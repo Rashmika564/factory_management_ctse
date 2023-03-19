@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:factory_management_ctse/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -68,10 +69,13 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
-      return _userFromFirebase(user!);
+      dynamic resut = await DatabaseService(uid: user!.uid)
+          .updateUserData('Mandara', '119', 25);
+      print(resut);
+      return _userFromFirebase(user);
     } catch (e) {
-      return null;
       print(e.toString());
+      return null;
     }
   }
 
