@@ -88,12 +88,16 @@ class _SignInState extends State<SignIn> {
                     if (_formKey.currentState!.validate()) {
                       print(email);
                       print(password);
+                      dynamic result =
+                          await _authService.SignInWithEmailPassword(
+                              email, password);
 
-                      // print(result);
-                      // if (result == null) {
-                      //   print("fgj");
-                      //   setState(() => error = 'Please enter valid email');
-                      // } else {}
+                      print(result);
+                      if (result == null) {
+                        print("fgj");
+                        setState(() =>
+                            error = 'Could Not sign in with these credintials');
+                      } else {}
                     }
                     // const url = "http://10.0.2.2:4000/getdeep/";
                     // final uri = Uri.parse(url);
