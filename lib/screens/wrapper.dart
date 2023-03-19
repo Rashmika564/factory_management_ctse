@@ -1,0 +1,24 @@
+import 'package:factory_management_ctse/screens/authenticate/authenticate.dart';
+import 'package:factory_management_ctse/screens/home/home.dart';
+import 'package:flutter/material.dart';
+
+import '../services/auth.dart';
+
+class Wrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    //return home or authenticate widgets
+
+    final user = AuthService().user;
+
+    if (user == null) {
+      return Authenticate();
+    } else {
+      return Home();
+    }
+
+    // return Container(
+    //   child: Text('home'),
+    // );
+  }
+}
