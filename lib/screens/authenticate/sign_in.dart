@@ -24,9 +24,11 @@ class _SignInState extends State<SignIn> {
   );
 
   final AuthService _authService = AuthService();
+  final _formKey = GlobalKey<FormState>();
   //text feild
   String email = '';
   String password = '';
+  String error = '';
   //final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -51,12 +53,14 @@ class _SignInState extends State<SignIn> {
       body: Container(
           padding: EdgeInsets.symmetric(vertical: 29.0, horizontal: 50.0),
           child: Form(
+            key: _formKey,
             child: Column(
               children: <Widget>[
                 SizedBox(
                   height: 20.0,
                 ),
                 TextFormField(
+                  validator: (val) => val!.isEmpty ? 'Enter an email' : null,
                   onChanged: (val) {
                     setState(() => email = val);
                   },
@@ -66,6 +70,8 @@ class _SignInState extends State<SignIn> {
                 ),
                 TextFormField(
                   obscureText: true,
+                  validator: (val) =>
+                      val!.length < 6 ? 'Enter an password  g than 6 ' : null,
                   onChanged: (val) {
                     setState(() => password = val);
                   },
@@ -79,21 +85,35 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                   onPressed: () async {
-                    print("fetching inside sign in button");
-                    const url = "http://10.0.2.2:4000/getdeep/";
-                    final uri = Uri.parse(url);
-                    try {
-                      final responce = await http.get(uri);
-                      final body = responce.body;
-                      final json = jsonDecode(body);
-                      print(json);
+                    if (_formKey.currentState!.validate()) {
                       print(email);
                       print(password);
-                    } catch (e) {
-                      print(e.toString());
+
+                      // print(result);
+                      // if (result == null) {
+                      //   print("fgj");
+                      //   setState(() => error = 'Please enter valid email');
+                      // } else {}
                     }
+                    // const url = "http://10.0.2.2:4000/getdeep/";
+                    // final uri = Uri.parse(url);
+                    // try {
+                    //   final responce = await http.get(uri);
+                    //   final body = responce.body;
+                    //   final json = jsonDecode(body);
+                    //   print(json);
+                    //   print(email);
+                    //   print(password);
+                    // } catch (e) {
+                    //   print(e.toString());
+                    // }
                   },
-                )
+                ),
+                SizedBox(
+                  height: 12.0,
+                ),
+                Text(error,
+                    style: TextStyle(color: Colors.red, fontSize: 14.0)),
               ],
             ),
           )),
