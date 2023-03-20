@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:factory_management_ctse/services/auth.dart';
+import 'package:factory_management_ctse/services/database.dart';
 import 'package:factory_management_ctse/shared/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -97,6 +98,7 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                         onPressed: () async {
+                          DatabaseService(uid: "").users;
                           if (_formKey.currentState!.validate()) {
                             setState(() => loading = true);
                             print(email);

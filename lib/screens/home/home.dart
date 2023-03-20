@@ -5,6 +5,8 @@ import 'package:factory_management_ctse/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/fuser.dart';
+
 class Home extends StatelessWidget {
   final AuthService service = AuthService();
 
@@ -22,9 +24,13 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot?>(
-      create: (_) => DatabaseService(uid: "").users,
+    return StreamProvider<List<FUser>?>.value(
+      value: DatabaseService(uid: "").users,
       initialData: null,
+      catchError: (_, err) {
+        print("errr");
+        return null;
+      },
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

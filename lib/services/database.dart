@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../models/fuser.dart';
+
 class DatabaseService {
   final String uid;
   DatabaseService({required this.uid});
@@ -17,6 +19,16 @@ class DatabaseService {
     });
   }
 
+  //userlist snap
+  List<FUser> factoryUserSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return FUser(
+          fullName: doc['fullName'] ?? '',
+          mobile: doc['mobile'] ?? '',
+          age: doc['age'] ?? 0);
+    }).toList();
+  }
+
   // Future updatePrductData(
   //     String productName, String productType, int price) async {
   //   return await productCollection.doc(uid).set({
@@ -27,7 +39,18 @@ class DatabaseService {
   // }
 
   //get users stream
-  Stream<QuerySnapshot> get users {
-    return userCollection.snapshots();
+  Stream<List<FUser>> get users {
+    print(userCollection.snapshots());
+    userCollection.get().then((QuerySnapshot querySnapshot) => {
+          querySnapshot.docs.forEach((doc) {
+            print("jkk");
+            print(querySnapshot.docs.length);
+            print(doc['fullName']);
+          })
+        });
+    print("jhol");
+    print(userCollection.snapshots().map((factoryUserSnapshot)));
+    // ignore: unnecessary_null_comparison
+    return userCollection.snapshots().map((factoryUserSnapshot));
   }
 }
