@@ -100,7 +100,7 @@ class _SignInState extends State<SignIn> {
                         onPressed: () async {
                           DatabaseService(uid: "").users;
                           if (_formKey.currentState!.validate()) {
-                            setState(() => loading = true);
+                            //setState(() => loading = true);
                             print(email);
                             print(password);
                             dynamic result =

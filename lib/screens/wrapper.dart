@@ -1,3 +1,4 @@
+import 'package:factory_management_ctse/docter_home/add_docter_info.dart';
 import 'package:factory_management_ctse/screens/authenticate/authenticate.dart';
 import 'package:factory_management_ctse/screens/home/home.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return Authenticate();
     } else {
-      return Home();
+      return AddDoctor();
     }
 
     // return Container(

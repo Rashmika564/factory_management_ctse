@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:factory_management_ctse/screens/home/update_form.dart';
 import 'package:factory_management_ctse/screens/home/user_list.dart';
 import 'package:factory_management_ctse/services/auth.dart';
 import 'package:factory_management_ctse/services/database.dart';
@@ -17,13 +18,24 @@ class Home extends StatelessWidget {
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
     ),
-    backgroundColor: Colors.blue,
+    backgroundColor: Color.fromARGB(255, 3, 33, 57),
   );
 
   get initialData => null;
 
   @override
   Widget build(BuildContext context) {
+    void _showUpdatesPanel() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: UpdateForm(),
+            );
+          });
+    }
+
     return StreamProvider<List<FUser>?>.value(
       value: DatabaseService(uid: "").users,
       initialData: null,
@@ -45,7 +57,12 @@ class Home extends StatelessWidget {
                 service.signOut();
               },
               child: Icon(Icons.person),
-            )
+            ),
+            TextButton(
+              style: flatButtonStyle,
+              onPressed: () => _showUpdatesPanel(),
+              child: Icon(Icons.update),
+            ),
           ],
         ),
         body: UserList(),

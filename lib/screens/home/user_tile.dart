@@ -16,7 +16,7 @@ class UserTile extends StatelessWidget {
         child: ListTile(
           leading: CircleAvatar(
             radius: 25.0,
-            backgroundColor: Colors.blue[8],
+            backgroundColor: Color.fromARGB(255, 218, 220, 221),
           ),
           title: Text(fuser.fullName.toString()),
           subtitle: Text('Mobile: ${fuser.mobile} Age: ${fuser.age}'),

@@ -40,6 +40,7 @@ class DatabaseService {
 
   //get users stream
   Stream<List<FUser>> get users {
+    print("hello");
     print(userCollection.snapshots());
     userCollection.get().then((QuerySnapshot querySnapshot) => {
           querySnapshot.docs.forEach((doc) {
@@ -48,8 +49,8 @@ class DatabaseService {
             print(doc['fullName']);
           })
         });
-    print("jhol");
-    print(userCollection.snapshots().map((factoryUserSnapshot)));
+    // print("jhol");
+    // print(userCollection.snapshots().map((factoryUserSnapshot)));
     // ignore: unnecessary_null_comparison
     return userCollection.snapshots().map((factoryUserSnapshot));
   }

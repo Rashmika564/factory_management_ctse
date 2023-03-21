@@ -11,11 +11,30 @@ class UserList extends StatefulWidget {
 }
 
 class _UserListState extends State<UserList> {
+  static List<FUser>? of(context, {bool allowNull = false}) {
+    try {
+      return Provider.of<List<FUser>>(context, listen: false);
+    } catch (error) {
+      if (!allowNull) throw error;
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final users = Provider.of<List<FUser>>(context);
-    print(users);
+    var users = [];
+    try {
+      users = Provider.of<List<FUser>?>(context, listen: true)!;
+    } catch (e) {}
+    //final users = Provider.of<List<FUser>?>(context, listen: true);
+    // print(users);
     print("adoo");
+    return ListView.builder(
+      itemCount: users.length,
+      itemBuilder: (context, index) {
+        return UserTile(fuser: users[index]);
+      },
+    );
 
     // users.forEach((u) {
     //   print(u.fullName);
@@ -27,12 +46,5 @@ class _UserListState extends State<UserList> {
     //   print(doc.data());
     //   print("of");
     // }
-
-    return ListView.builder(
-      itemCount: users.length,
-      itemBuilder: (context, index) {
-        return UserTile(fuser: users[index]);
-      },
-    );
   }
 }
