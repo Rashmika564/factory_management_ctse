@@ -1,6 +1,7 @@
 //import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:factory_management_ctse/appoinment_home/edit_apoinment_info.dart';
 import 'package:factory_management_ctse/data/models/doctor_model.dart';
 import 'package:factory_management_ctse/data/remote_data_source/doctor_helper.dart';
 import 'package:factory_management_ctse/docter_home/edit_docter_info.dart';
@@ -105,14 +106,20 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          EditDocterInfo(
-                                                            doctor: DoctorModel(
-                                                                fullname:
+                                                          EditAppoinmentnfo(
+                                                            appoinment: AppoinmentModel(
+                                                                doctorName:
                                                                     singledoctor
                                                                         .doctorName,
-                                                                age:
+                                                                hospitalName:
                                                                     singledoctor
                                                                         .hospitalName,
+                                                                date:
+                                                                    singledoctor
+                                                                        .date,
+                                                                reson:
+                                                                    singledoctor
+                                                                        .reson,
                                                                 id: singledoctor
                                                                     .id),
                                                           )));
