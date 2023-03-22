@@ -44,14 +44,9 @@ class DoctorHelper {
       print("some error occured");
     }
   }
-  // static Future update() async {
-  //   final doctorCollection = FirebaseFirestore.instance.collection("doctors");
-  //   final docRef = doctorCollection.doc("SsTUiqfGnH5la2tYtMM2");
 
-  //   try {
-  //     await docRef.update({"fullname": "some update"});
-  //   } catch (e) {
-  //     print("some error occured");
-  //   }
-  // }
+  static Future delete(DoctorModel doctor) async {
+    final doctorCollection = FirebaseFirestore.instance.collection("doctors");
+    final docRef = doctorCollection.doc(doctor.id).delete();
+  }
 }

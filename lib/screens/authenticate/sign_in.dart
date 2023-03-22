@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:factory_management_ctse/hospitalManagementHome.dart';
 import 'package:factory_management_ctse/services/auth.dart';
 import 'package:factory_management_ctse/services/database.dart';
 import 'package:factory_management_ctse/shared/loading.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../docter_home/add_docter_info.dart';
 import '../../shared/constants.dart';
 
 class SignIn extends StatefulWidget {
@@ -24,7 +26,7 @@ class _SignInState extends State<SignIn> {
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
     ),
-    backgroundColor: Colors.blue,
+    // backgroundColor: Colors.blue,
   );
 
   bool loading = false;
@@ -42,9 +44,9 @@ class _SignInState extends State<SignIn> {
         : Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              backgroundColor: Color.fromARGB(255, 1, 40, 72),
+              backgroundColor: const Color.fromARGB(255, 17, 90, 150),
               elevation: 0.0,
-              title: Text('Sign in Factory Management'),
+              title: Text('Sign in'),
               actions: <Widget>[
                 TextButton(
                   style: flatButtonStyle,
@@ -90,14 +92,8 @@ class _SignInState extends State<SignIn> {
                         },
                       ),
                       SizedBox(height: 20.0),
-                      ElevatedButton(
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        onPressed: () async {
+                      InkWell(
+                        onTap: () async {
                           DatabaseService(uid: "").users;
                           if (_formKey.currentState!.validate()) {
                             //setState(() => loading = true);
@@ -116,24 +112,40 @@ class _SignInState extends State<SignIn> {
                                 loading = false;
                               });
                             } else {
-                              setState(() {
-                                loading = false;
-                              });
+                              // setState(() {
+                              //   loading = false;
+                              // });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HospitalManagement()));
                             }
                           }
-                          // const url = "http://10.0.2.2:4000/getdeep/";
-                          // final uri = Uri.parse(url);
-                          // try {
-                          //   final responce = await http.get(uri);
-                          //   final body = responce.body;
-                          //   final json = jsonDecode(body);
-                          //   print(json);
-                          //   print(email);
-                          //   print(password);
-                          // } catch (e) {
-                          //   print(e.toString());
-                          // }
                         },
+                        child: Container(
+                          width: 100,
+                          height: 30,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.green),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.update,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "Sign In",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 12.0,

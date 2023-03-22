@@ -1,6 +1,8 @@
 import 'package:factory_management_ctse/services/database.dart';
 import 'package:flutter/material.dart';
 
+import '../../docter_home/add_docter_info.dart';
+import '../../hospitalManagementHome.dart';
 import '../../services/auth.dart';
 import '../../shared/constants.dart';
 import '../../shared/loading.dart';
@@ -21,7 +23,7 @@ class _RegisterState extends State<Register> {
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
     ),
-    backgroundColor: Colors.blue,
+    // backgroundColor: Colors.blue,
   );
   final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
@@ -38,9 +40,9 @@ class _RegisterState extends State<Register> {
         : Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              backgroundColor: Color.fromARGB(255, 1, 40, 72),
+              backgroundColor: const Color.fromARGB(255, 17, 90, 150),
               elevation: 0.0,
-              title: Text('Register Factory Management'),
+              title: Text('Sign Up'),
               actions: <Widget>[
                 TextButton(
                   style: flatButtonStyle,
@@ -87,16 +89,10 @@ class _RegisterState extends State<Register> {
                         },
                       ),
                       SizedBox(height: 20.0),
-                      ElevatedButton(
-                        child: Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        onPressed: () async {
+                      InkWell(
+                        onTap: () async {
                           if (_formKey.currentState!.validate()) {
-                            // setState(() => loading = true);
+                            setState(() => loading = true);
                             print(email);
                             print(password);
                             print("register");
@@ -107,17 +103,45 @@ class _RegisterState extends State<Register> {
                             print(result);
                             if (result == null) {
                               print("fgj");
-                              // setState(() {
-                              //   error = 'Please enter valid email';
-                              //   loading = false;
-                              // });
+                              setState(() {
+                                error = 'Please enter valid email';
+                                loading = false;
+                              });
                             } else {
                               setState(() {
                                 loading = false;
                               });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HospitalManagement()));
                             }
                           }
                         },
+                        child: Container(
+                          width: 100,
+                          height: 30,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.green),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.update,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "Sign Up",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 12.0,

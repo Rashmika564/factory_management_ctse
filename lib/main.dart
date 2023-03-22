@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           );
         }
         return MaterialApp(
-          title: 'firebase puka',
+          title: 'Hospital Management',
           home: Wrapper(),
         );
       },
