@@ -1,20 +1,18 @@
 //import 'dart:ffi';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:factory_management_ctse/appoinment_home/edit_apoinment_info.dart';
-import 'package:factory_management_ctse/data/models/doctor_model.dart';
-import 'package:factory_management_ctse/data/remote_data_source/doctor_helper.dart';
-import 'package:factory_management_ctse/docter_home/edit_docter_info.dart';
-import 'package:flutter/material.dart';
 
+import 'package:factory_management_ctse/appoinment_home/edit_apoinment_info.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import '../data/models/apponment_model.dart';
 import '../data/remote_data_source/appoinment_helper.dart';
 import '../services/auth.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+  // ignore: deprecated_member_use
   primary: Colors.white,
-  minimumSize: Size(88, 44),
-  padding: EdgeInsets.symmetric(horizontal: 16.0),
+  minimumSize: const Size(88, 44),
+  padding: const EdgeInsets.symmetric(horizontal: 16.0),
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(2.0)),
   ),
@@ -29,8 +27,8 @@ class AppoinmentList extends StatefulWidget {
 }
 
 class _AppoinmentListState extends State<AppoinmentList> {
-  TextEditingController _fullnamecontroller = TextEditingController();
-  TextEditingController _agecontroller = TextEditingController();
+  final TextEditingController _fullnamecontroller = TextEditingController();
+  final TextEditingController _agecontroller = TextEditingController();
   final AuthService service = AuthService();
   final _formKey = GlobalKey<FormState>();
 
@@ -46,17 +44,19 @@ class _AppoinmentListState extends State<AppoinmentList> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Appoinment List"),
+          title: const Text("Appoinment List"),
           backgroundColor: const Color.fromARGB(255, 17, 90, 150),
           elevation: 0.0,
           actions: <Widget>[
             TextButton(
               style: flatButtonStyle,
               onPressed: () async {
-                print('sign out');
+                if (kDebugMode) {
+                  print('sign out');
+                }
                 service.signOut();
               },
-              child: Icon(Icons.person),
+              child: const Icon(Icons.person),
             ),
           ],
         ),
@@ -70,12 +70,12 @@ class _AppoinmentListState extends State<AppoinmentList> {
                     stream: AppoinmentHelper.read(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
                       if (snapshot.hasError) {
-                        return Center(
+                        return const Center(
                           child: Text("Some error occured"),
                         );
                       }
@@ -84,15 +84,16 @@ class _AppoinmentListState extends State<AppoinmentList> {
                         return Expanded(
                           child: ListView.builder(
                             itemCount: docterdata!.length,
+                            // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
                             itemBuilder: (context, Index) {
                               final singledoctor = docterdata[Index];
                               return Container(
-                                margin: EdgeInsets.symmetric(vertical: 5),
+                                margin: const EdgeInsets.symmetric(vertical: 5),
                                 child: ListTile(
                                     leading: Container(
                                       width: 40,
                                       height: 40,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                           color: Colors.green,
                                           shape: BoxShape.circle),
                                     ),
@@ -124,21 +125,23 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                                                     .id),
                                                           )));
                                             },
-                                            child: Icon(Icons.edit)),
+                                            child: const Icon(Icons.edit)),
                                         // SizedBox(
                                         //   height: 0.5,
                                         // ),
                                         InkWell(
                                           onTap: () {
                                             //call your onpressed function here
-                                            print('Button Pressed');
+                                            if (kDebugMode) {
+                                              print('Button Pressed');
+                                            }
                                             showDialog(
                                                 context: context,
                                                 builder: (context) {
                                                   return AlertDialog(
                                                     title:
-                                                        Text("Delete Confirm"),
-                                                    content: Text(
+                                                        const Text("Delete Confirm"),
+                                                    content: const Text(
                                                         "Are You sure You want to delete"),
                                                     actions: [
                                                       ElevatedButton(
@@ -150,12 +153,12 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                                                   context);
                                                             });
                                                           },
-                                                          child: Text("Delete"))
+                                                          child: const Text("Delete"))
                                                     ],
                                                   );
                                                 });
                                           },
-                                          child: Icon(Icons.delete),
+                                          child: const Icon(Icons.delete),
                                         ),
                                       ],
                                     )),
@@ -164,7 +167,7 @@ class _AppoinmentListState extends State<AppoinmentList> {
                           ),
                         );
                       }
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     })

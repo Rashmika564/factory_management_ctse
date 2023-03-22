@@ -1,9 +1,6 @@
-//import 'dart:ffi';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:factory_management_ctse/data/models/doctor_model.dart';
-import 'package:factory_management_ctse/data/remote_data_source/doctor_helper.dart';
-import 'package:factory_management_ctse/docter_home/edit_docter_info.dart';
+import 'package:factory_management_ctse/appoinment_home/appoinment_list.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../data/models/apponment_model.dart';
@@ -11,9 +8,10 @@ import '../data/remote_data_source/appoinment_helper.dart';
 import '../services/auth.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
+  // ignore: deprecated_member_use
   primary: Colors.white,
-  minimumSize: Size(88, 44),
-  padding: EdgeInsets.symmetric(horizontal: 16.0),
+  minimumSize: const Size(88, 44),
+  padding: const EdgeInsets.symmetric(horizontal: 16.0),
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(2.0)),
   ),
@@ -28,10 +26,10 @@ class AddAppoinment extends StatefulWidget {
 }
 
 class _AddAppoinmentState extends State<AddAppoinment> {
-  TextEditingController _doctorNamecontroller = TextEditingController(); 
-  TextEditingController _hospitalNamecontroller = TextEditingController();
-  TextEditingController _datecontroller = TextEditingController();
-  TextEditingController _resoncontroller = TextEditingController();
+  final TextEditingController _doctorNamecontroller = TextEditingController(); 
+  final TextEditingController _hospitalNamecontroller = TextEditingController();
+  final TextEditingController _datecontroller = TextEditingController();
+  final TextEditingController _resoncontroller = TextEditingController();
   final AuthService service = AuthService();
   final _formKey = GlobalKey<FormState>();
 
@@ -49,17 +47,19 @@ class _AddAppoinmentState extends State<AddAppoinment> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Add New Appoinment"),
+          title: const Text("Add New Appoinment"),
           backgroundColor: const Color.fromARGB(255, 17, 90, 150),
           elevation: 0.0,
           actions: <Widget>[
             TextButton(
               style: flatButtonStyle,
               onPressed: () async {
-                print('sign out');
+                if (kDebugMode) {
+                  print('sign out');
+                }
                 service.signOut();
               },
-              child: Icon(Icons.person),
+              child: const Icon(Icons.person),
             ),
           ],
         ),
@@ -71,45 +71,53 @@ class _AddAppoinmentState extends State<AddAppoinment> {
               children: [
                 TextFormField(
                   controller: _hospitalNamecontroller,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Hospital"),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
                   controller: _doctorNamecontroller,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Doctor Name"),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
                   controller: _datecontroller,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Date"),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
                   controller: _resoncontroller,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Reson for appoinment"),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 InkWell(
                   onTap: () {
-                    print("Create Data");
+                    if (kDebugMode) {
+                      print("Create Data");
+                    }
                     //_create();
                     AppoinmentHelper.create(AppoinmentModel(
                         doctorName: _doctorNamecontroller.text,
                         hospitalName: _hospitalNamecontroller.text,
                         date: _datecontroller.text,
                         reson: _resoncontroller.text));
+
+                    Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                  const AppoinmentList()));
                   },
                   child: Container(
                     width: 100,
@@ -119,7 +127,7 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                         color: Colors.green),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Icon(
                           Icons.add,
                           color: Colors.white,
@@ -135,7 +143,7 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 
