@@ -6,6 +6,8 @@ import 'package:factory_management_ctse/data/remote_data_source/doctor_helper.da
 import 'package:factory_management_ctse/docter_home/edit_docter_info.dart';
 import 'package:flutter/material.dart';
 
+import '../data/models/apponment_model.dart';
+import '../data/remote_data_source/appoinment_helper.dart';
 import '../services/auth.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
@@ -26,15 +28,19 @@ class AddAppoinment extends StatefulWidget {
 }
 
 class _AddAppoinmentState extends State<AddAppoinment> {
-  TextEditingController _fullnamecontroller = TextEditingController();
-  TextEditingController _agecontroller = TextEditingController();
+  TextEditingController _doctorNamecontroller = TextEditingController(); 
+  TextEditingController _hospitalNamecontroller = TextEditingController();
+  TextEditingController _datecontroller = TextEditingController();
+  TextEditingController _resoncontroller = TextEditingController();
   final AuthService service = AuthService();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _fullnamecontroller.dispose();
-    _agecontroller.dispose();
+    _doctorNamecontroller.dispose();
+    _hospitalNamecontroller.dispose();
+    _datecontroller.dispose();
+    _resoncontroller.dispose();
     super.dispose();
   }
 
@@ -64,7 +70,7 @@ class _AddAppoinmentState extends State<AddAppoinment> {
             child: Column(
               children: [
                 TextFormField(
-                  controller: _fullnamecontroller,
+                  controller: _hospitalNamecontroller,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), hintText: "Hospital"),
                 ),
@@ -72,7 +78,7 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   height: 10,
                 ),
                 TextFormField(
-                  controller: _agecontroller,
+                  controller: _doctorNamecontroller,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), hintText: "Doctor Name"),
                 ),
@@ -80,7 +86,7 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   height: 10,
                 ),
                 TextFormField(
-                  controller: _agecontroller,
+                  controller: _datecontroller,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), hintText: "Date"),
                 ),
@@ -88,7 +94,7 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   height: 10,
                 ),
                 TextFormField(
-                  controller: _agecontroller,
+                  controller: _resoncontroller,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), hintText: "Reson for appoinment"),
                 ),
@@ -99,9 +105,11 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   onTap: () {
                     print("Create Data");
                     //_create();
-                    DoctorHelper.create(DoctorModel(
-                        fullname: _fullnamecontroller.text,
-                        age: _agecontroller.text));
+                    AppoinmentHelper.create(AppoinmentModel(
+                        doctorName: _doctorNamecontroller.text,
+                        hospitalName: _hospitalNamecontroller.text,
+                        date: _datecontroller.text,
+                        reson: _resoncontroller.text));
                   },
                   child: Container(
                     width: 100,
@@ -130,102 +138,7 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                 SizedBox(
                   height: 10,
                 ),
-                StreamBuilder<List<DoctorModel>>(
-                    stream: DoctorHelper.read(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (snapshot.hasError) {
-                        return Center(
-                          child: Text("Some error occured"),
-                        );
-                      }
-                      if (snapshot.hasData) {
-                        final docterdata = snapshot.data;
-                        return Expanded(
-                          child: ListView.builder(
-                            itemCount: docterdata!.length,
-                            itemBuilder: (context, Index) {
-                              final singledoctor = docterdata[Index];
-                              return Container(
-                                margin: EdgeInsets.symmetric(vertical: 5),
-                                child: ListTile(
-                                    leading: Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          shape: BoxShape.circle),
-                                    ),
-                                    title: Text("${singledoctor.fullname}"),
-                                    subtitle: Text("${singledoctor.age}"),
-                                    trailing: Column(
-                                      children: [
-                                        InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          EditDocterInfo(
-                                                            doctor: DoctorModel(
-                                                                fullname:
-                                                                    singledoctor
-                                                                        .fullname,
-                                                                age:
-                                                                    singledoctor
-                                                                        .age,
-                                                                id: singledoctor
-                                                                    .id),
-                                                          )));
-                                            },
-                                            child: Icon(Icons.edit)),
-                                        // SizedBox(
-                                        //   height: 0.5,
-                                        // ),
-                                        InkWell(
-                                          onTap: () {
-                                            //call your onpressed function here
-                                            print('Button Pressed');
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    title:
-                                                        Text("Delete Confirm"),
-                                                    content: Text(
-                                                        "Are You sure You want to delete"),
-                                                    actions: [
-                                                      ElevatedButton(
-                                                          onPressed: () {
-                                                            DoctorHelper.delete(
-                                                                    singledoctor)
-                                                                .then((value) {
-                                                              Navigator.pop(
-                                                                  context);
-                                                            });
-                                                          },
-                                                          child: Text("Delete"))
-                                                    ],
-                                                  );
-                                                });
-                                          },
-                                          child: Icon(Icons.delete),
-                                        ),
-                                      ],
-                                    )),
-                              );
-                            },
-                          ),
-                        );
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    })
+                
               ],
             ),
           ),
@@ -233,13 +146,4 @@ class _AddAppoinmentState extends State<AddAppoinment> {
       ),
     );
   }
-
-  // Future _create() async {
-  //   final doctorCollection = FirebaseFirestore.instance.collection("doctors");
-  //   final docRef = doctorCollection.doc();
-  //   await docRef.set({
-  //     "fullname": _fullnamecontroller.text,
-  //     "age": _agecontroller.text,
-  //   });
-  // }
 }

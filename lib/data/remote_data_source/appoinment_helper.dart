@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/apponment_model.dart';
 
 
-class DoctorHelper {
+class AppoinmentHelper {
   static Stream<List<AppoinmentModel>> read() {
     final doctorCollection = FirebaseFirestore.instance.collection("appoinments");
     return doctorCollection.snapshots().map((querySnapshot) =>

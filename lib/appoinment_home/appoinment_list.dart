@@ -6,6 +6,8 @@ import 'package:factory_management_ctse/data/remote_data_source/doctor_helper.da
 import 'package:factory_management_ctse/docter_home/edit_docter_info.dart';
 import 'package:flutter/material.dart';
 
+import '../data/models/apponment_model.dart';
+import '../data/remote_data_source/appoinment_helper.dart';
 import '../services/auth.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
@@ -43,7 +45,7 @@ class _AppoinmentListState extends State<AppoinmentList> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Add New Appoinment"),
+          title: Text("Appoinment List"),
           backgroundColor: const Color.fromARGB(255, 17, 90, 150),
           elevation: 0.0,
           actions: <Widget>[
@@ -63,8 +65,8 @@ class _AppoinmentListState extends State<AppoinmentList> {
             key: _formKey,
             child: Column(
               children: [
-                StreamBuilder<List<DoctorModel>>(
-                    stream: DoctorHelper.read(),
+                StreamBuilder<List<AppoinmentModel>>(
+                    stream: AppoinmentHelper.read(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
@@ -93,8 +95,8 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                           color: Colors.green,
                                           shape: BoxShape.circle),
                                     ),
-                                    title: Text("${singledoctor.fullname}"),
-                                    subtitle: Text("${singledoctor.age}"),
+                                    title: Text("${singledoctor.doctorName}"),
+                                    subtitle: Text("${singledoctor.hospitalName}"),
                                     trailing: Column(
                                       children: [
                                         InkWell(
@@ -107,10 +109,10 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                                             doctor: DoctorModel(
                                                                 fullname:
                                                                     singledoctor
-                                                                        .fullname,
+                                                                        .doctorName,
                                                                 age:
                                                                     singledoctor
-                                                                        .age,
+                                                                        .hospitalName,
                                                                 id: singledoctor
                                                                     .id),
                                                           )));
@@ -134,7 +136,7 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                                     actions: [
                                                       ElevatedButton(
                                                           onPressed: () {
-                                                            DoctorHelper.delete(
+                                                            AppoinmentHelper.delete(
                                                                     singledoctor)
                                                                 .then((value) {
                                                               Navigator.pop(
