@@ -1,6 +1,5 @@
 //import 'dart:ffi';
 
-
 import 'package:factory_management_ctse/appoinment_home/edit_apoinment_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -90,15 +89,22 @@ class _AppoinmentListState extends State<AppoinmentList> {
                               return Container(
                                 margin: const EdgeInsets.symmetric(vertical: 5),
                                 child: ListTile(
+                                    shape: BeveledRectangleBorder(
+                                      //<-- SEE HERE
+                                      side: const BorderSide(width: 2),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
                                     leading: Container(
-                                      width: 40,
+                                      width: 20,
                                       height: 40,
                                       decoration: const BoxDecoration(
-                                          color: Colors.green,
-                                          shape: BoxShape.circle),
+                                          color: Colors.yellow,
+                                          shape: BoxShape.rectangle),
                                     ),
-                                    title: Text("${singledoctor.doctorName}"),
-                                    subtitle: Text("${singledoctor.hospitalName}"),
+                                    title:
+                                        Text("${singledoctor.doctorName} at "),
+                                    subtitle: Text(
+                                        "${singledoctor.hospitalName} on ${singledoctor.date}"),
                                     trailing: Column(
                                       children: [
                                         InkWell(
@@ -106,24 +112,23 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          EditAppoinmentnfo(
-                                                            appoinment: AppoinmentModel(
-                                                                doctorName:
-                                                                    singledoctor
-                                                                        .doctorName,
-                                                                hospitalName:
-                                                                    singledoctor
-                                                                        .hospitalName,
-                                                                date:
-                                                                    singledoctor
+                                                      builder:
+                                                          (context) =>
+                                                              EditAppoinmentnfo(
+                                                                appoinment: AppoinmentModel(
+                                                                    doctorName:
+                                                                        singledoctor
+                                                                            .doctorName,
+                                                                    hospitalName:
+                                                                        singledoctor
+                                                                            .hospitalName,
+                                                                    date: singledoctor
                                                                         .date,
-                                                                reson:
-                                                                    singledoctor
+                                                                    reson: singledoctor
                                                                         .reson,
-                                                                id: singledoctor
-                                                                    .id),
-                                                          )));
+                                                                    id: singledoctor
+                                                                        .id),
+                                                              )));
                                             },
                                             child: const Icon(Icons.edit)),
                                         // SizedBox(
@@ -139,8 +144,8 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                                 context: context,
                                                 builder: (context) {
                                                   return AlertDialog(
-                                                    title:
-                                                        const Text("Delete Confirm"),
+                                                    title: const Text(
+                                                        "Delete Confirm"),
                                                     content: const Text(
                                                         "Are You sure You want to delete"),
                                                     actions: [
@@ -153,7 +158,8 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                                                   context);
                                                             });
                                                           },
-                                                          child: const Text("Delete"))
+                                                          child: const Text(
+                                                              "Delete"))
                                                     ],
                                                   );
                                                 });

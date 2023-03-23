@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:factory_management_ctse/appoinment_home/appoinment_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../data/models/apponment_model.dart';
 import '../data/remote_data_source/appoinment_helper.dart';
 import '../services/auth.dart';
@@ -31,13 +32,8 @@ class _AddAppoinmentState extends State<AddAppoinment> {
   final TextEditingController _datecontroller = TextEditingController();
   final TextEditingController _resoncontroller = TextEditingController();
 
-  List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-  ];
-  String? selectedValue;
+  List<String> items = [];
+  String selectedValue = 'Four';
 
   final AuthService service = AuthService();
   final _formKey = GlobalKey<FormState>();
@@ -72,190 +68,275 @@ class _AddAppoinmentState extends State<AddAppoinment> {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Container(
-                  height: 300.0,
-                  decoration: const BoxDecoration(
-                      color: Colors.yellow,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(250),
-                        bottomRight: Radius.circular(250),
-                      )),
-                ),
-                const SizedBox(height: 20.0),
-                const Text("Welcome",
-                    style: TextStyle(
-                        fontSize: 24.0,
-                        letterSpacing: 1.5,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
-                const SizedBox(height: 10.0),
-                const Text("Book Your Doctor Appoinment Hear",
-                    style: TextStyle(fontSize: 16.0, color: Colors.black)),
-                const SizedBox(height: 20.0),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                      child: const Text(
-                        "View all",
-                        style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: Colors.black),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AppoinmentList()));
-                      }),
-                ),
-                // const Schedule(),
-                const SizedBox(height: 30.0),
-                // const Image(image: AssetImage('graphics/background.png')),
-                TextFormField(
-                  controller: _hospitalNamecontroller,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Hospital"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: _doctorNamecontroller,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Doctor Name"),
-                ),
-                DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                    hint: Text(
-                      'Select Item',
+        body: Stack(
+          fit: StackFit.expand,
+          children: 
+            [
+              SvgPicture.asset(
+            "assets/images/Sign_Up_bg.svg",
+            height: MediaQuery.of(context).size.height,
+            // Now it takes 100% of our height
+          ),
+              Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Container(
+                    height: 300.0,
+                    decoration: const BoxDecoration(
+                        color: Colors.yellow,
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/doctorstes.jpg"),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(250),
+                          bottomRight: Radius.circular(250),
+                        )),
+                  ),
+                  const SizedBox(height: 20.0),
+                  const Text("Welcome",
                       style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                    items: items
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ))
-                        .toList(),
-                    value: selectedValue,
-                    onChanged: (value) {
-                      // setState(() {
-                        selectedValue = value as String?;
-                      // });
+                          fontSize: 24.0,
+                          letterSpacing: 1.5,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  const SizedBox(height: 10.0),
+                  const Text("Book Your Doctor Appoinment Hear",
+                      style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                  const SizedBox(height: 20.0),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                        child: const Text(
+                          "View all",
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Colors.black),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AppoinmentList()));
+                        }),
+                  ),
+                  // const Schedule(),
+                  const SizedBox(height: 30.0),
+                  // const Image(image: AssetImage('graphics/background.png')),
+                  TextFormField(
+                    controller: _hospitalNamecontroller,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(), hintText: "Hospital"),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  // TextFormField(
+                  //   controller: _doctorNamecontroller,
+                  //   decoration: const InputDecoration(
+                  //       border: OutlineInputBorder(), hintText: "Doctor Name"),
+                  // ),
+                  // DropdownButtonHideUnderline(
+                  //   child: DropdownButton2<String>(
+
+                  //     hint: Text(
+                  //       'Select Doctor',
+                  //       style: TextStyle(
+                  //         fontSize: 14,
+                  //         color: Theme.of(context).hintColor,
+                  //       ),
+                  //     ),
+                  //     items: items
+                  //         .map((item) => DropdownMenuItem<String>(
+                  //               value: item,
+                  //               child: Text(
+                  //                 item,
+                  //                 style: const TextStyle(
+                  //                   fontSize: 14,
+                  //                 ),
+                  //               ),
+                  //             ))
+                  //         .toList(),
+                  //     value: selectedValue,
+                  //     onChanged: (value) {
+                  //       // setState(() {
+                  //         selectedValue = value;
+                  //       // });
+                  //     },
+                  //   ),
+                  // ),
+
+                  // DropdownButton(items: _items.map((e) => DropdownMenuItem(child: Text(e),value: e,)).toList(),
+                  // onChanged: (val) { setState(() {
+                  //   selectedValue = val as String;
+                  // });
+                  // }),
+                  Container(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10)),
+                      width: 100,
+                      child: Row(children: <Widget>[
+                        StreamBuilder<List<AppoinmentModel>>(
+                            stream: AppoinmentHelper.read(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              if (snapshot.hasError) {
+                                return const Center(
+                                  child: Text("Some error occured"),
+                                );
+                              }
+                              if (snapshot.hasData) {
+                                final appoinmentData = snapshot.data;
+                                for (var i = 0; i < 2; i++) {
+                                  items.add(
+                                      appoinmentData![i].doctorName.toString());
+                                }
+                              }
+                              return const Center(
+                                child: Text("data Loaded"),
+                              );
+                            }),
+                       
+                      ] // dropdown below..
+
+                          )),
+
+                  Container(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10)),
+                      width: 100,
+                      child: Row(children: <Widget>[
+                        DropdownButton<String>(
+                          value: selectedValue,
+                          onChanged: (newValue) =>
+                              setState(() => selectedValue = newValue as String),
+                          items: items
+                              .map<DropdownMenuItem<String>>(
+                                  (String value) => DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      ))
+                              .toList(),
+
+                          // add extra sugar..
+                          icon: const Icon(Icons.arrow_drop_down),
+                          iconSize: 42,
+                          underline: const SizedBox(),
+                        ),
+                      ] // dropdown below..
+
+                          )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller:
+                        _datecontroller, //editing controller of this TextField
+                    decoration: const InputDecoration(
+                        icon: Icon(Icons.calendar_today), //icon of text field
+                        labelText: "Enter Date" //label text of field
+                        ),
+                    readOnly:
+                        true, //set it true, so that user will not able to edit text
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(
+                              2000), //DateTime.now() - not to allow to choose before today.
+                          lastDate: DateTime(2101));
+
+                      if (pickedDate != null) {
+                        if (kDebugMode) {
+                          print(pickedDate);
+                        } //pickedDate output format => 2021-03-10 00:00:00.000
+                        String formattedDate =
+                            DateFormat('yyyy-MM-dd').format(pickedDate);
+                        if (kDebugMode) {
+                          print(formattedDate);
+                        } //formatted date output using intl package =>  2021-03-16
+                        //you can implement different kind of Date Format here according to your requirement
+
+                        setState(() {
+                          _datecontroller.text =
+                              formattedDate; //set output date to TextField value.
+                        });
+                      } else {
+                        if (kDebugMode) {
+                          print("Date is not selected");
+                        }
+                      }
                     },
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller:
-                      _datecontroller, //editing controller of this TextField
-                  decoration: const InputDecoration(
-                      icon: Icon(Icons.calendar_today), //icon of text field
-                      labelText: "Enter Date" //label text of field
-                      ),
-                  readOnly:
-                      true, //set it true, so that user will not able to edit text
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(
-                            2000), //DateTime.now() - not to allow to choose before today.
-                        lastDate: DateTime(2101));
-
-                    if (pickedDate != null) {
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: _resoncontroller,
+                    minLines:
+                        6, // any number you need (It works as the rows for the textarea)
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Reson for appoinment"),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
                       if (kDebugMode) {
-                        print(pickedDate);
-                      } //pickedDate output format => 2021-03-10 00:00:00.000
-                      String formattedDate =
-                          DateFormat('yyyy-MM-dd').format(pickedDate);
-                      if (kDebugMode) {
-                        print(formattedDate);
-                      } //formatted date output using intl package =>  2021-03-16
-                      //you can implement different kind of Date Format here according to your requirement
-
-                      setState(() {
-                        _datecontroller.text =
-                            formattedDate; //set output date to TextField value.
-                      });
-                    } else {
-                      if (kDebugMode) {
-                        print("Date is not selected");
+                        print("Create Data");
                       }
-                    }
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: _resoncontroller,
-                  minLines:
-                      6, // any number you need (It works as the rows for the textarea)
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Reson for appoinment"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                InkWell(
-                  onTap: () {
-                    if (kDebugMode) {
-                      print("Create Data");
-                    }
-                    //_create();
-                    AppoinmentHelper.create(AppoinmentModel(
-                        doctorName: _doctorNamecontroller.text,
-                        hospitalName: _hospitalNamecontroller.text,
-                        date: _datecontroller.text,
-                        reson: _resoncontroller.text));
+                      //_create();
+                      AppoinmentHelper.create(AppoinmentModel(
+                          doctorName: selectedValue,
+                          hospitalName: _hospitalNamecontroller.text,
+                          date: _datecontroller.text,
+                          reson: _resoncontroller.text));
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AppoinmentList()));
-                  },
-                  child: Container(
-                    width: 100,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.yellow),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          "Book",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ],
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AppoinmentList()));
+                    },
+                    child: Container(
+                      width: 100,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.yellow),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "Book",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
