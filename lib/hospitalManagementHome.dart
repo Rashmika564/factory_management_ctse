@@ -136,7 +136,7 @@ class _HospitalManagementState extends State<HospitalManagement> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Icon(
-                        Icons.person_2,
+                        Icons.person,
                         size: 70.0,
                       ),
                       Text("Appoinment Management",
