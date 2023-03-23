@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:factory_management_ctse/docter_home/add_docter_info.dart';
+import 'package:factory_management_ctse/screens/authenticate/sign_in.dart';
+import 'package:factory_management_ctse/services/auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +24,8 @@ class HospitalManagement extends StatefulWidget {
 }
 
 class _HospitalManagementState extends State<HospitalManagement> {
+  final AuthService service = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,16 +35,24 @@ class _HospitalManagementState extends State<HospitalManagement> {
         elevation: 0.0,
         title: Text('Dashboard'),
         actions: <Widget>[
-          TextButton(
-            style: flatButtonStyle,
-            onPressed: () {
-              print('login in');
-              // widget.toggleView();
-
-              //service.signOut();
+          TextButton.icon(
+            onPressed: () async {
+              service.signOut();
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => SignIn()));
             },
-            child: Icon(Icons.person),
-          )
+            icon: Icon(
+              // <-- Icon
+              Icons.person_remove,
+              color: Colors.white,
+
+              size: 24.0,
+            ),
+            label: Text(
+              'Log out Account',
+              style: TextStyle(color: Colors.white),
+            ), // <-- Text
+          ),
         ],
       ),
       body: Container(
@@ -51,7 +64,12 @@ class _HospitalManagementState extends State<HospitalManagement> {
             Card(
               margin: EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddDoctor()));
+                },
                 splashColor: Colors.green,
                 child: Center(
                   child: Column(

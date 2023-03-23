@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:factory_management_ctse/screens/authenticate/sign_in.dart';
 import 'package:factory_management_ctse/services/database.dart';
 import 'package:flutter/material.dart';
 
@@ -8,8 +11,8 @@ import '../../shared/constants.dart';
 import '../../shared/loading.dart';
 
 class Register extends StatefulWidget {
-  final Function toggleView;
-  Register({required this.toggleView});
+  // final Function toggleView;
+  // Register({required this.toggleView});
 
   @override
   State<Register> createState() => _RegisterState();
@@ -44,16 +47,23 @@ class _RegisterState extends State<Register> {
               elevation: 0.0,
               title: Text('Sign Up'),
               actions: <Widget>[
-                TextButton(
-                  style: flatButtonStyle,
+                TextButton.icon(
                   onPressed: () {
-                    print('login in');
-                    widget.toggleView();
-
-                    //service.signOut();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignIn()));
                   },
-                  child: Icon(Icons.person),
-                )
+                  icon: Icon(
+                    // <-- Icon
+                    Icons.person,
+                    color: Colors.white,
+
+                    size: 24.0,
+                  ),
+                  label: Text(
+                    'Sign In',
+                    style: TextStyle(color: Colors.white),
+                  ), // <-- Text
+                ),
               ],
             ),
             body: Container(
@@ -148,6 +158,17 @@ class _RegisterState extends State<Register> {
                       ),
                       Text(error,
                           style: TextStyle(color: Colors.red, fontSize: 14.0)),
+                      Container(
+                        width: window.physicalSize.width / 2,
+                        height: window.physicalSize.height / 3,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('Hospital-building-bro.png'),
+                            fit: BoxFit.fill,
+                          ),
+                          shape: BoxShape.rectangle,
+                        ),
+                      )
                     ],
                   ),
                 )),

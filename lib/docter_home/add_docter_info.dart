@@ -4,9 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:factory_management_ctse/data/models/doctor_model.dart';
 import 'package:factory_management_ctse/data/remote_data_source/doctor_helper.dart';
 import 'package:factory_management_ctse/docter_home/edit_docter_info.dart';
+import 'package:factory_management_ctse/hospitalManagementHome.dart';
+import 'package:factory_management_ctse/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
 import '../services/auth.dart';
+import '../shared/constants.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   primary: Colors.white,
@@ -18,6 +21,30 @@ final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   //backgroundColor: Color.fromARGB(255, 3, 33, 57),
 );
 
+final List<String> categories = [
+  'Select a Category',
+  'Family medicine',
+  'Internal Medicine',
+  'Pediatrician',
+  'gynecologist (OBGYNs)',
+  'Cardiologist',
+  'Oncologist',
+  'Gastroenterologist',
+  'Pulmonologist',
+  'Infectious disease',
+  'Nephrologist',
+  'Endocrinologist',
+  'Ophthalmologist',
+  'Otolaryngologist',
+  'Dermatologist',
+  'Psychiatrist',
+  'Neurologist',
+  'Radiologist',
+  'Anesthesiologist',
+  'Surgeon',
+  'Physician executive',
+];
+
 class AddDoctor extends StatefulWidget {
   const AddDoctor({Key? key}) : super(key: key);
 
@@ -28,13 +55,20 @@ class AddDoctor extends StatefulWidget {
 class _AddDoctorState extends State<AddDoctor> {
   TextEditingController _fullnamecontroller = TextEditingController();
   TextEditingController _agecontroller = TextEditingController();
+  TextEditingController _mobilenumbercontroller = TextEditingController();
+  TextEditingController _livingaddresscontroller = TextEditingController();
+  TextEditingController _noofnursescontroller = TextEditingController();
   final AuthService service = AuthService();
   final _formKey = GlobalKey<FormState>();
+  String? doctorcategory = 'Select a Category';
 
   @override
   void dispose() {
     _fullnamecontroller.dispose();
     _agecontroller.dispose();
+    _mobilenumbercontroller.dispose();
+    _livingaddresscontroller.dispose();
+    _noofnursescontroller.dispose();
     super.dispose();
   }
 
@@ -47,13 +81,23 @@ class _AddDoctorState extends State<AddDoctor> {
           backgroundColor: const Color.fromARGB(255, 17, 90, 150),
           elevation: 0.0,
           actions: <Widget>[
-            TextButton(
-              style: flatButtonStyle,
+            TextButton.icon(
               onPressed: () async {
-                print('sign out');
                 service.signOut();
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => SignIn()));
               },
-              child: Icon(Icons.person),
+              icon: Icon(
+                // <-- Icon
+                Icons.person_remove,
+                color: Colors.white,
+
+                size: 24.0,
+              ),
+              label: Text(
+                'Log out Account',
+                style: TextStyle(color: Colors.white),
+              ), // <-- Text
             ),
           ],
         ),
@@ -64,6 +108,8 @@ class _AddDoctorState extends State<AddDoctor> {
             child: Column(
               children: [
                 TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Full Name Cant be empty' : null,
                   controller: _fullnamecontroller,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), hintText: "full Name"),
@@ -72,6 +118,7 @@ class _AddDoctorState extends State<AddDoctor> {
                   height: 10,
                 ),
                 TextFormField(
+                  validator: (val) => val!.isEmpty ? 'age cant be empty' : null,
                   controller: _agecontroller,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), hintText: "Age"),
@@ -79,13 +126,110 @@ class _AddDoctorState extends State<AddDoctor> {
                 SizedBox(
                   height: 10,
                 ),
+                DropdownButtonFormField(
+                  validator: (value) => value!.toString() == 'Select a Category'
+                      ? 'category Cant be empty'
+                      : null,
+                  decoration: textInputDecoration,
+                  value: doctorcategory,
+                  items: categories.map((c) {
+                    return DropdownMenuItem(
+                      value: c,
+                      child: Text(c),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    // print(value);
+                    doctorcategory = value as String?;
+                    // setState(() => doctorcategory = value as String?);
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'mobile number cant be empty' : null,
+                  controller: _mobilenumbercontroller,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), hintText: "Mobile Number"),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Living Addresss cant be empty' : null,
+                  controller: _livingaddresscontroller,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), hintText: "Living Address"),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Number Of Nurses cant be empty' : null,
+                  controller: _noofnursescontroller,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: "No of Assigned Nurses"),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 InkWell(
                   onTap: () {
                     print("Create Data");
-                    //_create();
-                    DoctorHelper.create(DoctorModel(
-                        fullname: _fullnamecontroller.text,
-                        age: _agecontroller.text));
+                    if (_formKey.currentState!.validate()) {
+//_create();
+                      DoctorHelper.create(DoctorModel(
+                          fullname: _fullnamecontroller.text,
+                          age: _agecontroller.text,
+                          doctorcategory: doctorcategory,
+                          mobilenumber: _mobilenumbercontroller.text,
+                          livingaddress: _livingaddresscontroller.text,
+                          noofassignednurses: _noofnursescontroller.text));
+
+                      _agecontroller.clear();
+                      _fullnamecontroller.clear();
+                      _mobilenumbercontroller.clear();
+                      _livingaddresscontroller.clear();
+                      _noofnursescontroller.clear();
+
+                      // setState(() {
+                      doctorcategory = 'Select a Category';
+
+                      // showDialog(
+                      //     context: context,
+                      //     builder: (context) {
+                      //       return AlertDialog(
+                      //         title: Text("Delete Confirm"),
+                      //         content: Text("Are You sure You want to delete"),
+                      //         actions: [
+                      //           ElevatedButton(
+                      //               onPressed: () {
+                      //                 Navigator.pop(context);
+                      //               },
+                      //               child: Text("Delete"))
+                      //         ],
+                      //       );
+                      //     });
+
+                      final snackBar = SnackBar(
+                        content:
+                            const Text('Docter Record Created Successfully'),
+                        backgroundColor: const Color.fromARGB(255, 17, 90, 150),
+                        action: SnackBarAction(
+                          label: 'close',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
                   },
                   child: Container(
                     width: 100,
@@ -137,12 +281,10 @@ class _AddDoctorState extends State<AddDoctor> {
                               return Container(
                                 margin: EdgeInsets.symmetric(vertical: 5),
                                 child: ListTile(
-                                    leading: Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          shape: BoxShape.circle),
+                                    leading: CircleAvatar(
+                                      radius: 22.0,
+                                      backgroundColor: Colors.green,
+                                      backgroundImage: AssetImage('images.png'),
                                     ),
                                     title: Text("${singledoctor.fullname}"),
                                     subtitle: Text("${singledoctor.age}"),
@@ -159,11 +301,22 @@ class _AddDoctorState extends State<AddDoctor> {
                                                                 fullname:
                                                                     singledoctor
                                                                         .fullname,
-                                                                age:
-                                                                    singledoctor
-                                                                        .age,
+                                                                age: singledoctor
+                                                                    .age,
                                                                 id: singledoctor
-                                                                    .id),
+                                                                    .id,
+                                                                doctorcategory:
+                                                                    singledoctor
+                                                                        .doctorcategory,
+                                                                mobilenumber:
+                                                                    singledoctor
+                                                                        .mobilenumber,
+                                                                livingaddress:
+                                                                    singledoctor
+                                                                        .livingaddress,
+                                                                noofassignednurses:
+                                                                    singledoctor
+                                                                        .noofassignednurses),
                                                           )));
                                             },
                                             child: Icon(Icons.edit)),
@@ -191,6 +344,31 @@ class _AddDoctorState extends State<AddDoctor> {
                                                               Navigator.pop(
                                                                   context);
                                                             });
+
+                                                            final snackBar =
+                                                                SnackBar(
+                                                              content: const Text(
+                                                                  'Docter Record Deleted Successfully'),
+                                                              backgroundColor:
+                                                                  const Color
+                                                                          .fromARGB(
+                                                                      255,
+                                                                      17,
+                                                                      90,
+                                                                      150),
+                                                              action:
+                                                                  SnackBarAction(
+                                                                label: 'close',
+                                                                onPressed: () {
+                                                                  // Some code to undo the change.
+                                                                },
+                                                              ),
+                                                            );
+
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                                    snackBar);
                                                           },
                                                           child: Text("Delete"))
                                                     ],
