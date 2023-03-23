@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:factory_management_ctse/hospitalManagementHome.dart';
+import 'package:factory_management_ctse/screens/authenticate/register.dart';
 import 'package:factory_management_ctse/services/auth.dart';
 import 'package:factory_management_ctse/services/database.dart';
 import 'package:factory_management_ctse/shared/loading.dart';
@@ -12,8 +14,8 @@ import '../../docter_home/add_docter_info.dart';
 import '../../shared/constants.dart';
 
 class SignIn extends StatefulWidget {
-  final Function toggleView;
-  SignIn({required this.toggleView});
+  //final Function toggleView;
+  //SignIn();
   @override
   _SignInState createState() => _SignInState();
 }
@@ -48,15 +50,23 @@ class _SignInState extends State<SignIn> {
               elevation: 0.0,
               title: Text('Sign in'),
               actions: <Widget>[
-                TextButton(
-                  style: flatButtonStyle,
+                TextButton.icon(
                   onPressed: () {
-                    print('Register');
-                    widget.toggleView();
-                    //service.signOut();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Register()));
                   },
-                  child: Icon(Icons.person),
-                )
+                  icon: Icon(
+                    // <-- Icon
+                    Icons.person_add,
+                    color: Colors.white,
+
+                    size: 24.0,
+                  ),
+                  label: Text(
+                    'Sign Up',
+                    style: TextStyle(color: Colors.white),
+                  ), // <-- Text
+                ),
               ],
             ),
             body: Container(
@@ -152,6 +162,17 @@ class _SignInState extends State<SignIn> {
                       ),
                       Text(error,
                           style: TextStyle(color: Colors.red, fontSize: 14.0)),
+                      Container(
+                        width: window.physicalSize.width / 2,
+                        height: window.physicalSize.height / 3,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('Doctors-pana.png'),
+                            fit: BoxFit.fill,
+                          ),
+                          shape: BoxShape.rectangle,
+                        ),
+                      )
                     ],
                   ),
                 )),

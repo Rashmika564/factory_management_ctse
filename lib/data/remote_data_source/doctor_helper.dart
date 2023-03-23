@@ -15,10 +15,14 @@ class DoctorHelper {
     final docRef = doctorCollection.doc(did);
 
     final newDoctor = DoctorModel(
-      id: did,
-      fullname: doctor.fullname,
-      age: doctor.age,
-    ).toJson();
+            id: did,
+            fullname: doctor.fullname,
+            age: doctor.age,
+            doctorcategory: doctor.doctorcategory,
+            mobilenumber: doctor.mobilenumber,
+            livingaddress: doctor.livingaddress,
+            noofassignednurses: doctor.noofassignednurses)
+        .toJson();
 
     try {
       await docRef.set(newDoctor);
@@ -33,10 +37,14 @@ class DoctorHelper {
     final docRef = doctorCollection.doc(doctor.id);
 
     final updateDoctorRec = DoctorModel(
-      id: doctor.id,
-      fullname: doctor.fullname,
-      age: doctor.age,
-    ).toJson();
+            id: doctor.id,
+            fullname: doctor.fullname,
+            age: doctor.age,
+            doctorcategory: doctor.doctorcategory,
+            mobilenumber: doctor.mobilenumber,
+            livingaddress: doctor.livingaddress,
+            noofassignednurses: doctor.noofassignednurses)
+        .toJson();
 
     try {
       await docRef.update(updateDoctorRec);
