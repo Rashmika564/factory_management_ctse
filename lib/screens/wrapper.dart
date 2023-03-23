@@ -4,6 +4,8 @@ import 'package:factory_management_ctse/screens/authenticate/authenticate.dart';
 import 'package:factory_management_ctse/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
+import '../appoinment_home/add_appoinment_info.dart';
+import '../appoinment_home/appoinment_list.dart';
 import '../services/auth.dart';
 
 class Wrapper extends StatelessWidget {
@@ -16,7 +18,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return Authenticate();
     } else {
-      return HospitalManagement();
+      return AddAppoinment();
     }
 
     // return Container(
