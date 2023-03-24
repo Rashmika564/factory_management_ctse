@@ -113,12 +113,34 @@ class _EditDocterInfoState extends State<EditDocterInfo> {
             key: _formKey,
             child: Column(
               children: [
+                Container(
+                  width: window.physicalSize.width / 2.2,
+                  height: window.physicalSize.height / 5,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('green2.png'),
+                      fit: BoxFit.fill,
+                    ),
+                    shape: BoxShape.rectangle,
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
                 TextFormField(
                   validator: (val) =>
                       val!.isEmpty ? 'Full Name Cant be empty' : null,
                   controller: _fullnamecontroller,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), hintText: "full Name"),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(width: 1.5)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 17, 90, 150),
+                              width: 1.5)),
+                      hintText: "full Name"),
                 ),
                 SizedBox(
                   height: 10,
@@ -127,7 +149,15 @@ class _EditDocterInfoState extends State<EditDocterInfo> {
                   validator: (val) => val!.isEmpty ? 'age cant be empty' : null,
                   controller: _agecontroller,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Age"),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(width: 1.5)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 17, 90, 150),
+                              width: 1.5)),
+                      hintText: "Age"),
                 ),
                 SizedBox(
                   height: 10,
@@ -157,7 +187,15 @@ class _EditDocterInfoState extends State<EditDocterInfo> {
                       val!.isEmpty ? 'mobile number cant be empty' : null,
                   controller: _mobilenumbercontroller,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Mobile Number"),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(width: 1.5)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 17, 90, 150),
+                              width: 1.5)),
+                      hintText: "Mobile Number"),
                 ),
                 SizedBox(
                   height: 10,
@@ -167,7 +205,15 @@ class _EditDocterInfoState extends State<EditDocterInfo> {
                       val!.isEmpty ? 'Living Addresss cant be empty' : null,
                   controller: _livingaddresscontroller,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Living Address"),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(width: 1.5)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 17, 90, 150),
+                              width: 1.5)),
+                      hintText: "Living Address"),
                 ),
                 SizedBox(
                   height: 10,
@@ -177,7 +223,14 @@ class _EditDocterInfoState extends State<EditDocterInfo> {
                       val!.isEmpty ? 'Number Of Nurses cant be empty' : null,
                   controller: _noofnursescontroller,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(width: 1.5)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 17, 90, 150),
+                              width: 1.5)),
                       hintText: "No of Assigned Nurses"),
                 ),
                 SizedBox(
@@ -214,8 +267,8 @@ class _EditDocterInfoState extends State<EditDocterInfo> {
                     }
                   },
                   child: Container(
-                    width: 100,
-                    height: 30,
+                    width: 330,
+                    height: 34,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.green),
@@ -237,20 +290,6 @@ class _EditDocterInfoState extends State<EditDocterInfo> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 8,
-                ),
-                Container(
-                  width: window.physicalSize.width / 2,
-                  height: window.physicalSize.height / 4.3,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('Doctors-bro.png'),
-                      fit: BoxFit.fill,
-                    ),
-                    shape: BoxShape.rectangle,
-                  ),
-                )
               ],
             ),
           ),

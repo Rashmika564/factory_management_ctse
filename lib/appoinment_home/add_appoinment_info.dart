@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:factory_management_ctse/appoinment_home/appoinment_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+//import 'package:flutter_svg/svg.dart';
 import '../data/models/apponment_model.dart';
 import '../data/remote_data_source/appoinment_helper.dart';
 import '../services/auth.dart';
@@ -72,9 +73,13 @@ class _AddAppoinmentState extends State<AddAppoinment> {
         ),
         body: Stack(
           fit: StackFit.expand,
-          children: 
-            [
-              Form(
+          children: [
+            //     SvgPicture.asset(
+            //   "assets/images/Sign_Up_bg.svg",
+            //   height: MediaQuery.of(context).size.height,
+            //   // Now it takes 100% of our height
+            // ),
+            Form(
               key: _formKey,
               child: Column(
                 children: [
@@ -115,7 +120,8 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const AppoinmentList()));
+                                  builder: (context) =>
+                                      const AppoinmentList()));
                         }),
                   ),
                   // const Schedule(),
@@ -131,8 +137,8 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   ),
                   
                   Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),
@@ -163,14 +169,13 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                                 child: Text("data Loaded"),
                               );
                             }),
-                       
                       ] // dropdown below..
 
                           )),
 
                   Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),
@@ -178,8 +183,8 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                       child: Row(children: <Widget>[
                         DropdownButton<String>(
                           value: selectedValue,
-                          onChanged: (newValue) =>
-                              setState(() => selectedValue = newValue as String),
+                          onChanged: (newValue) => setState(
+                              () => selectedValue = newValue as String),
                           items: items
                               .map<DropdownMenuItem<String>>(
                                   (String value) => DropdownMenuItem<String>(
