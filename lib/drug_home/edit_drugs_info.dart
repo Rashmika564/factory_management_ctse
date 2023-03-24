@@ -1,38 +1,41 @@
-import 'package:factory_management_ctse/data/models/apponment_model.dart';
-import 'package:factory_management_ctse/data/remote_data_source/appoinment_helper.dart';
+import 'package:factory_management_ctse/data/models/drugs_model.dart';
+import 'package:factory_management_ctse/data/remote_data_source/drug_helper.dart';
 import 'package:flutter/material.dart';
 
-class EditAppoinmentnfo extends StatefulWidget {
-  final AppoinmentModel appoinment;
-  const EditAppoinmentnfo({Key? key, required this.appoinment}) : super(key: key);
+class EditDruginfo extends StatefulWidget {
+  final DrugsModel drug;
+  const EditDruginfo({Key? key, required this.drug}) : super(key: key);
 
   @override
-  State<EditAppoinmentnfo> createState() => _EditAppoinmentnfoState();
+  State<EditDruginfo> createState() => _EditDruginfoState();
 }
 
-class _EditAppoinmentnfoState extends State<EditAppoinmentnfo> {
-  TextEditingController? _doctorNamecontroller;
-  TextEditingController? _hospitalNamecontroller;
-  TextEditingController? _datecontroller;
-  TextEditingController? _resoncontroller;
+class _EditDruginfoState extends State<EditDruginfo> {
+  TextEditingController? _drCodecontroller;
+  TextEditingController? _drNamecontroller;
+  TextEditingController? _unitPriceontroller;
+  TextEditingController? _drCategorycontroller;
+  TextEditingController? _drStatuscontroller;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    _doctorNamecontroller = TextEditingController(text: widget.appoinment.doctorName);
-    _hospitalNamecontroller = TextEditingController(text: widget.appoinment.hospitalName);
-    _datecontroller = TextEditingController(text: widget.appoinment.date);
-    _resoncontroller = TextEditingController(text: widget.appoinment.reson);
+    _drCodecontroller = TextEditingController(text: widget.drug.drCode);
+    _drNamecontroller = TextEditingController(text: widget.drug.drName);
+    _unitPriceontroller = TextEditingController(text: widget.drug.unitPrice);
+    _drCategorycontroller = TextEditingController(text: widget.drug.drCategory);
+    _drStatuscontroller = TextEditingController(text: widget.drug.drStatus);
     //init state
     super.initState();
   }
 
   @override
   void dispose() {
-    _doctorNamecontroller!.dispose();
-    _hospitalNamecontroller!.dispose();
-    _datecontroller!.dispose();
-    _resoncontroller!.dispose();
+    _drCodecontroller!.dispose();
+    _drNamecontroller!.dispose();
+    _unitPriceontroller!.dispose();
+    _drCategorycontroller!.dispose();
+    _drStatuscontroller!.dispose();
     super.dispose();
   }
 
@@ -41,7 +44,7 @@ class _EditAppoinmentnfoState extends State<EditAppoinmentnfo> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Edit Appoinment Info"),
+          title: const Text("Edit Drug Info"),
           backgroundColor: const Color.fromARGB(255, 17, 90, 150),
           elevation: 0.0,
         ),
@@ -52,45 +55,54 @@ class _EditAppoinmentnfoState extends State<EditAppoinmentnfo> {
             child: Column(
               children: [
                 TextFormField(
-                  controller: _hospitalNamecontroller,
+                  controller: _drNamecontroller,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Hospital"),
+                      border: OutlineInputBorder(), hintText: "Drug Name"),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
-                  controller: _doctorNamecontroller,
+                  controller: _drCodecontroller,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Doctor Name"),
+                      border: OutlineInputBorder(), hintText: "Drug Code"),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
-                  controller: _datecontroller,
+                  controller: _unitPriceontroller,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Date"),
+                      border: OutlineInputBorder(), hintText: "Unit Price"),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
-                  controller: _resoncontroller,
+                  controller: _drCategorycontroller,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Reson for appoinment"),
+                      border: OutlineInputBorder(), hintText: "Drug Category"),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: _drStatuscontroller,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), hintText: "Drug Status"),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 InkWell(
                   onTap: () {
-                    AppoinmentHelper.update(AppoinmentModel(
-                            id: widget.appoinment.id,
-                            hospitalName: _hospitalNamecontroller!.text,
-                            doctorName: _doctorNamecontroller!.text, 
-                            date: _datecontroller!.text, 
-                            reson: _resoncontroller!.text, 
+                    DrugHelper.update(DrugsModel(
+                            id: widget.drug.id,
+                            drCode: _drCodecontroller!.text,
+                            drName: _drNamecontroller!.text,
+                            unitPrice: _unitPriceontroller!.text,
+                            drCategory: _drCategorycontroller!.text,
+                            drStatus: _drStatuscontroller!.text
                             ))
                         .then((value) {
                       Navigator.pop(context);

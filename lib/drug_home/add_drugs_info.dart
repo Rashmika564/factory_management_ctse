@@ -1,13 +1,10 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:factory_management_ctse/appoinment_home/appoinment_list.dart';
 import 'package:factory_management_ctse/data/models/drugs_model.dart';
 import 'package:factory_management_ctse/data/remote_data_source/drug_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../data/models/drugs_model.dart';
-import '../data/remote_data_source/drug_helper.dart';
+import '../constants.dart';
 import '../services/auth.dart';
-import 'package:intl/intl.dart';
+import 'drugs_list.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   // ignore: deprecated_member_use
@@ -33,8 +30,9 @@ class _AddDrugsState extends State<AddDrugs> {
   final TextEditingController _unitPriceontroller = TextEditingController();
   final TextEditingController _drCategorycontroller = TextEditingController();
   final TextEditingController _drStatuscontroller = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  List<String> items = [
+  List<String> drugcategories = [
     'Item1',
     'Item2',
     'Item3',
@@ -43,7 +41,6 @@ class _AddDrugsState extends State<AddDrugs> {
   String? selectedValue;
 
   final AuthService service = AuthService();
-  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -86,9 +83,13 @@ class _AddDrugsState extends State<AddDrugs> {
                   height: 300.0,
                   decoration: const BoxDecoration(
                       color: Colors.yellow,
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/onlinedoctorbro.png"),
+                        fit: BoxFit.cover,
+                      ),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(250),
-                        bottomRight: Radius.circular(250),
+                        bottomRight: Radius.circular(0),
                       )),
                 ),
                 const SizedBox(height: 20.0),
@@ -99,7 +100,7 @@ class _AddDrugsState extends State<AddDrugs> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
                 const SizedBox(height: 10.0),
-                const Text("Book Your Doctor Appoinment Hear",
+                const Text("Add Drug",
                     style: TextStyle(fontSize: 16.0, color: Colors.black)),
                 const SizedBox(height: 20.0),
                 Align(
@@ -115,128 +116,116 @@ class _AddDrugsState extends State<AddDrugs> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const AppoinmentList()));
+                                builder: (context) => const DrugsList()));
                       }),
                 ),
                 // const Schedule(),
                 const SizedBox(height: 30.0),
                 // const Image(image: AssetImage('graphics/background.png')),
                 TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Drug Name Cant be empty' : null,
                   controller: _drNamecontroller,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Hospital"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: _drCodecontroller,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Doctor Name"),
-                ),
-                DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                    hint: Text(
-                      'Select Item',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                      ),
+                    hintText: "Drug Name",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
                     ),
-                    items: items
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ))
-                        .toList(),
-                    value: selectedValue,
-                    onChanged: (value) {
-                      // setState(() {
-                      selectedValue = value as String?;
-                      // });
-                    },
                   ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
-                  controller:
-                      _unitPriceontroller, //editing controller of this TextField
+                  validator: (val) =>
+                      val!.isEmpty ? 'Drug Code Cant be empty' : null,
+                  controller: _drCodecontroller,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
-                      icon: Icon(Icons.calendar_today), //icon of text field
-                      labelText: "Enter Date" //label text of field
-                      ),
-                  readOnly:
-                      true, //set it true, so that user will not able to edit text
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(
-                            2000), //DateTime.now() - not to allow to choose before today.
-                        lastDate: DateTime(2101));
-
-                    if (pickedDate != null) {
-                      if (kDebugMode) {
-                        print(pickedDate);
-                      } //pickedDate output format => 2021-03-10 00:00:00.000
-                      String formattedDate =
-                          DateFormat('yyyy-MM-dd').format(pickedDate);
-                      if (kDebugMode) {
-                        print(formattedDate);
-                      } //formatted date output using intl package =>  2021-03-16
-                      //you can implement different kind of Date Format here according to your requirement
-
-                      setState(() {
-                        _unitPriceontroller.text =
-                            formattedDate; //set output date to TextField value.
-                      });
-                    } else {
-                      if (kDebugMode) {
-                        print("Date is not selected");
-                      }
-                    }
-                  },
+                    hintText: "Drug Code",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
-                  controller: _drCategorycontroller,
-                  minLines:
-                      6, // any number you need (It works as the rows for the textarea)
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
+                  validator: (val) =>
+                      val!.isEmpty ? 'Unit Price Cant be empty' : null,
+                  controller: _unitPriceontroller,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Reson for appoinment"),
+                    hintText: "Unit Price",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (value) =>
+                      value!.isEmpty ? 'Drug Category Cant be empty' : null,
+                  controller: _drCategorycontroller,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Drug Category",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Drug Status Cant be empty' : null,
+                  controller: _drStatuscontroller,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Drug Status",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 InkWell(
                   onTap: () {
-                    if (kDebugMode) {
-                      print("Create Data");
-                    }
-                    //_create();
-                    DrugHelper.create(DrugsModel(
-                        drCode: _drCodecontroller.text,
-                        drName: _drNamecontroller.text,
-                        unitPrice: _unitPriceontroller.text,
-                        drCategory: _drCategorycontroller.text,
-                        drStatus: _drStatuscontroller.text));
+                    if (_formKey.currentState!.validate()) {
+                      if (kDebugMode) {
+                        print("Create Data");
+                      }
+                      //_create();
+                      DrugHelper.create(DrugsModel(
+                          drCode: _drCodecontroller.text,
+                          drName: _drNamecontroller.text,
+                          unitPrice: _unitPriceontroller.text,
+                          drCategory: _drCategorycontroller.text,
+                          drStatus: _drStatuscontroller.text));
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AppoinmentList()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const DrugsList()));
+                    }
                   },
                   child: Container(
                     width: 100,

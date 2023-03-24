@@ -1,31 +1,13 @@
 import 'package:factory_management_ctse/screens/wrapper.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'package:firebase_core/firebase_core.dart';
+import 'constants.dart';
 
-const primaryColor = Color(0xFF255ED6);
-const textColor = Color(0xFF35364F);
-const backgroundColor = Color(0xFFE6EFF9);
-const redColor = Color(0xFFE85050);
+void main() => runApp(MyApp());
 
-const defaultPadding = 16.0;
-
-OutlineInputBorder textFieldBorder = OutlineInputBorder(
-  borderSide: BorderSide(
-    color: primaryColor.withOpacity(0.1),
-  ),
-);
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  runApp(MyApp());
-}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-
   final Future<FirebaseApp> _initialization = Firebase.initializeApp(
       options: const FirebaseOptions(
     apiKey: 'AIzaSyBAjsk73MKqixM6TE3oYNC0rz6I96_jNKo',
@@ -34,14 +16,16 @@ class MyApp extends StatelessWidget {
     projectId: 'fir-ctse',
   ));
 
-  //FirebaseAuth auth = FirebaseAuth.instance;
+  // const MyApp({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _initialization,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return MaterialApp(
+          return const MaterialApp(
             home: Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),
@@ -61,22 +45,30 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Hospital Management',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
-            primaryColor: primaryColor,
-            textTheme:
-                Theme.of(context).textTheme.apply(displayColor: textColor),
-            elevatedButtonTheme: ElevatedButtonThemeData(
-              style: TextButton.styleFrom(
-                backgroundColor: primaryColor,
-                padding: EdgeInsets.all(defaultPadding),
+              primarySwatch: Colors.blue,
+              primaryColor: const Color(0xFFF1E6FF),
+              textTheme:
+                  Theme.of(context).textTheme.apply(displayColor: const Color(0)),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  elevation: 0, backgroundColor: kPrimaryColor,
+                  shape: const StadiumBorder(),
+                  maximumSize: const Size(double.infinity, 56),
+                  minimumSize: const Size(double.infinity, 56),
+                ),
               ),
-            ),
-            inputDecorationTheme: InputDecorationTheme(
-              border: textFieldBorder,
-              enabledBorder: textFieldBorder,
-              focusedBorder: textFieldBorder,
-            ),
-          ),
+              inputDecorationTheme: const InputDecorationTheme(
+                filled: true,
+                fillColor: Color(0xFFF1E6FF),
+                iconColor: Color(0xFF6F35A5),
+                prefixIconColor: Color(0xFF6F35A5),
+                contentPadding: EdgeInsets.symmetric(
+                    horizontal: defaultPadding, vertical: defaultPadding),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  borderSide: BorderSide.none,
+                ),
+              )),
           home: Wrapper(),
         );
       },

@@ -2,11 +2,15 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:factory_management_ctse/appoinment_home/appoinment_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+//import 'package:flutter_svg/svg.dart';
+import '../constants.dart';
 import '../data/models/apponment_model.dart';
 import '../data/remote_data_source/appoinment_helper.dart';
+import '../main.dart';
 import '../services/auth.dart';
 import 'package:intl/intl.dart';
+
+import '../shared/constants.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   // ignore: deprecated_member_use
@@ -70,14 +74,13 @@ class _AddAppoinmentState extends State<AddAppoinment> {
         ),
         body: Stack(
           fit: StackFit.expand,
-          children: 
-            [
-              SvgPicture.asset(
-            "assets/images/Sign_Up_bg.svg",
-            height: MediaQuery.of(context).size.height,
-            // Now it takes 100% of our height
-          ),
-              Form(
+          children: [
+            //     SvgPicture.asset(
+            //   "assets/images/Sign_Up_bg.svg",
+            //   height: MediaQuery.of(context).size.height,
+            //   // Now it takes 100% of our height
+            // ),
+            Form(
               key: _formKey,
               child: Column(
                 children: [
@@ -86,12 +89,12 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                     decoration: const BoxDecoration(
                         color: Colors.yellow,
                         image: DecorationImage(
-                          image: AssetImage("assets/images/doctorstes.jpg"),
+                          image: AssetImage("assets/images/onlinedoctorbro.png"),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(250),
-                          bottomRight: Radius.circular(250),
+                          bottomRight: Radius.circular(0),
                         )),
                   ),
                   const SizedBox(height: 20.0),
@@ -118,138 +121,56 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const AppoinmentList()));
+                                  builder: (context) =>
+                                      const AppoinmentList()));
                         }),
                   ),
                   // const Schedule(),
                   const SizedBox(height: 30.0),
-                  // const Image(image: AssetImage('graphics/background.png')),
                   TextFormField(
                     controller: _hospitalNamecontroller,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
-                        border: OutlineInputBorder(), hintText: "Hospital"),
+                      hintText: "Hospital",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  // TextFormField(
-                  //   controller: _doctorNamecontroller,
-                  //   decoration: const InputDecoration(
-                  //       border: OutlineInputBorder(), hintText: "Doctor Name"),
-                  // ),
-                  // DropdownButtonHideUnderline(
-                  //   child: DropdownButton2<String>(
-
-                  //     hint: Text(
-                  //       'Select Doctor',
-                  //       style: TextStyle(
-                  //         fontSize: 14,
-                  //         color: Theme.of(context).hintColor,
-                  //       ),
-                  //     ),
-                  //     items: items
-                  //         .map((item) => DropdownMenuItem<String>(
-                  //               value: item,
-                  //               child: Text(
-                  //                 item,
-                  //                 style: const TextStyle(
-                  //                   fontSize: 14,
-                  //                 ),
-                  //               ),
-                  //             ))
-                  //         .toList(),
-                  //     value: selectedValue,
-                  //     onChanged: (value) {
-                  //       // setState(() {
-                  //         selectedValue = value;
-                  //       // });
-                  //     },
-                  //   ),
-                  // ),
-
-                  // DropdownButton(items: _items.map((e) => DropdownMenuItem(child: Text(e),value: e,)).toList(),
-                  // onChanged: (val) { setState(() {
-                  //   selectedValue = val as String;
-                  // });
-                  // }),
-                  Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
-                      width: 100,
-                      child: Row(children: <Widget>[
-                        StreamBuilder<List<AppoinmentModel>>(
-                            stream: AppoinmentHelper.read(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                              if (snapshot.hasError) {
-                                return const Center(
-                                  child: Text("Some error occured"),
-                                );
-                              }
-                              if (snapshot.hasData) {
-                                final appoinmentData = snapshot.data;
-                                for (var i = 0; i < 2; i++) {
-                                  items.add(
-                                      appoinmentData![i].doctorName.toString());
-                                }
-                              }
-                              return const Center(
-                                child: Text("data Loaded"),
-                              );
-                            }),
-                       
-                      ] // dropdown below..
-
-                          )),
-
-                  Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
-                      width: 100,
-                      child: Row(children: <Widget>[
-                        DropdownButton<String>(
-                          value: selectedValue,
-                          onChanged: (newValue) =>
-                              setState(() => selectedValue = newValue as String),
-                          items: items
-                              .map<DropdownMenuItem<String>>(
-                                  (String value) => DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      ))
-                              .toList(),
-
-                          // add extra sugar..
-                          icon: const Icon(Icons.arrow_drop_down),
-                          iconSize: 42,
-                          underline: const SizedBox(),
-                        ),
-                      ] // dropdown below..
-
-                          )),
-                  const SizedBox(
+                  TextFormField(
+                    controller: _doctorNamecontroller,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Doctor Name",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
+                  ),
+                   const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
                     controller:
                         _datecontroller, //editing controller of this TextField
-                    decoration: const InputDecoration(
-                        icon: Icon(Icons.calendar_today), //icon of text field
-                        labelText: "Enter Date" //label text of field
-                        ),
                     readOnly:
-                        true, //set it true, so that user will not able to edit text
+                        true,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Enter Date",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.calendar_today),
+                      ),
+                    ), //set it true, so that user will not able to edit text
                     onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
                           context: context,
@@ -286,12 +207,16 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   TextFormField(
                     controller: _resoncontroller,
                     minLines:
-                        6, // any number you need (It works as the rows for the textarea)
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
+                        4, // any number you need (It works as the rows for the textarea)
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Reson for appoinment"),
+                      hintText: "Reson For Appoinment",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
