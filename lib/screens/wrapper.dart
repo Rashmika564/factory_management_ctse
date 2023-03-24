@@ -1,5 +1,7 @@
 import 'package:factory_management_ctse/docter_home/add_docter_info.dart';
 import 'package:factory_management_ctse/hospitalManagementHome.dart';
+import 'package:factory_management_ctse/screens/Login/login_screen.dart';
+import 'package:factory_management_ctse/screens/Welcome/welcome_screen.dart';
 import 'package:factory_management_ctse/screens/authenticate/authenticate.dart';
 import 'package:factory_management_ctse/screens/home/home.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +18,10 @@ class Wrapper extends StatelessWidget {
     final user = AuthService().user;
 
     if (user == null) {
-      return Authenticate();
+      //return Authenticate();
+      return WelcomeScreen();
     } else {
-      return AddAppoinment();
+      return WelcomeScreen();
     }
 
     // return Container(
