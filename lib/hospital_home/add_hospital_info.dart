@@ -5,11 +5,13 @@ import 'package:factory_management_ctse/data/models/hospital_model.dart';
 import 'package:factory_management_ctse/data/remote_data_source/hospital_helper.dart';
 import 'package:factory_management_ctse/hospital_home/edit_hospital_info.dart';
 import 'package:factory_management_ctse/hospitalManagementHome.dart';
+import 'package:factory_management_ctse/hospital_home/list_hospital.dart';
 import 'package:factory_management_ctse/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
 //import '../data/models/hospital_model.dart';
 //import '../data/remote_data_source/hospital_helper.dart';
+import '../constants.dart';
 import '../services/auth.dart';
 import '../shared/constants.dart';
 
@@ -74,287 +76,205 @@ class _AddHospitalState extends State<AddHospital> {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => SignIn()));
               },
-              icon: Icon(
+              icon: const Icon(
                 // <-- Icon
                 Icons.person_remove,
                 color: Colors.white,
 
                 size: 24.0,
               ),
-              label: Text(
+              label: const Text(
                 'Log out Account',
                 style: TextStyle(color: Colors.white),
               ), // <-- Text
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
+        body: SingleChildScrollView(
           child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  validator: (val) =>
-                      val!.isEmpty ? 'Hospital Name cannot be empty' : null,
-                  controller: _hospitalnamecontroller,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Add Hospital Name"),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                DropdownButtonFormField(
-                  validator: (value) =>
-                      value!.toString() == 'Select the Hospital Location'
-                          ? 'Branch Cant be empty'
-                          : null,
-                  decoration: textInputDecoration,
-                  value: hospitalbranch,
-                  items: categories.map((c) {
-                    return DropdownMenuItem(
-                      value: c,
-                      child: Text(c),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    // print(value);
-                    hospitalbranch = value as String?;
-                    // setState(() => doctorcategory = value as String?);
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  validator: (val) =>
-                      val!.isEmpty ? 'Hospital Address cannot be empty' : null,
-                  controller: _hospitaladdresscontroller,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Hospital Address"),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  validator: (val) =>
-                      val!.isEmpty ? 'Telephone Number cannot be empty' : null,
-                  controller: _telephonecontroller,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Telephone Number cannot be empty"),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                InkWell(
-                  onTap: () {
-                    print("Create Hospital");
-                    if (_formKey.currentState!.validate()) {
-//_create();
-                      HospitalHelper.create(HospitalModel(
-                          hospitalname: _hospitalnamecontroller.text,
-                          hospitalbranch: hospitalbranch,
-                          hospitaladdress: _hospitaladdresscontroller.text,
-                          telephone: _telephonecontroller.text));
-
-                      _hospitalnamecontroller.clear();
-                      _hospitaladdresscontroller.clear();
-                      _telephonecontroller.clear();
-
-                      // setState(() {
-                      hospitalbranch = 'Select the Hospital Location';
-
-                      // showDialog(
-                      //     context: context,
-                      //     builder: (context) {
-                      //       return AlertDialog(
-                      //         title: Text("Delete Confirm"),
-                      //         content: Text("Are You sure You want to delete"),
-                      //         actions: [
-                      //           ElevatedButton(
-                      //               onPressed: () {
-                      //                 Navigator.pop(context);
-                      //               },
-                      //               child: Text("Delete"))
-                      //         ],
-                      //       );
-                      //     });
-
-                      final snackBar = SnackBar(
-                        content:
-                            const Text('Hospital Branch Created Successfully'),
-                        backgroundColor: const Color.fromARGB(255, 17, 90, 150),
-                        action: SnackBarAction(
-                          label: 'Close',
-                          onPressed: () {
-                            // Some code to undo the change.
-                          },
-                        ),
-                      );
-
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                  },
-                  child: Container(
-                    width: 100,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.green),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "Create",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
+          key: _formKey,
+          child: Column(
+            children: [
+              Container(
+                height: 300.0,
+                decoration: const BoxDecoration(
+                    color: Colors.yellow,
+                    image: DecorationImage(
+                      image:
+                          AssetImage("assets/images/onlinedoctorbro.png"),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(250),
+                      bottomRight: Radius.circular(0),
+                    )),
+              ),
+              const SizedBox(height: 20.0),
+              const Text("Welcome",
+                  style: TextStyle(
+                      fontSize: 24.0,
+                      letterSpacing: 1.5,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black)),
+              const SizedBox(height: 10.0),
+              const Text("Add Hospital From Hear",
+                  style: TextStyle(fontSize: 16.0, color: Colors.black)),
+              const SizedBox(height: 20.0),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                    child: const Text(
+                      "View all",
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Colors.black),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const HospitalList()));
+                    }),
+              ),
+              // const Schedule(),
+              const SizedBox(height: 30.0),
+              TextFormField(
+                validator: (val) =>
+                    val!.isEmpty ? 'Hospital Name cannot be empty' : null,
+                controller: _hospitalnamecontroller,
+                keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Hospital Name",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                StreamBuilder<List<HospitalModel>>(
-                    stream: HospitalHelper.read(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (snapshot.hasError) {
-                        return Center(
-                          child: Text("Some error occured"),
-                        );
-                      }
-                      if (snapshot.hasData) {
-                        final hospitaldata = snapshot.data;
-                        return Expanded(
-                          child: ListView.builder(
-                            itemCount: hospitaldata!.length,
-                            itemBuilder: (context, Index) {
-                              final singlehospital = hospitaldata[Index];
-                              return Container(
-                                margin: EdgeInsets.symmetric(vertical: 5),
-                                child: ListTile(
-                                    leading: CircleAvatar(
-                                      radius: 22.0,
-                                      backgroundColor: Colors.green,
-                                      backgroundImage: AssetImage('images.png'),
-                                    ),
-                                    title:
-                                        Text("${singlehospital.hospitalname}"),
-                                    subtitle:
-                                        Text("${singlehospital.telephone}"),
-                                    trailing: Column(
-                                      children: [
-                                        InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          EditHospitalInfo(
-                                                            hospital: HospitalModel(
-                                                                hospitalname:
-                                                                    singlehospital
-                                                                        .hospitalname,
-                                                                hospitalbranch:
-                                                                    singlehospital
-                                                                        .hospitalbranch,
-                                                                id: singlehospital
-                                                                    .id,
-                                                                hospitaladdress:
-                                                                    singlehospital
-                                                                        .hospitaladdress,
-                                                                telephone:
-                                                                    singlehospital
-                                                                        .telephone),
-                                                          )));
-                                            },
-                                            child: Icon(Icons.edit)),
-                                        // SizedBox(
-                                        //   height: 0.5,
-                                        // ),
-                                        InkWell(
-                                          onTap: () {
-                                            //call your onpressed function here
-                                            print('Button Pressed');
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    title:
-                                                        Text("Delete Confirm"),
-                                                    content: Text(
-                                                        "Are You sure You want to delete"),
-                                                    actions: [
-                                                      ElevatedButton(
-                                                          onPressed: () {
-                                                            HospitalHelper.delete(
-                                                                    singlehospital)
-                                                                .then((value) {
-                                                              Navigator.pop(
-                                                                  context);
-                                                            });
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              DropdownButtonFormField(
+                validator: (value) =>
+                    value!.toString() == 'Select the Hospital Location'
+                        ? 'Branch Cant be empty'
+                        : null,
+                decoration: textInputDecoration,
+                value: hospitalbranch,
+                items: categories.map((c) {
+                  return DropdownMenuItem(
+                    value: c,
+                    child: Text(c),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  // print(value);
+                  hospitalbranch = value as String?;
+                  // setState(() => doctorcategory = value as String?);
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                validator: (val) =>
+                    val!.isEmpty ? 'Hospital Address cannot be empty' : null,
+                controller: _hospitaladdresscontroller,
+                keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Hospital Address",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
+                    ),
+                  ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                validator: (val) =>
+                    val!.isEmpty ? 'Telephone Number cannot be empty' : null,
+                controller: _telephonecontroller,
+                decoration: const InputDecoration(
+                    hintText: "Telephone Number",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
+                    ),
+                  ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              InkWell(
+                onTap: () {
+                  print("Create Hospital");
+                  if (_formKey.currentState!.validate()) {
 
-                                                            final snackBar =
-                                                                SnackBar(
-                                                              content: const Text(
-                                                                  'Hospital Record Deleted Successfully'),
-                                                              backgroundColor:
-                                                                  const Color
-                                                                          .fromARGB(
-                                                                      255,
-                                                                      17,
-                                                                      90,
-                                                                      150),
-                                                              action:
-                                                                  SnackBarAction(
-                                                                label: 'close',
-                                                                onPressed: () {
-                                                                  // Some code to undo the change.
-                                                                },
-                                                              ),
-                                                            );
+                    HospitalHelper.create(HospitalModel(
+                        hospitalname: _hospitalnamecontroller.text,
+                        hospitalbranch: hospitalbranch,
+                        hospitaladdress: _hospitaladdresscontroller.text,
+                        telephone: _telephonecontroller.text));
 
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                                    snackBar);
-                                                          },
-                                                          child: Text("Delete"))
-                                                    ],
-                                                  );
-                                                });
-                                          },
-                                          child: Icon(Icons.delete),
-                                        ),
-                                      ],
-                                    )),
-                              );
-                            },
-                          ),
-                        );
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    })
-              ],
-            ),
+                    _hospitalnamecontroller.clear();
+                    _hospitaladdresscontroller.clear();
+                    _telephonecontroller.clear();
+
+                 
+                    hospitalbranch = 'Select the Hospital Location';
+
+                  
+
+                    final snackBar = SnackBar(
+                      content:
+                          const Text('Hospital Branch Created Successfully'),
+                      backgroundColor: const Color.fromARGB(255, 17, 90, 150),
+                      action: SnackBarAction(
+                        label: 'Close',
+                        onPressed: () {
+                          // Some code to undo the change.
+                        },
+                      ),
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+                child: Container(
+                  width: 100,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.green),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "Create",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
           ),
+            ),
         ),
       ),
     );

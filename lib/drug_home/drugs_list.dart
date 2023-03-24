@@ -90,14 +90,14 @@ class _DrugsListState extends State<DrugsList> {
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
                     const SizedBox(height: 10.0),
-                    const Text("See Your Upcoming Appoinment",
+                    const Text("See Drug List",
                         style: TextStyle(fontSize: 16.0, color: Colors.black)),
                     const SizedBox(height: 20.0),
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
                           child: const Text(
-                            "Add New Appoinment",
+                            "Add New Drug",
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 color: Colors.black),

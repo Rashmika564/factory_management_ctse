@@ -76,8 +76,8 @@ class _SignInState extends State<SignIn> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        width: window.physicalSize.width / 2,
-                        height: window.physicalSize.height / 3,
+                        width: 300,
+                        height: 400,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('green.png'),
@@ -144,12 +144,9 @@ class _SignInState extends State<SignIn> {
                             }
                           }
                         },
-                        child: Container(
-                          width: 330,
-                          height: 34,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.green),
+                        child: ElevatedButton (
+                          
+                          onPressed: () {  },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

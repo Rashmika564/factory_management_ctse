@@ -36,8 +36,19 @@ class _AddAppoinmentState extends State<AddAppoinment> {
   final TextEditingController _datecontroller = TextEditingController();
   final TextEditingController _resoncontroller = TextEditingController();
 
-  List<String> items = [];
-  String selectedValue = 'Four';
+  List<String> items = [
+    'Select a Hospital',
+    'Asiri Hospital',
+    'Nawaloka Hospital'
+  ];
+  String selectedValue = 'Select a Hospital';
+
+   List<String> itemsdoctors = [
+    'Select a Doctor',
+    'Dr. Narampanawa',
+    'Dr. Amarasingha'
+  ];
+  String selectedValuedoctor = 'Select a Doctor';
 
   final AuthService service = AuthService();
   final _formKey = GlobalKey<FormState>();
@@ -72,216 +83,247 @@ class _AddAppoinmentState extends State<AddAppoinment> {
             ),
           ],
         ),
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            //     SvgPicture.asset(
-            //   "assets/images/Sign_Up_bg.svg",
-            //   height: MediaQuery.of(context).size.height,
-            //   // Now it takes 100% of our height
-            // ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Container(
-                    height: 300.0,
-                    decoration: const BoxDecoration(
-                        color: Colors.yellow,
-                        image: DecorationImage(
-                          image:
-                              AssetImage("assets/images/onlinedoctorbro.png"),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(250),
-                          bottomRight: Radius.circular(0),
-                        )),
-                  ),
-                  const SizedBox(height: 20.0),
-                  const Text("Welcome",
-                      style: TextStyle(
-                          fontSize: 24.0,
-                          letterSpacing: 1.5,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                  const SizedBox(height: 10.0),
-                  const Text("Book Your Doctor Appoinment Hear",
-                      style: TextStyle(fontSize: 16.0, color: Colors.black)),
-                  const SizedBox(height: 20.0),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                        child: const Text(
-                          "View all",
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: Colors.black),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const AppoinmentList()));
-                        }),
-                  ),
-                  // const Schedule(),
-                  const SizedBox(height: 30.0),
-                  TextFormField(
-                    validator: (val) =>
-                        val!.isEmpty ? 'Hospital Name Cant be empty' : null,
-                    controller: _hospitalNamecontroller,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Hospital",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.person),
+        body: SingleChildScrollView(
+          // fit: StackFit.expand,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  height: 300.0,
+                  decoration: const BoxDecoration(
+                      color: Colors.yellow,
+                      image: DecorationImage(
+                        image:
+                            AssetImage("assets/images/onlinedoctorbro.png"),
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    validator: (val) =>
-                        val!.isEmpty ? 'Doctor Name Cant be empty' : null,
-                    controller: _doctorNamecontroller,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Doctor Name",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.person),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(250),
+                        bottomRight: Radius.circular(0),
+                      )),
+                ),
+                const SizedBox(height: 20.0),
+                const Text("Welcome",
+                    style: TextStyle(
+                        fontSize: 24.0,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black)),
+                const SizedBox(height: 10.0),
+                const Text("Book Your Doctor Appoinment Hear",
+                    style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                const SizedBox(height: 20.0),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                      child: const Text(
+                        "View all",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    validator: (val) =>
-                        val!.isEmpty ? 'Date Name Cant be empty' : null,
-                    controller:
-                        _datecontroller, //editing controller of this TextField
-                    readOnly: true,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Enter Date",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.calendar_today),
-                      ),
-                    ), //set it true, so that user will not able to edit text
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(
-                              2000), //DateTime.now() - not to allow to choose before today.
-                          lastDate: DateTime(2101));
-
-                      if (pickedDate != null) {
-                        if (kDebugMode) {
-                          print(pickedDate);
-                        } //pickedDate output format => 2021-03-10 00:00:00.000
-                        String formattedDate =
-                            DateFormat('yyyy-MM-dd').format(pickedDate);
-                        if (kDebugMode) {
-                          print(formattedDate);
-                        } //formatted date output using intl package =>  2021-03-16
-                        //you can implement different kind of Date Format here according to your requirement
-
-                        setState(() {
-                          _datecontroller.text =
-                              formattedDate; //set output date to TextField value.
-                        });
-                      } else {
-                        if (kDebugMode) {
-                          print("Date is not selected");
-                        }
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: _resoncontroller,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Reson For Appinment",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.person),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        if (kDebugMode) {
-                          print("Create Data");
-                        }
-                        //_create();
-                        AppoinmentHelper.create(AppoinmentModel(
-                            doctorName: selectedValue,
-                            hospitalName: _hospitalNamecontroller.text,
-                            date: _datecontroller.text,
-                            reson: _resoncontroller.text));
-
-                        final snackBar = SnackBar(
-                          content:
-                              const Text('Apoinment Record Added Successfully'),
-                          backgroundColor: const Color.fromARGB(255, 17, 90, 150),
-                          action: SnackBarAction(
-                            label: 'close',
-                            onPressed: () {
-                              // Some code to undo the change.
-                            },
-                          ),
-                        );
-
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+                      onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const AppoinmentList()));
+                                builder: (context) =>
+                                    const AppoinmentList()));
+                      }),
+                ),
+                // const Schedule(),
+                const SizedBox(height: 30.0),
+                // TextFormField(
+                //   validator: (val) =>
+                //       val!.isEmpty ? 'Hospital Name Cant be empty' : null,
+                //   controller: _hospitalNamecontroller,
+                //   keyboardType: TextInputType.text,
+                //   textInputAction: TextInputAction.next,
+                //   decoration: const InputDecoration(
+                //     hintText: "Hospital",
+                //     prefixIcon: Padding(
+                //       padding: EdgeInsets.all(defaultPadding),
+                //       child: Icon(Icons.person),
+                //     ),
+                //   ),
+                // ),
+                DropdownButtonFormField(
+                  validator: (value) => value!.toString() == 'Select a Hospital'
+                      ? 'Hospital Cannot Be Empty'
+                      : null,
+                      
+                  decoration: textInputDecoration,
+                  value: selectedValue,
+                  items: items.map((c) {
+                    return DropdownMenuItem(
+                      value: c,
+                      child: Text(c),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    // print(value);
+                    selectedValue = (value as String?)!;
+                    // setState(() => doctorcategory = value as String?);
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                // TextFormField(
+                //   validator: (val) =>
+                //       val!.isEmpty ? 'Doctor Name Cant be empty' : null,
+                //   controller: _doctorNamecontroller,
+                //   keyboardType: TextInputType.text,
+                //   textInputAction: TextInputAction.next,
+                //   decoration: const InputDecoration(
+                //     hintText: "Doctor Name",
+                //     prefixIcon: Padding(
+                //       padding: EdgeInsets.all(defaultPadding),
+                //       child: Icon(Icons.person),
+                //     ),
+                //   ),
+                // ),
+                DropdownButtonFormField(
+                  validator: (value) => value!.toString() == 'Select a Doctor'
+                      ? 'Doctor Name Cannot Be Empty'
+                      : null,
+                      
+                  decoration: textInputDecoration,
+                  value: selectedValuedoctor,
+                  items: itemsdoctors.map((c) {
+                    return DropdownMenuItem(
+                      value: c,
+                      child: Text(c),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    // print(value);
+                    selectedValuedoctor = (value as String?)!;
+                    // setState(() => doctorcategory = value as String?);
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Date Name Cant be empty' : null,
+                  controller:
+                      _datecontroller, //editing controller of this TextField
+                  readOnly: true,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Enter Date",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.calendar_today),
+                    ),
+                  ), //set it true, so that user will not able to edit text
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(
+                            2000), //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(2101));
+
+                    if (pickedDate != null) {
+                      if (kDebugMode) {
+                        print(pickedDate);
+                      } //pickedDate output format => 2021-03-10 00:00:00.000
+                      String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                      if (kDebugMode) {
+                        print(formattedDate);
+                      } //formatted date output using intl package =>  2021-03-16
+                      //you can implement different kind of Date Format here according to your requirement
+
+                      setState(() {
+                        _datecontroller.text =
+                            formattedDate; //set output date to TextField value.
+                      });
+                    } else {
+                      if (kDebugMode) {
+                        print("Date is not selected");
                       }
-                    },
-                    child: Container(
-                      width: 100,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.yellow),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            "Book",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ],
-                      ),
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: _resoncontroller,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Reson For Appinment",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      if (kDebugMode) {
+                        print("Create Data");
+                      }
+                      //_create();
+                      AppoinmentHelper.create(AppoinmentModel(
+                          doctorName: selectedValuedoctor,
+                          hospitalName: selectedValue,
+                          date: _datecontroller.text,
+                          reson: _resoncontroller.text));
+
+                      final snackBar = SnackBar(
+                        content:
+                            const Text('Apoinment Record Added Successfully'),
+                        backgroundColor: const Color.fromARGB(255, 17, 90, 150),
+                        action: SnackBarAction(
+                          label: 'close',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AppoinmentList()));
+                    }
+                  },
+                  child: Container(
+                    width: 100,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.yellow),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Book",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

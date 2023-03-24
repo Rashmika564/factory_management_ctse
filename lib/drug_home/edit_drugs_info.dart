@@ -1,5 +1,6 @@
 import 'package:factory_management_ctse/data/models/drugs_model.dart';
 import 'package:factory_management_ctse/data/remote_data_source/drug_helper.dart';
+import 'package:factory_management_ctse/drug_home/drugs_list.dart';
 import 'package:flutter/material.dart';
 
 import '../shared/constants.dart';
@@ -71,12 +72,55 @@ class _EditDruginfoState extends State<EditDruginfo> {
           backgroundColor: const Color.fromARGB(255, 17, 90, 150),
           elevation: 0.0,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8),
+        body: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
               children: [
+                Container(
+                      height: 300.0,
+                      decoration: const BoxDecoration(
+                          color: Colors.yellow,
+                          image: DecorationImage(
+                            image:
+                                AssetImage("assets/images/onlinedoctorbro.png"),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(150),
+                            bottomRight: Radius.circular(150),
+                          )),
+                    ),
+                    const SizedBox(height: 20.0),
+                    const Text("Welcome",
+                        style: TextStyle(
+                            fontSize: 24.0,
+                            letterSpacing: 1.5,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                    const SizedBox(height: 10.0),
+                    const Text("Edit Drug From Hear",
+                        style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                    const SizedBox(height: 20.0),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                          child: const Text(
+                            "Back",
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Colors.black),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DrugsList()));
+                          }),
+                    ),
+                    // const Schedule(),
+                    const SizedBox(height: 30.0),
                 TextFormField(
                   validator: (val) =>
                       val!.isEmpty ? 'Drug Name Cant be empty' : null,

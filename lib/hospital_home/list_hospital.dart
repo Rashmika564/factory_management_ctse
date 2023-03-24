@@ -2,6 +2,10 @@
 
 import 'package:factory_management_ctse/appoinment_home/add_appoinment_info.dart';
 import 'package:factory_management_ctse/appoinment_home/edit_apoinment_info.dart';
+import 'package:factory_management_ctse/data/models/hospital_model.dart';
+import 'package:factory_management_ctse/data/remote_data_source/hospital_helper.dart';
+import 'package:factory_management_ctse/hospital_home/add_hospital_info.dart';
+import 'package:factory_management_ctse/hospital_home/edit_hospital_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../data/models/apponment_model.dart';
@@ -19,14 +23,14 @@ final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   //backgroundColor: Color.fromARGB(255, 3, 33, 57),
 );
 
-class AppoinmentList extends StatefulWidget {
-  const AppoinmentList({Key? key}) : super(key: key);
+class HospitalList extends StatefulWidget {
+  const HospitalList({Key? key}) : super(key: key);
 
   @override
-  State<AppoinmentList> createState() => _AppoinmentListState();
+  State<HospitalList> createState() => _HospitalListState();
 }
 
-class _AppoinmentListState extends State<AppoinmentList> {
+class _HospitalListState extends State<HospitalList> {
   final TextEditingController _fullnamecontroller = TextEditingController();
   final TextEditingController _agecontroller = TextEditingController();
   final AuthService service = AuthService();
@@ -44,7 +48,7 @@ class _AppoinmentListState extends State<AppoinmentList> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Appoinment List"),
+          title: const Text("Hospital List"),
           backgroundColor: const Color.fromARGB(255, 17, 90, 150),
           elevation: 0.0,
           actions: <Widget>[
@@ -89,14 +93,14 @@ class _AppoinmentListState extends State<AppoinmentList> {
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
                     const SizedBox(height: 10.0),
-                    const Text("See Your Upcoming Appoinment",
+                    const Text("Hospital List",
                         style: TextStyle(fontSize: 16.0, color: Colors.black)),
                     const SizedBox(height: 20.0),
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
                           child: const Text(
-                            "Add New Appoinment",
+                            "Add New Hospital",
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 color: Colors.black),
@@ -106,13 +110,13 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const AddAppoinment()));
+                                        const AddHospital()));
                           }),
                     ),
                     // const Schedule(),
                     const SizedBox(height: 30.0),
-                  StreamBuilder<List<AppoinmentModel>>(
-                      stream: AppoinmentHelper.read(),
+                  StreamBuilder<List<HospitalModel>>(
+                      stream: HospitalHelper.read(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return const Center(
@@ -125,13 +129,13 @@ class _AppoinmentListState extends State<AppoinmentList> {
                           );
                         }
                         if (snapshot.hasData) {
-                          final docterdata = snapshot.data;
+                          final hospitalData = snapshot.data;
                           return Expanded(
                             child: ListView.builder(
-                              itemCount: docterdata!.length,
+                              itemCount: hospitalData!.length,
                               // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
                               itemBuilder: (context, Index) {
-                                final singledoctor = docterdata[Index];
+                                final singleHospital = hospitalData[Index];
                                 return Container(
                                   margin: const EdgeInsets.symmetric(vertical: 5),
                                   child: ListTile(
@@ -149,9 +153,9 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                             shape: BoxShape.rectangle),
                                       ),
                                       title:
-                                          Text("${singledoctor.doctorName} at ${singledoctor.hospitalName}"),
+                                          Text("${singleHospital.hospitalname}"),
                                       subtitle: Text(
-                                          "${singledoctor.hospitalName} on ${singledoctor.date}"),
+                                          "${singleHospital.hospitalbranch}"),
                                       trailing: Column(
                                         children: [
                                           InkWell(
@@ -161,19 +165,19 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                                     MaterialPageRoute(
                                                         builder:
                                                             (context) =>
-                                                                EditAppoinmentnfo(
-                                                                  appoinment: AppoinmentModel(
-                                                                      doctorName:
-                                                                          singledoctor
-                                                                              .doctorName,
-                                                                      hospitalName:
-                                                                          singledoctor
-                                                                              .hospitalName,
-                                                                      date: singledoctor
-                                                                          .date,
-                                                                      reson: singledoctor
-                                                                          .reson,
-                                                                      id: singledoctor
+                                                                EditHospitalInfo(
+                                                                  hospital: HospitalModel(
+                                                                      hospitalname:
+                                                                          singleHospital
+                                                                              .hospitalname,
+                                                                      hospitalbranch:
+                                                                          singleHospital
+                                                                              .hospitalbranch,
+                                                                      hospitaladdress: singleHospital
+                                                                          .hospitaladdress,
+                                                                      telephone: singleHospital
+                                                                          .telephone,
+                                                                      id: singleHospital
                                                                           .id),
                                                                 )));
                                               },
@@ -198,8 +202,8 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                                       actions: [
                                                         ElevatedButton(
                                                             onPressed: () {
-                                                              AppoinmentHelper.delete(
-                                                                      singledoctor)
+                                                              HospitalHelper.delete(
+                                                                      singleHospital)
                                                                   .then((value) {
                                                                 Navigator.pop(
                                                                     context);

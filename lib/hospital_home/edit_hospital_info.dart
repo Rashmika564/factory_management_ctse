@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../shared/constants.dart';
+import 'list_hospital.dart';
 
 final List<String> categories = [
   'Select the Hospital Location',
@@ -92,12 +93,56 @@ class _EditHospitalInfoState extends State<EditHospitalInfo> {
             ),
           ],
         ),
-        body: Padding(
-          padding: EdgeInsets.all(8),
+        body: SingleChildScrollView(
+         
           child: Form(
             key: _formKey,
             child: Column(
               children: [
+                Container(
+                  height: 300.0,
+                  decoration: const BoxDecoration(
+                      color: Colors.yellow,
+                      image: DecorationImage(
+                        image:
+                            AssetImage("assets/images/onlinedoctorbro.png"),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(150),
+                        bottomRight: Radius.circular(150),
+                      )),
+                ),
+                const SizedBox(height: 20.0),
+                const Text("Welcome",
+                    style: TextStyle(
+                        fontSize: 24.0,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black)),
+                const SizedBox(height: 10.0),
+                const Text("Edit Hospital From Hear",
+                    style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                const SizedBox(height: 20.0),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                      child: const Text(
+                        "Back",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const HospitalList()));
+                      }),
+                ),
+                // const Schedule(),
+                const SizedBox(height: 30.0),
                 TextFormField(
                   validator: (val) =>
                       val!.isEmpty ? 'Hospital Name Cannot  be empty' : null,
@@ -184,7 +229,7 @@ class _EditHospitalInfoState extends State<EditHospitalInfo> {
                         color: Colors.green),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Icon(
                           Icons.update,
                           color: Colors.white,
@@ -200,20 +245,7 @@ class _EditHospitalInfoState extends State<EditHospitalInfo> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 8,
-                ),
-                Container(
-                  width: window.physicalSize.width / 2,
-                  height: window.physicalSize.height / 4.3,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('Doctors-bro.png'),
-                      fit: BoxFit.fill,
-                    ),
-                    shape: BoxShape.rectangle,
-                  ),
-                )
+               
               ],
             ),
           ),
