@@ -1,32 +1,13 @@
 import 'package:factory_management_ctse/screens/wrapper.dart';
-import 'package:factory_management_ctse/shared/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'package:firebase_core/firebase_core.dart';
+import 'constants.dart';
 
-const primaryColor = Color(0xFF255ED6);
-const textColor = Color(0xFF35364F);
-const backgroundColor = Color(0xFFE6EFF9);
-const redColor = Color(0xFFE85050);
+void main() => runApp(MyApp());
 
-const defaultPadding = 16.0;
-
-OutlineInputBorder textFieldBorder = OutlineInputBorder(
-  borderSide: BorderSide(
-    color: primaryColor.withOpacity(0.1),
-  ),
-);
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  runApp(MyApp());
-}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-
   final Future<FirebaseApp> _initialization = Firebase.initializeApp(
       options: const FirebaseOptions(
     apiKey: 'AIzaSyBAjsk73MKqixM6TE3oYNC0rz6I96_jNKo',
@@ -35,14 +16,16 @@ class MyApp extends StatelessWidget {
     projectId: 'fir-ctse',
   ));
 
-  //FirebaseAuth auth = FirebaseAuth.instance;
+  // const MyApp({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _initialization,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return MaterialApp(
+          return const MaterialApp(
             home: Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),
@@ -63,20 +46,20 @@ class MyApp extends StatelessWidget {
           title: 'Hospital Management',
           theme: ThemeData(
               primarySwatch: Colors.blue,
-              primaryColor: primaryColor,
+              primaryColor: const Color(0xFFF1E6FF),
               textTheme:
-                  Theme.of(context).textTheme.apply(displayColor: textColor),
+                  Theme.of(context).textTheme.apply(displayColor: const Color(0)),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: TextButton.styleFrom(
-                  backgroundColor: primaryColor,
-                  padding: EdgeInsets.all(defaultPadding),
+                  backgroundColor: const Color(0xFFF1E6FF),
+                  padding: const EdgeInsets.all(defaultPadding),
                 ),
               ),
               inputDecorationTheme: const InputDecorationTheme(
                 filled: true,
-                fillColor: kPrimaryLightColor,
-                iconColor: kPrimaryColor,
-                prefixIconColor: kPrimaryColor,
+                fillColor: Color(0xFFF1E6FF),
+                iconColor: Color(0xFF6F35A5),
+                prefixIconColor: Color(0xFF6F35A5),
                 contentPadding: EdgeInsets.symmetric(
                     horizontal: defaultPadding, vertical: defaultPadding),
                 border: OutlineInputBorder(

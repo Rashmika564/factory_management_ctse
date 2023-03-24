@@ -1,13 +1,9 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:factory_management_ctse/appoinment_home/appoinment_list.dart';
 import 'package:factory_management_ctse/data/models/drugs_model.dart';
 import 'package:factory_management_ctse/data/remote_data_source/drug_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../data/models/drugs_model.dart';
-import '../data/remote_data_source/drug_helper.dart';
 import '../services/auth.dart';
-import 'package:intl/intl.dart';
+import 'drugs_list.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   // ignore: deprecated_member_use
@@ -99,7 +95,7 @@ class _AddDrugsState extends State<AddDrugs> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
                 const SizedBox(height: 10.0),
-                const Text("Book Your Doctor Appoinment Hear",
+                const Text("Add Drug",
                     style: TextStyle(fontSize: 16.0, color: Colors.black)),
                 const SizedBox(height: 20.0),
                 Align(
@@ -115,7 +111,7 @@ class _AddDrugsState extends State<AddDrugs> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const AppoinmentList()));
+                                builder: (context) => const DrugsList()));
                       }),
                 ),
                 // const Schedule(),
@@ -124,7 +120,7 @@ class _AddDrugsState extends State<AddDrugs> {
                 TextFormField(
                   controller: _drNamecontroller,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Hospital"),
+                      border: OutlineInputBorder(), hintText: "Drug Name"),
                 ),
                 const SizedBox(
                   height: 10,
@@ -132,90 +128,28 @@ class _AddDrugsState extends State<AddDrugs> {
                 TextFormField(
                   controller: _drCodecontroller,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Doctor Name"),
-                ),
-                DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                    hint: Text(
-                      'Select Item',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                    items: items
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ))
-                        .toList(),
-                    value: selectedValue,
-                    onChanged: (value) {
-                      // setState(() {
-                      selectedValue = value as String?;
-                      // });
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
+                      border: OutlineInputBorder(), hintText: "Drug Code"),
                 ),
                 TextFormField(
-                  controller:
-                      _unitPriceontroller, //editing controller of this TextField
+                  controller: _unitPriceontroller,
                   decoration: const InputDecoration(
-                      icon: Icon(Icons.calendar_today), //icon of text field
-                      labelText: "Enter Date" //label text of field
-                      ),
-                  readOnly:
-                      true, //set it true, so that user will not able to edit text
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(
-                            2000), //DateTime.now() - not to allow to choose before today.
-                        lastDate: DateTime(2101));
-
-                    if (pickedDate != null) {
-                      if (kDebugMode) {
-                        print(pickedDate);
-                      } //pickedDate output format => 2021-03-10 00:00:00.000
-                      String formattedDate =
-                          DateFormat('yyyy-MM-dd').format(pickedDate);
-                      if (kDebugMode) {
-                        print(formattedDate);
-                      } //formatted date output using intl package =>  2021-03-16
-                      //you can implement different kind of Date Format here according to your requirement
-
-                      setState(() {
-                        _unitPriceontroller.text =
-                            formattedDate; //set output date to TextField value.
-                      });
-                    } else {
-                      if (kDebugMode) {
-                        print("Date is not selected");
-                      }
-                    }
-                  },
+                      border: OutlineInputBorder(), hintText: "Unit Price"),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
                   controller: _drCategorycontroller,
-                  minLines:
-                      6, // any number you need (It works as the rows for the textarea)
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Reson for appoinment"),
+                      border: OutlineInputBorder(), hintText: "Drug Category"),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: _drStatuscontroller,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), hintText: "Drug Status"),
                 ),
                 const SizedBox(
                   height: 10,
@@ -236,7 +170,7 @@ class _AddDrugsState extends State<AddDrugs> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const AppoinmentList()));
+                            builder: (context) => const DrugsList()));
                   },
                   child: Container(
                     width: 100,
