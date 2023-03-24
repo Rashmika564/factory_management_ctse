@@ -112,7 +112,15 @@ class _AddDoctorState extends State<AddDoctor> {
                       val!.isEmpty ? 'Full Name Cant be empty' : null,
                   controller: _fullnamecontroller,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), hintText: "full Name"),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(width: 1.5)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 17, 90, 150),
+                              width: 1.5)),
+                      hintText: "full Name"),
                 ),
                 SizedBox(
                   height: 10,
@@ -121,7 +129,15 @@ class _AddDoctorState extends State<AddDoctor> {
                   validator: (val) => val!.isEmpty ? 'age cant be empty' : null,
                   controller: _agecontroller,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Age"),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(width: 1.5)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 17, 90, 150),
+                              width: 1.5)),
+                      hintText: "Age"),
                 ),
                 SizedBox(
                   height: 10,
@@ -152,7 +168,15 @@ class _AddDoctorState extends State<AddDoctor> {
                       val!.isEmpty ? 'mobile number cant be empty' : null,
                   controller: _mobilenumbercontroller,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Mobile Number"),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(width: 1.5)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 17, 90, 150),
+                              width: 1.5)),
+                      hintText: "Mobile Number"),
                 ),
                 SizedBox(
                   height: 10,
@@ -162,7 +186,15 @@ class _AddDoctorState extends State<AddDoctor> {
                       val!.isEmpty ? 'Living Addresss cant be empty' : null,
                   controller: _livingaddresscontroller,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Living Address"),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(width: 1.5)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 17, 90, 150),
+                              width: 1.5)),
+                      hintText: "Living Address"),
                 ),
                 SizedBox(
                   height: 10,
@@ -172,7 +204,15 @@ class _AddDoctorState extends State<AddDoctor> {
                       val!.isEmpty ? 'Number Of Nurses cant be empty' : null,
                   controller: _noofnursescontroller,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1.5),
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 17, 90, 150),
+                              width: 1.5)),
                       hintText: "No of Assigned Nurses"),
                 ),
                 SizedBox(
@@ -232,8 +272,8 @@ class _AddDoctorState extends State<AddDoctor> {
                     }
                   },
                   child: Container(
-                    width: 100,
-                    height: 30,
+                    width: 330,
+                    height: 34,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.green),
