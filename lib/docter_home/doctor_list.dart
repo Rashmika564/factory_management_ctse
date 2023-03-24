@@ -1,6 +1,7 @@
 //import 'dart:ffi';
 
 import 'package:factory_management_ctse/appoinment_home/edit_apoinment_info.dart';
+import 'package:factory_management_ctse/docter_home/add_docter_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../data/models/apponment_model.dart';
@@ -62,145 +63,191 @@ class _DoctorListState extends State<DoctorList> {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                 StreamBuilder<List<DoctorModel>>(
-                    stream: DoctorHelper.read(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
+        body: Stack(
+          children: 
+            [
+
+              Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Container(
+                      height: 300.0,
+                      decoration: const BoxDecoration(
+                          color: Colors.yellow,
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/onlinedoctorbro.png"),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(0),
+                            bottomRight: Radius.circular(250),
+                          )),
+                    ),
+                    const SizedBox(height: 20.0),
+                    const Text("Welcome",
+                        style: TextStyle(
+                            fontSize: 24.0,
+                            letterSpacing: 1.5,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                    const SizedBox(height: 10.0),
+                    const Text("See Doctor List",
+                        style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                    const SizedBox(height: 20.0),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                          child: const Text(
+                            "Add New Doctor",
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Colors.black),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const AddDoctor()));
+                          }),
+                    ),
+                    // const Schedule(),
+                    const SizedBox(height: 30.0),
+                   StreamBuilder<List<DoctorModel>>(
+                      stream: DoctorHelper.read(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text("Some error occured"),
+                          );
+                        }
+                        if (snapshot.hasData) {
+                          final docterdata = snapshot.data;
+                          return Expanded(
+                            child: ListView.builder(
+                              itemCount: docterdata!.length,
+                              itemBuilder: (context, Index) {
+                                final singledoctor = docterdata[Index];
+                                return Container(
+                                  margin: EdgeInsets.symmetric(vertical: 5),
+                                  child: ListTile(
+                                      leading: CircleAvatar(
+                                        radius: 22.0,
+                                        backgroundColor: Colors.green,
+                                        // backgroundImage: AssetImage('images.png'),
+                                      ),
+                                      title: Text("${singledoctor.fullname}"),
+                                      subtitle: Text("${singledoctor.age}"),
+                                      trailing: Column(
+                                        children: [
+                                          InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            EditDocterInfo(
+                                                              doctor: DoctorModel(
+                                                                  fullname:
+                                                                      singledoctor
+                                                                          .fullname,
+                                                                  age: singledoctor
+                                                                      .age,
+                                                                  id: singledoctor
+                                                                      .id,
+                                                                  doctorcategory:
+                                                                      singledoctor
+                                                                          .doctorcategory,
+                                                                  mobilenumber:
+                                                                      singledoctor
+                                                                          .mobilenumber,
+                                                                  livingaddress:
+                                                                      singledoctor
+                                                                          .livingaddress,
+                                                                  noofassignednurses:
+                                                                      singledoctor
+                                                                          .noofassignednurses),
+                                                            )));
+                                              },
+                                              child: Icon(Icons.edit)),
+                                          // SizedBox(
+                                          //   height: 0.5,
+                                          // ),
+                                          InkWell(
+                                            onTap: () {
+                                              //call your onpressed function here
+                                              print('Button Pressed');
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title:
+                                                          Text("Delete Confirm"),
+                                                      content: Text(
+                                                          "Are You sure You want to delete"),
+                                                      actions: [
+                                                        ElevatedButton(
+                                                            onPressed: () {
+                                                              DoctorHelper.delete(
+                                                                      singledoctor)
+                                                                  .then((value) {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              });
+
+                                                              final snackBar =
+                                                                  SnackBar(
+                                                                content: const Text(
+                                                                    'Docter Record Deleted Successfully'),
+                                                                backgroundColor:
+                                                                    const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        17,
+                                                                        90,
+                                                                        150),
+                                                                action:
+                                                                    SnackBarAction(
+                                                                  label: 'close',
+                                                                  onPressed: () {
+                                                                    // Some code to undo the change.
+                                                                  },
+                                                                ),
+                                                              );
+
+                                                              ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .showSnackBar(
+                                                                      snackBar);
+                                                            },
+                                                            child: Text("Delete"))
+                                                      ],
+                                                    );
+                                                  });
+                                            },
+                                            child: Icon(Icons.delete),
+                                          ),
+                                        ],
+                                      )),
+                                );
+                              },
+                            ),
+                          );
+                        }
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      }
-                      if (snapshot.hasError) {
-                        return Center(
-                          child: Text("Some error occured"),
-                        );
-                      }
-                      if (snapshot.hasData) {
-                        final docterdata = snapshot.data;
-                        return Expanded(
-                          child: ListView.builder(
-                            itemCount: docterdata!.length,
-                            itemBuilder: (context, Index) {
-                              final singledoctor = docterdata[Index];
-                              return Container(
-                                margin: EdgeInsets.symmetric(vertical: 5),
-                                child: ListTile(
-                                    leading: CircleAvatar(
-                                      radius: 22.0,
-                                      backgroundColor: Colors.green,
-                                      // backgroundImage: AssetImage('images.png'),
-                                    ),
-                                    title: Text("${singledoctor.fullname}"),
-                                    subtitle: Text("${singledoctor.age}"),
-                                    trailing: Column(
-                                      children: [
-                                        InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          EditDocterInfo(
-                                                            doctor: DoctorModel(
-                                                                fullname:
-                                                                    singledoctor
-                                                                        .fullname,
-                                                                age: singledoctor
-                                                                    .age,
-                                                                id: singledoctor
-                                                                    .id,
-                                                                doctorcategory:
-                                                                    singledoctor
-                                                                        .doctorcategory,
-                                                                mobilenumber:
-                                                                    singledoctor
-                                                                        .mobilenumber,
-                                                                livingaddress:
-                                                                    singledoctor
-                                                                        .livingaddress,
-                                                                noofassignednurses:
-                                                                    singledoctor
-                                                                        .noofassignednurses),
-                                                          )));
-                                            },
-                                            child: Icon(Icons.edit)),
-                                        // SizedBox(
-                                        //   height: 0.5,
-                                        // ),
-                                        InkWell(
-                                          onTap: () {
-                                            //call your onpressed function here
-                                            print('Button Pressed');
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    title:
-                                                        Text("Delete Confirm"),
-                                                    content: Text(
-                                                        "Are You sure You want to delete"),
-                                                    actions: [
-                                                      ElevatedButton(
-                                                          onPressed: () {
-                                                            DoctorHelper.delete(
-                                                                    singledoctor)
-                                                                .then((value) {
-                                                              Navigator.pop(
-                                                                  context);
-                                                            });
-
-                                                            final snackBar =
-                                                                SnackBar(
-                                                              content: const Text(
-                                                                  'Docter Record Deleted Successfully'),
-                                                              backgroundColor:
-                                                                  const Color
-                                                                          .fromARGB(
-                                                                      255,
-                                                                      17,
-                                                                      90,
-                                                                      150),
-                                                              action:
-                                                                  SnackBarAction(
-                                                                label: 'close',
-                                                                onPressed: () {
-                                                                  // Some code to undo the change.
-                                                                },
-                                                              ),
-                                                            );
-
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                                    snackBar);
-                                                          },
-                                                          child: Text("Delete"))
-                                                    ],
-                                                  );
-                                                });
-                                          },
-                                          child: Icon(Icons.delete),
-                                        ),
-                                      ],
-                                    )),
-                              );
-                            },
-                          ),
-                        );
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    })
-              ],
+                      })
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

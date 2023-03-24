@@ -1,6 +1,6 @@
 //import 'dart:ffi';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:factory_management_ctse/data/models/hospital_model.dart';
 import 'package:factory_management_ctse/data/remote_data_source/hospital_helper.dart';
 import 'package:factory_management_ctse/hospital_home/edit_hospital_info.dart';
@@ -8,8 +8,8 @@ import 'package:factory_management_ctse/hospitalManagementHome.dart';
 import 'package:factory_management_ctse/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
-import '../data/models/hospital_model.dart';
-import '../data/remote_data_source/hospital_helper.dart';
+//import '../data/models/hospital_model.dart';
+//import '../data/remote_data_source/hospital_helper.dart';
 import '../services/auth.dart';
 import '../shared/constants.dart';
 
