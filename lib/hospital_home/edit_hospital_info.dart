@@ -32,7 +32,6 @@ class EditHospitalInfo extends StatefulWidget {
 
 class _EditHospitalInfoState extends State<EditHospitalInfo> {
   TextEditingController? _hospitalnamecontroller;
-  TextEditingController? _branchcontroller;
   TextEditingController? _hospitaladdresscontroller;
   TextEditingController? _telephonecontroller;
   final AuthService service = AuthService();
@@ -44,13 +43,12 @@ class _EditHospitalInfoState extends State<EditHospitalInfo> {
   void initState() {
     _hospitalnamecontroller =
         TextEditingController(text: widget.hospital.hospitalname);
-    _branchcontroller = TextEditingController(text: widget.hospital.branch);
     _hospitaladdresscontroller =
         TextEditingController(text: widget.hospital.hospitaladdress);
     _telephonecontroller =
         TextEditingController(text: widget.hospital.telephone);
 
-    branch = widget.hospital.branch;
+    branch = widget.hospital.hospitalbranch;
     //init state
     super.initState();
   }
@@ -58,7 +56,6 @@ class _EditHospitalInfoState extends State<EditHospitalInfo> {
   @override
   void dispose() {
     _hospitalnamecontroller!.dispose();
-    _branchcontroller!.dispose();
     _hospitaladdresscontroller!.dispose();
     _telephonecontroller!.dispose();
 
@@ -156,7 +153,6 @@ class _EditHospitalInfoState extends State<EditHospitalInfo> {
                       HospitalHelper.update(HospitalModel(
                               id: widget.hospital.id,
                               hospitalname: _hospitalnamecontroller!.text,
-                              branch: branch,
                               hospitaladdress: _hospitaladdresscontroller!.text,
                               telephone: _telephonecontroller!.text))
                           .then((value) {

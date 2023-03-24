@@ -18,7 +18,7 @@ class HospitalHelper {
     final newHospital = HospitalModel(
             id: hospitalid,
             hospitalname: hospital.hospitalname,
-            branch: hospital.branch,
+            hospitalbranch: hospital.hospitalbranch,
             hospitaladdress: hospital.hospitaladdress,
             telephone: hospital.telephone)
         .toJson();
@@ -38,7 +38,7 @@ class HospitalHelper {
     final updateHospitalRec = HospitalModel(
             id: hospital.id,
             hospitalname: hospital.hospitalname,
-            branch: hospital.branch,
+            hospitalbranch: hospital.hospitalbranch,
             hospitaladdress: hospital.hospitaladdress,
             telephone: hospital.telephone)
         .toJson();

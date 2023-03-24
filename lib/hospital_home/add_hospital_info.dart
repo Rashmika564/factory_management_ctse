@@ -45,7 +45,6 @@ class AddHospital extends StatefulWidget {
 
 class _AddHospitalState extends State<AddHospital> {
   TextEditingController _hospitalnamecontroller = TextEditingController();
-  TextEditingController _branchcontroller = TextEditingController();
   TextEditingController _hospitaladdresscontroller = TextEditingController();
   TextEditingController _telephonecontroller = TextEditingController();
   final AuthService service = AuthService();
@@ -55,7 +54,6 @@ class _AddHospitalState extends State<AddHospital> {
   @override
   void dispose() {
     _hospitalnamecontroller.dispose();
-    _branchcontroller.dispose();
     _hospitaladdresscontroller.dispose();
     _telephonecontroller.dispose();
     super.dispose();
@@ -103,17 +101,6 @@ class _AddHospitalState extends State<AddHospital> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: "Add Hospital Name"),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  validator: (val) =>
-                      val!.isEmpty ? 'Branch cannot be empty' : null,
-                  controller: _branchcontroller,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Select a branch"),
                 ),
                 SizedBox(
                   height: 10,
@@ -168,12 +155,11 @@ class _AddHospitalState extends State<AddHospital> {
 //_create();
                       HospitalHelper.create(HospitalModel(
                           hospitalname: _hospitalnamecontroller.text,
-                          branch: hospitalbranch,
+                          hospitalbranch: hospitalbranch,
                           hospitaladdress: _hospitaladdresscontroller.text,
                           telephone: _telephonecontroller.text));
 
                       _hospitalnamecontroller.clear();
-                      _branchcontroller.clear();
                       _hospitaladdresscontroller.clear();
                       _telephonecontroller.clear();
 
@@ -283,9 +269,9 @@ class _AddHospitalState extends State<AddHospital> {
                                                                 hospitalname:
                                                                     singlehospital
                                                                         .hospitalname,
-                                                                branch:
+                                                                hospitalbranch:
                                                                     singlehospital
-                                                                        .branch,
+                                                                        .hospitalbranch,
                                                                 id: singlehospital
                                                                     .id,
                                                                 hospitaladdress:

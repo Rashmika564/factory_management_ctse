@@ -3,14 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class HospitalModel {
   final String? id;
   final String? hospitalname;
-  final String? branch;
+  final String? hospitalbranch;
   final String? hospitaladdress;
   final String? telephone;
 
   HospitalModel(
       {this.id,
       this.hospitalname,
-      this.branch,
+      this.hospitalbranch,
       this.hospitaladdress,
       this.telephone});
   factory HospitalModel.fromSnapshot(DocumentSnapshot snap) {
@@ -18,7 +18,7 @@ class HospitalModel {
     return HospitalModel(
       id: snapshot['id'],
       hospitalname: snapshot['hospitalname'],
-      branch: snapshot['branch'],
+      hospitalbranch: snapshot['branch'],
       hospitaladdress: snapshot['hospitaladdress'],
       telephone: snapshot['telephone'],
     );
@@ -27,7 +27,7 @@ class HospitalModel {
   Map<String, dynamic> toJson() => {
         "id": id,
         "hospitalname": hospitalname,
-        "branch": branch,
+        "hospitalbranch": hospitalbranch,
         "hospitaladdress": hospitaladdress,
         "telephone": telephone,
       };
