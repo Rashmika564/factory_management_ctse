@@ -19,10 +19,8 @@ class Wrapper extends StatelessWidget {
 
     if (user == null) {
       //return Authenticate();
-      return WelcomeScreen();
+      return HospitalManagement();
     } else {
-      return WelcomeScreen();
-
       return HospitalManagement();
     }
 

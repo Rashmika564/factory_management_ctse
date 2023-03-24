@@ -1,10 +1,14 @@
 import 'dart:math';
 
+import 'package:factory_management_ctse/appoinment_home/add_appoinment_info.dart';
 import 'package:factory_management_ctse/docter_home/add_docter_info.dart';
+import 'package:factory_management_ctse/drug_home/add_drugs_info.dart';
 import 'package:factory_management_ctse/screens/authenticate/sign_in.dart';
 import 'package:factory_management_ctse/services/auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import 'hospital_home/add_hospital_info.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   primary: Colors.white,
@@ -41,14 +45,14 @@ class _HospitalManagementState extends State<HospitalManagement> {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => SignIn()));
             },
-            icon: Icon(
+            icon: const Icon(
               // <-- Icon
               Icons.person_remove,
               color: Colors.white,
 
               size: 24.0,
             ),
-            label: Text(
+            label: const Text(
               'Log out Account',
               style: TextStyle(color: Colors.white),
             ), // <-- Text
@@ -89,7 +93,12 @@ class _HospitalManagementState extends State<HospitalManagement> {
             Card(
               margin: EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddHospital()));
+                },
                 splashColor: Colors.green,
                 child: Center(
                   child: Column(
@@ -109,7 +118,12 @@ class _HospitalManagementState extends State<HospitalManagement> {
             Card(
               margin: EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddDrugs()));
+                },
                 splashColor: Colors.green,
                 child: Center(
                   child: Column(
@@ -129,16 +143,22 @@ class _HospitalManagementState extends State<HospitalManagement> {
             Card(
               margin: EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddAppoinment()));
+                },
                 splashColor: Colors.green,
                 child: Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Icon(
+                      const Icon(
                         Icons.person,
                         size: 70.0,
                       ),
+                      
                       Text("Appoinment Management",
                           style: new TextStyle(fontSize: 13.0))
                     ],

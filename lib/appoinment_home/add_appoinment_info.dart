@@ -3,10 +3,14 @@ import 'package:factory_management_ctse/appoinment_home/appoinment_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_svg/svg.dart';
+import '../constants.dart';
 import '../data/models/apponment_model.dart';
 import '../data/remote_data_source/appoinment_helper.dart';
+import '../main.dart';
 import '../services/auth.dart';
 import 'package:intl/intl.dart';
+
+import '../shared/constants.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   // ignore: deprecated_member_use
@@ -27,7 +31,6 @@ class AddAppoinment extends StatefulWidget {
 }
 
 class _AddAppoinmentState extends State<AddAppoinment> {
-
   TextEditingController _doctorNamecontroller = TextEditingController();
   final TextEditingController _hospitalNamecontroller = TextEditingController();
   final TextEditingController _datecontroller = TextEditingController();
@@ -51,9 +54,7 @@ class _AddAppoinmentState extends State<AddAppoinment> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      
       child: Scaffold(
-        
         appBar: AppBar(
           title: const Text("Add New Appoinment"),
           backgroundColor: const Color.fromARGB(255, 17, 90, 150),
@@ -88,12 +89,13 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                     decoration: const BoxDecoration(
                         color: Colors.yellow,
                         image: DecorationImage(
-                          image: AssetImage("assets/images/doctorstes.jpg"),
+                          image:
+                              AssetImage("assets/images/onlinedoctorbro.png"),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(250),
-                          bottomRight: Radius.circular(250),
+                          bottomRight: Radius.circular(0),
                         )),
                   ),
                   const SizedBox(height: 20.0),
@@ -126,93 +128,55 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   ),
                   // const Schedule(),
                   const SizedBox(height: 30.0),
-                  // const Image(image: AssetImage('graphics/background.png')),
                   TextFormField(
+                    validator: (val) =>
+                        val!.isEmpty ? 'Hospital Name Cant be empty' : null,
                     controller: _hospitalNamecontroller,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
-                        border: OutlineInputBorder(), hintText: "Hospital"),
+                      hintText: "Hospital",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  
-                  Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
-                      width: 100,
-                      child: Row(children: <Widget>[
-                        StreamBuilder<List<AppoinmentModel>>(
-                            stream: AppoinmentHelper.read(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                              if (snapshot.hasError) {
-                                return const Center(
-                                  child: Text("Some error occured"),
-                                );
-                              }
-                              if (snapshot.hasData) {
-                                final appoinmentData = snapshot.data;
-                                for (var i = 0; i < 2; i++) {
-                                  items.add(
-                                      appoinmentData![i].doctorName.toString());
-                                }
-                              }
-                              return const Center(
-                                child: Text("data Loaded"),
-                              );
-                            }),
-                      ] // dropdown below..
-
-                          )),
-
-                  Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
-                      width: 100,
-                      child: Row(children: <Widget>[
-                        DropdownButton<String>(
-                          value: selectedValue,
-                          onChanged: (newValue) => setState(
-                              () => selectedValue = newValue as String),
-                          items: items
-                              .map<DropdownMenuItem<String>>(
-                                  (String value) => DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      ))
-                              .toList(),
-
-                          // add extra sugar..
-                          icon: const Icon(Icons.arrow_drop_down),
-                          iconSize: 42,
-                          underline: const SizedBox(),
-                        ),
-                      ] // dropdown below..
-
-                          )),
                   const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (val) =>
+                        val!.isEmpty ? 'Doctor Name Cant be empty' : null,
+                    controller: _doctorNamecontroller,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Doctor Name",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    validator: (val) =>
+                        val!.isEmpty ? 'Date Name Cant be empty' : null,
                     controller:
                         _datecontroller, //editing controller of this TextField
+                    readOnly: true,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
-                        icon: Icon(Icons.calendar_today), //icon of text field
-                        labelText: "Enter Date" //label text of field
-                        ),
-                    readOnly:
-                        true, //set it true, so that user will not able to edit text
+                      hintText: "Enter Date",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.calendar_today),
+                      ),
+                    ), //set it true, so that user will not able to edit text
                     onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
                           context: context,
@@ -248,13 +212,15 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   ),
                   TextFormField(
                     controller: _resoncontroller,
-                    minLines:
-                        6, // any number you need (It works as the rows for the textarea)
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Reson for appoinment"),
+                      hintText: "Reson For Appinment",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -270,6 +236,20 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                           hospitalName: _hospitalNamecontroller.text,
                           date: _datecontroller.text,
                           reson: _resoncontroller.text));
+
+                      final snackBar = SnackBar(
+                        content:
+                            const Text('Apoinment Record Added Successfully'),
+                        backgroundColor: const Color.fromARGB(255, 17, 90, 150),
+                        action: SnackBarAction(
+                          label: 'close',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
                       Navigator.push(
                           context,

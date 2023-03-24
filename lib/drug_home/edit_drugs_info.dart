@@ -55,6 +55,8 @@ class _EditDruginfoState extends State<EditDruginfo> {
             child: Column(
               children: [
                 TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Drug Name Cant be empty' : null,
                   controller: _drNamecontroller,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Drug Name"),
@@ -63,6 +65,8 @@ class _EditDruginfoState extends State<EditDruginfo> {
                   height: 10,
                 ),
                 TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Drug Code Cant be empty' : null,
                   controller: _drCodecontroller,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Drug Code"),
@@ -71,6 +75,8 @@ class _EditDruginfoState extends State<EditDruginfo> {
                   height: 10,
                 ),
                 TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Unit price Cant be empty' : null,
                   controller: _unitPriceontroller,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Unit Price"),
@@ -79,6 +85,8 @@ class _EditDruginfoState extends State<EditDruginfo> {
                   height: 10,
                 ),
                 TextFormField(
+                  validator: (value) =>
+                      value!.isEmpty ? 'Drug Category Cant be empty' : null,
                   controller: _drCategorycontroller,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Drug Category"),
@@ -87,6 +95,8 @@ class _EditDruginfoState extends State<EditDruginfo> {
                   height: 10,
                 ),
                 TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Drug Status Cant be empty' : null,
                   controller: _drStatuscontroller,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Drug Status"),
@@ -102,9 +112,21 @@ class _EditDruginfoState extends State<EditDruginfo> {
                             drName: _drNamecontroller!.text,
                             unitPrice: _unitPriceontroller!.text,
                             drCategory: _drCategorycontroller!.text,
-                            drStatus: _drStatuscontroller!.text
-                            ))
+                            drStatus: _drStatuscontroller!.text))
                         .then((value) {
+                      final snackBar = SnackBar(
+                        content: const Text(
+                            'Drug Record Record Updated Successfully'),
+                        backgroundColor: const Color.fromARGB(255, 17, 90, 150),
+                        action: SnackBarAction(
+                          label: 'close',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       Navigator.pop(context);
                     });
                   },
