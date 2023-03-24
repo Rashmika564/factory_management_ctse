@@ -6,6 +6,8 @@ import 'package:factory_management_ctse/services/auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'hospital_home/add_hospital_info.dart';
+
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   primary: Colors.white,
   minimumSize: Size(88, 44),
@@ -89,7 +91,12 @@ class _HospitalManagementState extends State<HospitalManagement> {
             Card(
               margin: EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddHospital()));
+                },
                 splashColor: Colors.green,
                 child: Center(
                   child: Column(
