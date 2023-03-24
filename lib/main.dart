@@ -6,7 +6,6 @@ import 'constants.dart';
 
 void main() => runApp(MyApp());
 
-
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -47,11 +46,12 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
               primarySwatch: Colors.blue,
               primaryColor: const Color(0xFFF1E6FF),
-              textTheme:
-                  Theme.of(context).textTheme.apply(displayColor: const Color(0)),
+              textTheme: Theme.of(context)
+                  .textTheme
+                  .apply(displayColor: const Color(0)),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
-                  elevation: 0, backgroundColor: kPrimaryColor,
+                  elevation: 0,
                   shape: const StadiumBorder(),
                   maximumSize: const Size(double.infinity, 56),
                   minimumSize: const Size(double.infinity, 56),
