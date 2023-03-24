@@ -47,7 +47,7 @@ class _DoctorListState extends State<DoctorList> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Appoinment List"),
+          title: const Text("Doctor List"),
           backgroundColor: const Color.fromARGB(255, 17, 90, 150),
           elevation: 0.0,
           actions: <Widget>[
@@ -64,60 +64,59 @@ class _DoctorListState extends State<DoctorList> {
           ],
         ),
         body: Stack(
-          children: 
-            [
-
-              Form(
+          children: [
+            Form(
               key: _formKey,
               child: Column(
                 children: [
                   Container(
-                      height: 300.0,
-                      decoration: const BoxDecoration(
-                          color: Colors.yellow,
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/onlinedoctorbro.png"),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(0),
-                            bottomRight: Radius.circular(250),
-                          )),
-                    ),
-                    const SizedBox(height: 20.0),
-                    const Text("Welcome",
-                        style: TextStyle(
-                            fontSize: 24.0,
-                            letterSpacing: 1.5,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black)),
-                    const SizedBox(height: 10.0),
-                    const Text("See Doctor List",
-                        style: TextStyle(fontSize: 16.0, color: Colors.black)),
-                    const SizedBox(height: 20.0),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                          child: const Text(
-                            "Add New Doctor",
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: Colors.black),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const AddDoctor()));
-                          }),
-                    ),
-                    // const Schedule(),
-                    const SizedBox(height: 30.0),
-                   StreamBuilder<List<DoctorModel>>(
+                    height: 300.0,
+                    decoration: const BoxDecoration(
+                        color: Colors.yellow,
+                        image: DecorationImage(
+                          image:
+                              AssetImage("assets/images/onlinedoctorbro.png"),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(0),
+                          bottomRight: Radius.circular(250),
+                        )),
+                  ),
+                  const SizedBox(height: 20.0),
+                  const Text("Welcome",
+                      style: TextStyle(
+                          fontSize: 24.0,
+                          letterSpacing: 1.5,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  const SizedBox(height: 10.0),
+                  const Text("See Doctor List",
+                      style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                  const SizedBox(height: 20.0),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                        child: const Text(
+                          "Add New Doctor",
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Colors.black),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AddDoctor()));
+                        }),
+                  ),
+                  // const Schedule(),
+                  const SizedBox(height: 30.0),
+                  StreamBuilder<List<DoctorModel>>(
                       stream: DoctorHelper.read(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Center(
                             child: CircularProgressIndicator(),
                           );
@@ -187,8 +186,8 @@ class _DoctorListState extends State<DoctorList> {
                                                   context: context,
                                                   builder: (context) {
                                                     return AlertDialog(
-                                                      title:
-                                                          Text("Delete Confirm"),
+                                                      title: Text(
+                                                          "Delete Confirm"),
                                                       content: Text(
                                                           "Are You sure You want to delete"),
                                                       actions: [
@@ -196,7 +195,8 @@ class _DoctorListState extends State<DoctorList> {
                                                             onPressed: () {
                                                               DoctorHelper.delete(
                                                                       singledoctor)
-                                                                  .then((value) {
+                                                                  .then(
+                                                                      (value) {
                                                                 Navigator.pop(
                                                                     context);
                                                               });
@@ -214,19 +214,23 @@ class _DoctorListState extends State<DoctorList> {
                                                                         150),
                                                                 action:
                                                                     SnackBarAction(
-                                                                  label: 'close',
-                                                                  onPressed: () {
+                                                                  label:
+                                                                      'close',
+                                                                  onPressed:
+                                                                      () {
                                                                     // Some code to undo the change.
                                                                   },
                                                                 ),
                                                               );
 
                                                               ScaffoldMessenger
-                                                                      .of(context)
+                                                                      .of(
+                                                                          context)
                                                                   .showSnackBar(
                                                                       snackBar);
                                                             },
-                                                            child: Text("Delete"))
+                                                            child:
+                                                                Text("Delete"))
                                                       ],
                                                     );
                                                   });

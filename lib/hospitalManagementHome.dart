@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:factory_management_ctse/appoinment_home/add_appoinment_info.dart';
 import 'package:factory_management_ctse/docter_home/add_docter_info.dart';
 import 'package:factory_management_ctse/drug_home/add_drugs_info.dart';
+import 'package:factory_management_ctse/screens/about.dart';
 import 'package:factory_management_ctse/screens/authenticate/sign_in.dart';
 import 'package:factory_management_ctse/services/auth.dart';
 import 'package:flutter/foundation.dart';
@@ -39,6 +40,24 @@ class _HospitalManagementState extends State<HospitalManagement> {
         elevation: 0.0,
         title: Text('Dashboard'),
         actions: <Widget>[
+          TextButton.icon(
+            onPressed: () async {
+              service.signOut();
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => About()));
+            },
+            icon: const Icon(
+              // <-- Icon
+              Icons.keyboard_arrow_up_sharp,
+              color: Colors.white,
+
+              size: 24.0,
+            ),
+            label: const Text(
+              'About Us',
+              style: TextStyle(color: Colors.white),
+            ), // <-- Text
+          ),
           TextButton.icon(
             onPressed: () async {
               service.signOut();
@@ -83,7 +102,7 @@ class _HospitalManagementState extends State<HospitalManagement> {
                         Icons.health_and_safety,
                         size: 70.0,
                       ),
-                      Text("Docter Records Managements",
+                      Text("Docter Managements",
                           style: new TextStyle(fontSize: 13.0))
                     ],
                   ),
@@ -108,7 +127,7 @@ class _HospitalManagementState extends State<HospitalManagement> {
                         Icons.home,
                         size: 70.0,
                       ),
-                      Text("Hospital Branch Management",
+                      Text("Hospital Management",
                           style: new TextStyle(fontSize: 13.0))
                     ],
                   ),
@@ -158,7 +177,6 @@ class _HospitalManagementState extends State<HospitalManagement> {
                         Icons.person,
                         size: 70.0,
                       ),
-                      
                       Text("Appoinment Management",
                           style: new TextStyle(fontSize: 13.0))
                     ],

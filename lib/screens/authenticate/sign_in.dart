@@ -70,7 +70,8 @@ class _SignInState extends State<SignIn> {
               ],
             ),
             body: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(vertical: 29.0, horizontal: 50.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 29.0, horizontal: 50.0),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -79,10 +80,10 @@ class _SignInState extends State<SignIn> {
                         width: 300,
                         height: 400,
                         decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('green.png'),
-                            fit: BoxFit.fill,
-                          ),
+                          // image: DecorationImage(
+                          //   image: AssetImage('green.png'),
+                          //   fit: BoxFit.fill,
+                          // ),
                           shape: BoxShape.rectangle,
                         ),
                       ),
@@ -144,38 +145,37 @@ class _SignInState extends State<SignIn> {
                             }
                           }
                         },
-                        child: ElevatedButton (
-                          
-                          onPressed: () async { 
+                        child: ElevatedButton(
+                          onPressed: () async {
                             DatabaseService(uid: "").users;
-                          if (_formKey.currentState!.validate()) {
-                            //setState(() => loading = true);
-                            print(email);
-                            print(password);
-                            dynamic result =
-                                await _authService.SignInWithEmailPassword(
-                                    email, password);
+                            if (_formKey.currentState!.validate()) {
+                              //setState(() => loading = true);
+                              print(email);
+                              print(password);
+                              dynamic result =
+                                  await _authService.SignInWithEmailPassword(
+                                      email, password);
 
-                            print(result);
-                            if (result == null) {
-                              print("fgj");
-                              setState(() {
-                                error =
-                                    'Could Not sign in with these credintials';
-                                loading = false;
-                              });
-                            } else {
-                              // setState(() {
-                              //   loading = false;
-                              // });
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const HospitalManagement()));
+                              print(result);
+                              if (result == null) {
+                                print("fgj");
+                                setState(() {
+                                  error =
+                                      'Could Not sign in with these credintials';
+                                  loading = false;
+                                });
+                              } else {
+                                // setState(() {
+                                //   loading = false;
+                                // });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HospitalManagement()));
+                              }
                             }
-                          }
-                           },
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -198,7 +198,8 @@ class _SignInState extends State<SignIn> {
                         height: 12.0,
                       ),
                       Text(error,
-                          style: const TextStyle(color: Colors.red, fontSize: 14.0)),
+                          style: const TextStyle(
+                              color: Colors.red, fontSize: 14.0)),
                     ],
                   ),
                 )),

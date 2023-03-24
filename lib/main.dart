@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
                   .apply(displayColor: const Color(0)),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
-                  elevation: 0, backgroundColor: Colors.green,
+                  elevation: 0,
                   shape: const StadiumBorder(),
                   maximumSize: const Size(double.infinity, 56),
                   minimumSize: const Size(double.infinity, 56),

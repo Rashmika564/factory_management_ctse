@@ -49,8 +49,6 @@ class _EditAppoinmentnfoState extends State<EditAppoinmentnfo> {
 
   @override
   void dispose() {
-    _doctorNamecontroller!.dispose();
-    _hospitalNamecontroller!.dispose();
     _datecontroller!.dispose();
     _resoncontroller!.dispose();
     super.dispose();

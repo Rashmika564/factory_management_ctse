@@ -74,13 +74,13 @@ class _RegisterState extends State<Register> {
                     children: <Widget>[
                       Container(
                         width: 300,
-                        height: 400,
+                        height: 200,
                         decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image:
-                                AssetImage('Hospital-building-bro-green.png'),
-                            fit: BoxFit.fill,
-                          ),
+                          // image: DecorationImage(
+                          //   image:
+                          //       AssetImage('Hospital-building-bro-green.png'),
+                          //   fit: BoxFit.fill,
+                          // ),
                           shape: BoxShape.rectangle,
                         ),
                       ),
@@ -142,36 +142,35 @@ class _RegisterState extends State<Register> {
                           }
                         },
                         child: ElevatedButton(
-                          
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                            setState(() => loading = true);
-                            print(email);
-                            print(password);
-                            print("register");
-                            dynamic result =
-                                await _authService.RegisterWithEmailPassword(
-                                    email, password);
-                            print("after egtting result");
-                            print(result);
-                            if (result == null) {
-                              print("fgj");
-                              setState(() {
-                                error = 'Please enter valid email';
-                                loading = false;
-                              });
-                            } else {
-                              setState(() {
-                                loading = false;
-                              });
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const HospitalManagement()));
+                              setState(() => loading = true);
+                              print(email);
+                              print(password);
+                              print("register");
+                              dynamic result =
+                                  await _authService.RegisterWithEmailPassword(
+                                      email, password);
+                              print("after egtting result");
+                              print(result);
+                              if (result == null) {
+                                print("fgj");
+                                setState(() {
+                                  error = 'Please enter valid email';
+                                  loading = false;
+                                });
+                              } else {
+                                setState(() {
+                                  loading = false;
+                                });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HospitalManagement()));
+                              }
                             }
-                          }
-                            },
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

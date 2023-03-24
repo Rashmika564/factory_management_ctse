@@ -13,24 +13,19 @@ class EditDruginfo extends StatefulWidget {
   State<EditDruginfo> createState() => _EditDruginfoState();
 }
 
-
 final List<String> drugcategories = [
-    'Select a Category',
-    'Blood Pressure',
-    'Blood Cholesterol',
-    'Blood Glucose',
-    'Antibiotics',
-    'Painkillers',
-    'Other Drugs',
-  ];
-   String? selectedValue = 'Select a Category';
+  'Select a Category',
+  'Blood Pressure',
+  'Blood Cholesterol',
+  'Blood Glucose',
+  'Antibiotics',
+  'Painkillers',
+  'Other Drugs',
+];
+String? selectedValue = 'Select a Category';
 
-  final List<String> drugStatus = [
-    'Select a Status',
-    'Available',
-    'Unavailable'
-  ];
-   String? selectedValueStatus = 'Select a Status';
+final List<String> drugStatus = ['Select a Status', 'Available', 'Unavailable'];
+String? selectedValueStatus = 'Select a Status';
 
 class _EditDruginfoState extends State<EditDruginfo> {
   TextEditingController? _drCodecontroller;
@@ -45,7 +40,6 @@ class _EditDruginfoState extends State<EditDruginfo> {
     _drCodecontroller = TextEditingController(text: widget.drug.drCode);
     _drNamecontroller = TextEditingController(text: widget.drug.drName);
     _unitPriceontroller = TextEditingController(text: widget.drug.unitPrice);
-  
 
     selectedValue = widget.drug.drCategory;
     selectedValueStatus = widget.drug.drStatus;
@@ -58,8 +52,7 @@ class _EditDruginfoState extends State<EditDruginfo> {
     _drCodecontroller!.dispose();
     _drNamecontroller!.dispose();
     _unitPriceontroller!.dispose();
-    _drCategorycontroller!.dispose();
-    _drStatuscontroller!.dispose();
+
     super.dispose();
   }
 
@@ -78,49 +71,47 @@ class _EditDruginfoState extends State<EditDruginfo> {
             child: Column(
               children: [
                 Container(
-                      height: 300.0,
-                      decoration: const BoxDecoration(
-                          color: Colors.yellow,
-                          image: DecorationImage(
-                            image:
-                                AssetImage("assets/images/onlinedoctorbro.png"),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(150),
-                            bottomRight: Radius.circular(150),
-                          )),
-                    ),
-                    const SizedBox(height: 20.0),
-                    const Text("Welcome",
+                  height: 300.0,
+                  decoration: const BoxDecoration(
+                      color: Colors.yellow,
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/onlinedoctorbro.png"),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(150),
+                        bottomRight: Radius.circular(150),
+                      )),
+                ),
+                const SizedBox(height: 20.0),
+                const Text("Welcome",
+                    style: TextStyle(
+                        fontSize: 24.0,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black)),
+                const SizedBox(height: 10.0),
+                const Text("Edit Drug From Hear",
+                    style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                const SizedBox(height: 20.0),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                      child: const Text(
+                        "Back",
                         style: TextStyle(
-                            fontSize: 24.0,
-                            letterSpacing: 1.5,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black)),
-                    const SizedBox(height: 10.0),
-                    const Text("Edit Drug From Hear",
-                        style: TextStyle(fontSize: 16.0, color: Colors.black)),
-                    const SizedBox(height: 20.0),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                          child: const Text(
-                            "Back",
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: Colors.black),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const DrugsList()));
-                          }),
-                    ),
-                    // const Schedule(),
-                    const SizedBox(height: 30.0),
+                            decoration: TextDecoration.underline,
+                            color: Colors.black),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const DrugsList()));
+                      }),
+                ),
+                // const Schedule(),
+                const SizedBox(height: 30.0),
                 TextFormField(
                   validator: (val) =>
                       val!.isEmpty ? 'Drug Name Cant be empty' : null,
@@ -159,23 +150,23 @@ class _EditDruginfoState extends State<EditDruginfo> {
                 //       border: OutlineInputBorder(), hintText: "Drug Category"),
                 // ),
                 DropdownButtonFormField(
-                    validator: (value) => value!.toString() == 'Select a Category'
-                        ? 'category Cant be empty'
-                        : null,
-                    decoration: textInputDecoration,
-                    value: selectedValue,
-                    items: drugcategories.map((c) {
-                      return DropdownMenuItem(
-                        value: c,
-                        child: Text(c),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      // print(value);
-                      selectedValue = value as String?;
-                      // setState(() => doctorcategory = value as String?);
-                    },
-                  ),
+                  validator: (value) => value!.toString() == 'Select a Category'
+                      ? 'category Cant be empty'
+                      : null,
+                  decoration: textInputDecoration,
+                  value: selectedValue,
+                  items: drugcategories.map((c) {
+                    return DropdownMenuItem(
+                      value: c,
+                      child: Text(c),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    // print(value);
+                    selectedValue = value as String?;
+                    // setState(() => doctorcategory = value as String?);
+                  },
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -187,23 +178,23 @@ class _EditDruginfoState extends State<EditDruginfo> {
                 //       border: OutlineInputBorder(), hintText: "Drug Status"),
                 // ),
                 DropdownButtonFormField(
-                    validator: (value) => value!.toString() == 'Select a Category'
-                        ? 'category Cant be empty'
-                        : null,
-                    decoration: textInputDecoration,
-                    value: selectedValueStatus,
-                    items: drugStatus.map((c) {
-                      return DropdownMenuItem(
-                        value: c,
-                        child: Text(c),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      // print(value);
-                      selectedValueStatus = value as String?;
-                      // setState(() => doctorcategory = value as String?);
-                    },
-                  ),
+                  validator: (value) => value!.toString() == 'Select a Category'
+                      ? 'category Cant be empty'
+                      : null,
+                  decoration: textInputDecoration,
+                  value: selectedValueStatus,
+                  items: drugStatus.map((c) {
+                    return DropdownMenuItem(
+                      value: c,
+                      child: Text(c),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    // print(value);
+                    selectedValueStatus = value as String?;
+                    // setState(() => doctorcategory = value as String?);
+                  },
+                ),
                 const SizedBox(
                   height: 10,
                 ),
