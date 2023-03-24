@@ -86,221 +86,219 @@ class _AddDrugsState extends State<AddDrugs> {
             ),
           ],
         ),
-        body: Stack(
-          children: [
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Container(
-                    height: 300.0,
-                    decoration: const BoxDecoration(
-                        color: Colors.yellow,
-                        image: DecorationImage(
-                          image:
-                              AssetImage("assets/images/onlinedoctorbro.png"),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(250),
-                          bottomRight: Radius.circular(0),
-                        )),
-                  ),
-                  const SizedBox(height: 20.0),
-                  const Text("Welcome",
-                      style: TextStyle(
-                          fontSize: 24.0,
-                          letterSpacing: 1.5,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                  const SizedBox(height: 10.0),
-                  const Text("Add Drug",
-                      style: TextStyle(fontSize: 16.0, color: Colors.black)),
-                  const SizedBox(height: 20.0),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                        child: const Text(
-                          "View all",
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: Colors.black),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const DrugsList()));
-                        }),
-                  ),
-                  // const Schedule(),
-                  const SizedBox(height: 30.0),
-                  // const Image(image: AssetImage('graphics/background.png')),
-                  TextFormField(
-                    validator: (val) =>
-                        val!.isEmpty ? 'Drug Name Cant be empty' : null,
-                    controller: _drNamecontroller,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Drug Name",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.person),
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  height: 300.0,
+                  decoration: const BoxDecoration(
+                      color: Colors.yellow,
+                      image: DecorationImage(
+                        image:
+                            AssetImage("assets/images/onlinedoctorbro.png"),
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    validator: (val) =>
-                        val!.isEmpty ? 'Drug Code Cant be empty' : null,
-                    controller: _drCodecontroller,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Drug Code",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.person),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(250),
+                        bottomRight: Radius.circular(0),
+                      )),
+                ),
+                const SizedBox(height: 20.0),
+                const Text("Welcome",
+                    style: TextStyle(
+                        fontSize: 24.0,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black)),
+                const SizedBox(height: 10.0),
+                const Text("Add Drug",
+                    style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                const SizedBox(height: 20.0),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                      child: const Text(
+                        "View all",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    validator: (val) =>
-                        val!.isEmpty ? 'Unit Price Cant be empty' : null,
-                    controller: _unitPriceontroller,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Unit Price",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.person),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  // TextFormField(
-                  //   validator: (value) =>
-                  //       value!.isEmpty ? 'Drug Category Cant be empty' : null,
-                  //   controller: _drCategorycontroller,
-                  //   keyboardType: TextInputType.text,
-                  //   textInputAction: TextInputAction.next,
-                  //   decoration: const InputDecoration(
-                  //     hintText: "Drug Category",
-                  //     prefixIcon: Padding(
-                  //       padding: EdgeInsets.all(defaultPadding),
-                  //       child: Icon(Icons.person),
-                  //     ),
-                  //   ),
-                  // ),
-                  DropdownButtonFormField(
-                    validator: (value) => value!.toString() == 'Select a Category'
-                        ? 'category Cant be empty'
-                        : null,
-                    decoration: textInputDecoration,
-                    value: selectedValue,
-                    items: drugcategories.map((c) {
-                      return DropdownMenuItem(
-                        value: c,
-                        child: Text(c),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      // print(value);
-                      selectedValue = value as String?;
-                      // setState(() => doctorcategory = value as String?);
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  DropdownButtonFormField(
-                    validator: (value) => value!.toString() == 'Select a Status'
-                        ? 'category Cant be empty'
-                        : null,
-                    decoration: textInputDecoration,
-                    value: selectedValueStatus,
-                    items: drugStatus.map((c) {
-                      return DropdownMenuItem(
-                        value: c,
-                        child: Text(c),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      // print(value);
-                      selectedValueStatus = value as String?;
-                      // setState(() => doctorcategory = value as String?);
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        if (kDebugMode) {
-                          print("Create Data");
-                        }
-                        //_create();
-                        DrugHelper.create(DrugsModel(
-                            drCode: _drCodecontroller.text,
-                            drName: _drNamecontroller.text,
-                            unitPrice: _unitPriceontroller.text,
-                            drCategory: selectedValue,
-                            drStatus: selectedValueStatus));
-
-                        final snackBar = SnackBar(
-                          content: const Text('Drug Record Added Successfully'),
-                          backgroundColor:
-                              const Color.fromARGB(255, 17, 90, 150),
-                          action: SnackBarAction(
-                            label: 'close',
-                            onPressed: () {
-                              // Some code to undo the change.
-                            },
-                          ),
-                        );
-
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+                      onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const DrugsList()));
-                      }
-                    },
-                    child: Container(
-                      width: 100,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.yellow),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            "Book",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ],
-                      ),
+                      }),
+                ),
+                // const Schedule(),
+                const SizedBox(height: 30.0),
+                // const Image(image: AssetImage('graphics/background.png')),
+                TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Drug Name Cant be empty' : null,
+                  controller: _drNamecontroller,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Drug Name",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Drug Code Cant be empty' : null,
+                  controller: _drCodecontroller,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Drug Code",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
+                    ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Unit Price Cant be empty' : null,
+                  controller: _unitPriceontroller,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    hintText: "Unit Price",
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.all(defaultPadding),
+                      child: Icon(Icons.person),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                // TextFormField(
+                //   validator: (value) =>
+                //       value!.isEmpty ? 'Drug Category Cant be empty' : null,
+                //   controller: _drCategorycontroller,
+                //   keyboardType: TextInputType.text,
+                //   textInputAction: TextInputAction.next,
+                //   decoration: const InputDecoration(
+                //     hintText: "Drug Category",
+                //     prefixIcon: Padding(
+                //       padding: EdgeInsets.all(defaultPadding),
+                //       child: Icon(Icons.person),
+                //     ),
+                //   ),
+                // ),
+                DropdownButtonFormField(
+                  validator: (value) => value!.toString() == 'Select a Category'
+                      ? 'category Cant be empty'
+                      : null,
+                  decoration: textInputDecoration,
+                  value: selectedValue,
+                  items: drugcategories.map((c) {
+                    return DropdownMenuItem(
+                      value: c,
+                      child: Text(c),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    // print(value);
+                    selectedValue = value as String?;
+                    // setState(() => doctorcategory = value as String?);
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                DropdownButtonFormField(
+                  validator: (value) => value!.toString() == 'Select a Status'
+                      ? 'category Cant be empty'
+                      : null,
+                  decoration: textInputDecoration,
+                  value: selectedValueStatus,
+                  items: drugStatus.map((c) {
+                    return DropdownMenuItem(
+                      value: c,
+                      child: Text(c),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    // print(value);
+                    selectedValueStatus = value as String?;
+                    // setState(() => doctorcategory = value as String?);
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      if (kDebugMode) {
+                        print("Create Data");
+                      }
+                      //_create();
+                      DrugHelper.create(DrugsModel(
+                          drCode: _drCodecontroller.text,
+                          drName: _drNamecontroller.text,
+                          unitPrice: _unitPriceontroller.text,
+                          drCategory: selectedValue,
+                          drStatus: selectedValueStatus));
+
+                      final snackBar = SnackBar(
+                        content: const Text('Drug Record Added Successfully'),
+                        backgroundColor:
+                            const Color.fromARGB(255, 17, 90, 150),
+                        action: SnackBarAction(
+                          label: 'close',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const DrugsList()));
+                    }
+                  },
+                  child: Container(
+                    width: 100,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.yellow),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Add Drug",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

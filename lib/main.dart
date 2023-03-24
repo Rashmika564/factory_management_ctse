@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
                   .apply(displayColor: const Color(0)),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
-                  elevation: 0,
+                  elevation: 0, backgroundColor: Colors.green,
                   shape: const StadiumBorder(),
                   maximumSize: const Size(double.infinity, 56),
                   minimumSize: const Size(double.infinity, 56),
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
               inputDecorationTheme: const InputDecorationTheme(
                 filled: true,
                 fillColor: Color(0xFFF1E6FF),
-                iconColor: Color(0xFF6F35A5),
+                iconColor: Colors.green,
                 prefixIconColor: Color(0xFF6F35A5),
                 contentPadding: EdgeInsets.symmetric(
                     horizontal: defaultPadding, vertical: defaultPadding),

@@ -1,11 +1,14 @@
 //import 'dart:ffi';
 
-import 'package:factory_management_ctse/data/models/drugs_model.dart';
-import 'package:factory_management_ctse/data/remote_data_source/drug_helper.dart';
-import 'package:factory_management_ctse/drug_home/add_drugs_info.dart';
-import 'package:factory_management_ctse/drug_home/edit_drugs_info.dart';
+import 'package:factory_management_ctse/appoinment_home/add_appoinment_info.dart';
+import 'package:factory_management_ctse/appoinment_home/edit_apoinment_info.dart';
+import 'package:factory_management_ctse/data/models/hospital_model.dart';
+import 'package:factory_management_ctse/data/remote_data_source/hospital_helper.dart';
+import 'package:factory_management_ctse/hospital_home/add_hospital_info.dart';
+import 'package:factory_management_ctse/hospital_home/edit_hospital_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../data/models/apponment_model.dart';
 import '../data/remote_data_source/appoinment_helper.dart';
 import '../services/auth.dart';
 
@@ -20,14 +23,14 @@ final ButtonStyle flatButtonStyle = TextButton.styleFrom(
   //backgroundColor: Color.fromARGB(255, 3, 33, 57),
 );
 
-class DrugsList extends StatefulWidget {
-  const DrugsList({Key? key}) : super(key: key);
+class HospitalList extends StatefulWidget {
+  const HospitalList({Key? key}) : super(key: key);
 
   @override
-  State<DrugsList> createState() => _DrugsListState();
+  State<HospitalList> createState() => _HospitalListState();
 }
 
-class _DrugsListState extends State<DrugsList> {
+class _HospitalListState extends State<HospitalList> {
   final TextEditingController _fullnamecontroller = TextEditingController();
   final TextEditingController _agecontroller = TextEditingController();
   final AuthService service = AuthService();
@@ -45,7 +48,7 @@ class _DrugsListState extends State<DrugsList> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Drug List"),
+          title: const Text("Hospital List"),
           backgroundColor: const Color.fromARGB(255, 17, 90, 150),
           elevation: 0.0,
           actions: <Widget>[
@@ -90,14 +93,14 @@ class _DrugsListState extends State<DrugsList> {
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
                     const SizedBox(height: 10.0),
-                    const Text("See Drug List",
+                    const Text("Hospital List",
                         style: TextStyle(fontSize: 16.0, color: Colors.black)),
                     const SizedBox(height: 20.0),
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
                           child: const Text(
-                            "Add New Drug",
+                            "Add New Hospital",
                             style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 color: Colors.black),
@@ -107,13 +110,13 @@ class _DrugsListState extends State<DrugsList> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const AddDrugs()));
+                                        const AddHospital()));
                           }),
                     ),
                     // const Schedule(),
                     const SizedBox(height: 30.0),
-                  StreamBuilder<List<DrugsModel>>(
-                      stream: DrugHelper.read(),
+                  StreamBuilder<List<HospitalModel>>(
+                      stream: HospitalHelper.read(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return const Center(
@@ -126,26 +129,33 @@ class _DrugsListState extends State<DrugsList> {
                           );
                         }
                         if (snapshot.hasData) {
-                          final docterdata = snapshot.data;
+                          final hospitalData = snapshot.data;
                           return Expanded(
                             child: ListView.builder(
-                              itemCount: docterdata!.length,
+                              itemCount: hospitalData!.length,
                               // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
                               itemBuilder: (context, Index) {
-                                final singleDrug = docterdata[Index];
+                                final singleHospital = hospitalData[Index];
                                 return Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 5),
+                                  margin: const EdgeInsets.symmetric(vertical: 5),
                                   child: ListTile(
+                                      shape: BeveledRectangleBorder(
+                                        //<-- SEE HERE
+                                      
+                                        side: const BorderSide(width: 1),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                       leading: Container(
-                                        width: 40,
+                                        width: 20,
                                         height: 40,
                                         decoration: const BoxDecoration(
-                                            color: Colors.green,
-                                            shape: BoxShape.circle),
+                                            color: Colors.yellow,
+                                            shape: BoxShape.rectangle),
                                       ),
-                                      title: Text("${singleDrug.drName}"),
-                                      subtitle: Text("${singleDrug.drCode}"),
+                                      title:
+                                          Text("${singleHospital.hospitalname}"),
+                                      subtitle: Text(
+                                          "${singleHospital.hospitalbranch}"),
                                       trailing: Column(
                                         children: [
                                           InkWell(
@@ -155,22 +165,19 @@ class _DrugsListState extends State<DrugsList> {
                                                     MaterialPageRoute(
                                                         builder:
                                                             (context) =>
-                                                                EditDruginfo(
-                                                                  drug: DrugsModel(
-                                                                      drCode: singleDrug
-                                                                          .drCode,
-                                                                      drName: singleDrug
-                                                                          .drName,
-                                                                      unitPrice:
-                                                                          singleDrug
-                                                                              .unitPrice,
-                                                                      drCategory:
-                                                                          singleDrug
-                                                                              .drCategory,
-                                                                      drStatus:
-                                                                          singleDrug
-                                                                              .drStatus,
-                                                                      id: singleDrug
+                                                                EditHospitalInfo(
+                                                                  hospital: HospitalModel(
+                                                                      hospitalname:
+                                                                          singleHospital
+                                                                              .hospitalname,
+                                                                      hospitalbranch:
+                                                                          singleHospital
+                                                                              .hospitalbranch,
+                                                                      hospitaladdress: singleHospital
+                                                                          .hospitaladdress,
+                                                                      telephone: singleHospital
+                                                                          .telephone,
+                                                                      id: singleHospital
                                                                           .id),
                                                                 )));
                                               },
@@ -195,10 +202,9 @@ class _DrugsListState extends State<DrugsList> {
                                                       actions: [
                                                         ElevatedButton(
                                                             onPressed: () {
-                                                              DrugHelper.delete(
-                                                                      singleDrug)
-                                                                  .then(
-                                                                      (value) {
+                                                              HospitalHelper.delete(
+                                                                      singleHospital)
+                                                                  .then((value) {
                                                                 Navigator.pop(
                                                                     context);
                                                               });
