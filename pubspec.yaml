@@ -42,11 +42,11 @@ dependencies:
   http: ^0.13.5
   flutter_spinkit: ^5.1.0
   dropdown_button2: ^2.0.0
-<<<<<<< HEAD
+
   flutter_svg: ^1.1.6
-=======
-  flutter_svg: ^0.22.0
->>>>>>> 5d59c3896f9dd818326b1b3e82ed09d49be450d8
+
+
+
   
 
 dev_dependencies:

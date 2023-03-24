@@ -21,11 +21,9 @@ class Wrapper extends StatelessWidget {
       //return Authenticate();
       return WelcomeScreen();
     } else {
-<<<<<<< HEAD
       return WelcomeScreen();
-=======
+
       return HospitalManagement();
->>>>>>> 5d59c3896f9dd818326b1b3e82ed09d49be450d8
     }
 
     // return Container(
