@@ -23,8 +23,8 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final ButtonStyle flatButtonStyle = TextButton.styleFrom(
     primary: Colors.white,
-    minimumSize: Size(88, 44),
-    padding: EdgeInsets.symmetric(horizontal: 16.0),
+    minimumSize: const Size(88, 44),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(2.0)),
     ),
@@ -48,21 +48,21 @@ class _SignInState extends State<SignIn> {
             appBar: AppBar(
               backgroundColor: const Color.fromARGB(255, 17, 90, 150),
               elevation: 0.0,
-              title: Text('Sign in'),
+              title: const Text('Sign in'),
               actions: <Widget>[
                 TextButton.icon(
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Register()));
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     // <-- Icon
                     Icons.person_add,
                     color: Colors.white,
 
                     size: 24.0,
                   ),
-                  label: Text(
+                  label: const Text(
                     'Sign Up',
                     style: TextStyle(color: Colors.white),
                   ), // <-- Text
@@ -70,7 +70,7 @@ class _SignInState extends State<SignIn> {
               ],
             ),
             body: Container(
-                padding: EdgeInsets.symmetric(vertical: 29.0, horizontal: 50.0),
+                padding: const EdgeInsets.symmetric(vertical: 29.0, horizontal: 50.0),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -78,7 +78,7 @@ class _SignInState extends State<SignIn> {
                       Container(
                         width: 300,
                         height: 400,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('green.png'),
                             fit: BoxFit.fill,
@@ -86,7 +86,7 @@ class _SignInState extends State<SignIn> {
                           shape: BoxShape.rectangle,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10.0,
                       ),
                       TextFormField(
@@ -98,7 +98,7 @@ class _SignInState extends State<SignIn> {
                           setState(() => email = val);
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20.0,
                       ),
                       TextFormField(
@@ -112,7 +112,7 @@ class _SignInState extends State<SignIn> {
                           setState(() => password = val);
                         },
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       InkWell(
                         onTap: () async {
                           DatabaseService(uid: "").users;
@@ -146,18 +146,47 @@ class _SignInState extends State<SignIn> {
                         },
                         child: ElevatedButton (
                           
-                          onPressed: () {  },
+                          onPressed: () async { 
+                            DatabaseService(uid: "").users;
+                          if (_formKey.currentState!.validate()) {
+                            //setState(() => loading = true);
+                            print(email);
+                            print(password);
+                            dynamic result =
+                                await _authService.SignInWithEmailPassword(
+                                    email, password);
+
+                            print(result);
+                            if (result == null) {
+                              print("fgj");
+                              setState(() {
+                                error =
+                                    'Could Not sign in with these credintials';
+                                loading = false;
+                              });
+                            } else {
+                              // setState(() {
+                              //   loading = false;
+                              // });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HospitalManagement()));
+                            }
+                          }
+                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.update,
                                 color: Colors.white,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
-                              Text(
+                              const Text(
                                 "Sign In",
                                 style: TextStyle(color: Colors.white),
                               ),
@@ -165,11 +194,11 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12.0,
                       ),
                       Text(error,
-                          style: TextStyle(color: Colors.red, fontSize: 14.0)),
+                          style: const TextStyle(color: Colors.red, fontSize: 14.0)),
                     ],
                   ),
                 )),
