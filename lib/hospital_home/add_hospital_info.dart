@@ -49,7 +49,7 @@ class _AddHospitalState extends State<AddHospital> {
   TextEditingController _telephonecontroller = TextEditingController();
   final AuthService service = AuthService();
   final _formKey = GlobalKey<FormState>();
-  String? hospitalbranch = 'Select a Location';
+  String? hospitalbranch = 'Select the Hospital Location';
 
   @override
   void dispose() {
@@ -106,9 +106,10 @@ class _AddHospitalState extends State<AddHospital> {
                   height: 10,
                 ),
                 DropdownButtonFormField(
-                  validator: (value) => value!.toString() == 'Select a branch'
-                      ? 'Branch Cant be empty'
-                      : null,
+                  validator: (value) =>
+                      value!.toString() == 'Select the Hospital Location'
+                          ? 'Branch Cant be empty'
+                          : null,
                   decoration: textInputDecoration,
                   value: hospitalbranch,
                   items: categories.map((c) {
@@ -164,7 +165,7 @@ class _AddHospitalState extends State<AddHospital> {
                       _telephonecontroller.clear();
 
                       // setState(() {
-                      hospitalbranch = 'Select a branch location';
+                      hospitalbranch = 'Select the Hospital Location';
 
                       // showDialog(
                       //     context: context,

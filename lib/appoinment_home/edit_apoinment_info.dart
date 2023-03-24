@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class EditAppoinmentnfo extends StatefulWidget {
   final AppoinmentModel appoinment;
-  const EditAppoinmentnfo({Key? key, required this.appoinment}) : super(key: key);
+  const EditAppoinmentnfo({Key? key, required this.appoinment})
+      : super(key: key);
 
   @override
   State<EditAppoinmentnfo> createState() => _EditAppoinmentnfoState();
@@ -19,8 +20,10 @@ class _EditAppoinmentnfoState extends State<EditAppoinmentnfo> {
 
   @override
   void initState() {
-    _doctorNamecontroller = TextEditingController(text: widget.appoinment.doctorName);
-    _hospitalNamecontroller = TextEditingController(text: widget.appoinment.hospitalName);
+    _doctorNamecontroller =
+        TextEditingController(text: widget.appoinment.doctorName);
+    _hospitalNamecontroller =
+        TextEditingController(text: widget.appoinment.hospitalName);
     _datecontroller = TextEditingController(text: widget.appoinment.date);
     _resoncontroller = TextEditingController(text: widget.appoinment.reson);
     //init state
@@ -52,6 +55,8 @@ class _EditAppoinmentnfoState extends State<EditAppoinmentnfo> {
             child: Column(
               children: [
                 TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Hospital Name Cant be empty' : null,
                   controller: _hospitalNamecontroller,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Hospital"),
@@ -60,6 +65,8 @@ class _EditAppoinmentnfoState extends State<EditAppoinmentnfo> {
                   height: 10,
                 ),
                 TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Doctor Name Cant be empty' : null,
                   controller: _doctorNamecontroller,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Doctor Name"),
@@ -68,6 +75,8 @@ class _EditAppoinmentnfoState extends State<EditAppoinmentnfo> {
                   height: 10,
                 ),
                 TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Date Cant be empty' : null,
                   controller: _datecontroller,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), hintText: "Date"),
@@ -76,9 +85,12 @@ class _EditAppoinmentnfoState extends State<EditAppoinmentnfo> {
                   height: 10,
                 ),
                 TextFormField(
+                  validator: (val) =>
+                      val!.isEmpty ? 'Reason Cant be empty' : null,
                   controller: _resoncontroller,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Reson for appoinment"),
+                      border: OutlineInputBorder(),
+                      hintText: "Reson for appoinment"),
                 ),
                 const SizedBox(
                   height: 10,
@@ -86,14 +98,27 @@ class _EditAppoinmentnfoState extends State<EditAppoinmentnfo> {
                 InkWell(
                   onTap: () {
                     AppoinmentHelper.update(AppoinmentModel(
-                            id: widget.appoinment.id,
-                            hospitalName: _hospitalNamecontroller!.text,
-                            doctorName: _doctorNamecontroller!.text, 
-                            date: _datecontroller!.text, 
-                            reson: _resoncontroller!.text, 
-                            ))
-                        .then((value) {
+                      id: widget.appoinment.id,
+                      hospitalName: _hospitalNamecontroller!.text,
+                      doctorName: _doctorNamecontroller!.text,
+                      date: _datecontroller!.text,
+                      reson: _resoncontroller!.text,
+                    )).then((value) {
                       Navigator.pop(context);
+
+                      final snackBar = SnackBar(
+                        content: const Text(
+                            'Apoinment Record modified Successfully'),
+                        backgroundColor: const Color.fromARGB(255, 17, 90, 150),
+                        action: SnackBarAction(
+                          label: 'close',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     });
                   },
                   child: Container(

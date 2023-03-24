@@ -38,6 +38,7 @@ class _EditHospitalInfoState extends State<EditHospitalInfo> {
 
   final _formKey = GlobalKey<FormState>();
   String? branch;
+  String? hospitalbranch = 'Select the Hospital Location';
 
   @override
   void initState() {
@@ -108,11 +109,12 @@ class _EditHospitalInfoState extends State<EditHospitalInfo> {
                   height: 10,
                 ),
                 DropdownButtonFormField(
-                  validator: (value) => value!.toString() == 'Select a Branch'
-                      ? 'Branch Cant be empty'
-                      : null,
+                  validator: (value) =>
+                      value!.toString() == 'Select the Hospital Location'
+                          ? 'Branch Cant be empty'
+                          : null,
                   decoration: textInputDecoration,
-                  value: branch,
+                  value: hospitalbranch,
                   items: categories.map((c) {
                     return DropdownMenuItem(
                       value: c,

@@ -89,7 +89,8 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                     decoration: const BoxDecoration(
                         color: Colors.yellow,
                         image: DecorationImage(
-                          image: AssetImage("assets/images/onlinedoctorbro.png"),
+                          image:
+                              AssetImage("assets/images/onlinedoctorbro.png"),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.only(
@@ -128,6 +129,8 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   // const Schedule(),
                   const SizedBox(height: 30.0),
                   TextFormField(
+                    validator: (val) =>
+                        val!.isEmpty ? 'Hospital Name Cant be empty' : null,
                     controller: _hospitalNamecontroller,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
@@ -143,6 +146,8 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (val) =>
+                        val!.isEmpty ? 'Doctor Name Cant be empty' : null,
                     controller: _doctorNamecontroller,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
@@ -154,14 +159,15 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                       ),
                     ),
                   ),
-                   const SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (val) =>
+                        val!.isEmpty ? 'Date Name Cant be empty' : null,
                     controller:
                         _datecontroller, //editing controller of this TextField
-                    readOnly:
-                        true,
+                    readOnly: true,
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
@@ -232,6 +238,20 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                           hospitalName: _hospitalNamecontroller.text,
                           date: _datecontroller.text,
                           reson: _resoncontroller.text));
+
+                      final snackBar = SnackBar(
+                        content:
+                            const Text('Apoinment Record Added Successfully'),
+                        backgroundColor: const Color.fromARGB(255, 17, 90, 150),
+                        action: SnackBarAction(
+                          label: 'close',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
                       Navigator.push(
                           context,

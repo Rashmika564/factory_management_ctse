@@ -156,6 +156,33 @@ class _AppoinmentListState extends State<AppoinmentList> {
                                                                 .then((value) {
                                                               Navigator.pop(
                                                                   context);
+                                                              final snackBar =
+                                                                  SnackBar(
+                                                                content: const Text(
+                                                                    'Appoinment Record Delete Successfully'),
+                                                                backgroundColor:
+                                                                    const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        17,
+                                                                        90,
+                                                                        150),
+                                                                action:
+                                                                    SnackBarAction(
+                                                                  label:
+                                                                      'close',
+                                                                  onPressed:
+                                                                      () {
+                                                                    // Some code to undo the change.
+                                                                  },
+                                                                ),
+                                                              );
+
+                                                              ScaffoldMessenger
+                                                                      .of(
+                                                                          context)
+                                                                  .showSnackBar(
+                                                                      snackBar);
                                                             });
                                                           },
                                                           child: const Text(

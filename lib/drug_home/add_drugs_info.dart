@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../services/auth.dart';
+import '../shared/constants.dart';
 import 'drugs_list.dart';
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
@@ -31,8 +32,10 @@ class _AddDrugsState extends State<AddDrugs> {
   final TextEditingController _drCategorycontroller = TextEditingController();
   final TextEditingController _drStatuscontroller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String? drugcategory = 'Select a Category';
 
-  List<String> drugcategories = [
+  final List<String> drugcategories = [
+    'Select a Category',
     'Item1',
     'Item2',
     'Item3',
@@ -173,19 +176,23 @@ class _AddDrugsState extends State<AddDrugs> {
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  validator: (value) =>
-                      value!.isEmpty ? 'Drug Category Cant be empty' : null,
-                  controller: _drCategorycontroller,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(
-                    hintText: "Drug Category",
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.all(defaultPadding),
-                      child: Icon(Icons.person),
-                    ),
-                  ),
+                DropdownButtonFormField(
+                  validator: (value) => value!.toString() == 'Select a Category'
+                      ? 'category Cant be empty'
+                      : null,
+                  decoration: textInputDecoration,
+                  value: drugcategory,
+                  items: drugcategories.map((c) {
+                    return DropdownMenuItem(
+                      value: c,
+                      child: Text(c),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    // print(value);
+                    drugcategory = value as String?;
+                    // setState(() => doctorcategory = value as String?);
+                  },
                 ),
                 const SizedBox(
                   height: 10,
@@ -218,8 +225,21 @@ class _AddDrugsState extends State<AddDrugs> {
                           drCode: _drCodecontroller.text,
                           drName: _drNamecontroller.text,
                           unitPrice: _unitPriceontroller.text,
-                          drCategory: _drCategorycontroller.text,
+                          drCategory: drugcategory,
                           drStatus: _drStatuscontroller.text));
+
+                      final snackBar = SnackBar(
+                        content: const Text('Drug Record Added Successfully'),
+                        backgroundColor: const Color.fromARGB(255, 17, 90, 150),
+                        action: SnackBarAction(
+                          label: 'close',
+                          onPressed: () {
+                            // Some code to undo the change.
+                          },
+                        ),
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
                       Navigator.push(
                           context,
