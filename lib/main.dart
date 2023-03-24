@@ -1,4 +1,5 @@
 import 'package:factory_management_ctse/screens/wrapper.dart';
+import 'package:factory_management_ctse/shared/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -61,22 +62,28 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Hospital Management',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
-            primaryColor: primaryColor,
-            textTheme:
-                Theme.of(context).textTheme.apply(displayColor: textColor),
-            elevatedButtonTheme: ElevatedButtonThemeData(
-              style: TextButton.styleFrom(
-                backgroundColor: primaryColor,
-                padding: EdgeInsets.all(defaultPadding),
+              primarySwatch: Colors.blue,
+              primaryColor: primaryColor,
+              textTheme:
+                  Theme.of(context).textTheme.apply(displayColor: textColor),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: TextButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  padding: EdgeInsets.all(defaultPadding),
+                ),
               ),
-            ),
-            inputDecorationTheme: InputDecorationTheme(
-              border: textFieldBorder,
-              enabledBorder: textFieldBorder,
-              focusedBorder: textFieldBorder,
-            ),
-          ),
+              inputDecorationTheme: const InputDecorationTheme(
+                filled: true,
+                fillColor: kPrimaryLightColor,
+                iconColor: kPrimaryColor,
+                prefixIconColor: kPrimaryColor,
+                contentPadding: EdgeInsets.symmetric(
+                    horizontal: defaultPadding, vertical: defaultPadding),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  borderSide: BorderSide.none,
+                ),
+              )),
           home: Wrapper(),
         );
       },
