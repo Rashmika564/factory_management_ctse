@@ -143,7 +143,35 @@ class _RegisterState extends State<Register> {
                         },
                         child: ElevatedButton(
                           
-                          onPressed: () {  },
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                            setState(() => loading = true);
+                            print(email);
+                            print(password);
+                            print("register");
+                            dynamic result =
+                                await _authService.RegisterWithEmailPassword(
+                                    email, password);
+                            print("after egtting result");
+                            print(result);
+                            if (result == null) {
+                              print("fgj");
+                              setState(() {
+                                error = 'Please enter valid email';
+                                loading = false;
+                              });
+                            } else {
+                              setState(() {
+                                loading = false;
+                              });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HospitalManagement()));
+                            }
+                          }
+                            },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

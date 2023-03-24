@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import '../appoinment_home/add_appoinment_info.dart';
 import '../appoinment_home/appoinment_list.dart';
 import '../services/auth.dart';
+import 'about.dart';
 
 class Wrapper extends StatelessWidget {
   @override
@@ -19,9 +20,9 @@ class Wrapper extends StatelessWidget {
 
     if (user == null) {
       //return Authenticate();
-      return HospitalManagement();
+      return About();
     } else {
-      return HospitalManagement();
+      return About();
     }
 
     // return Container(
