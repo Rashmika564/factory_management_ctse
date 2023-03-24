@@ -30,8 +30,9 @@ class _AddDrugsState extends State<AddDrugs> {
   final TextEditingController _unitPriceontroller = TextEditingController();
   final TextEditingController _drCategorycontroller = TextEditingController();
   final TextEditingController _drStatuscontroller = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  List<String> items = [
+  List<String> drugcategories = [
     'Item1',
     'Item2',
     'Item3',
@@ -40,7 +41,6 @@ class _AddDrugsState extends State<AddDrugs> {
   String? selectedValue;
 
   final AuthService service = AuthService();
-  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -80,18 +80,18 @@ class _AddDrugsState extends State<AddDrugs> {
               child: Column(
                 children: [
                   Container(
-                      height: 300.0,
-                      decoration: const BoxDecoration(
-                          color: Colors.yellow,
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/onlinedoctorbro.png"),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(250),
-                            bottomRight: Radius.circular(0),
-                          )),
-                    ),
+                    height: 300.0,
+                    decoration: const BoxDecoration(
+                        color: Colors.yellow,
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/onlinedoctorbro.png"),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(250),
+                          bottomRight: Radius.circular(0),
+                        )),
+                  ),
                   const SizedBox(height: 20.0),
                   const Text("Welcome",
                       style: TextStyle(
@@ -123,97 +123,122 @@ class _AddDrugsState extends State<AddDrugs> {
                   const SizedBox(height: 30.0),
                   // const Image(image: AssetImage('graphics/background.png')),
                   TextFormField(
+                    validator: (val) =>
+                        val!.isEmpty ? 'Drug Name Cant be empty' : null,
                     controller: _drNamecontroller,
                     keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        hintText: "Drug Name",
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(defaultPadding),
-                          child: Icon(Icons.person),
-                        ),
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Drug Name",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
                       ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (val) =>
+                        val!.isEmpty ? 'Drug Code Cant be empty' : null,
                     controller: _drCodecontroller,
                     keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        hintText: "Drug Code",
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(defaultPadding),
-                          child: Icon(Icons.person),
-                        ),
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Drug Code",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
                       ),
+                    ),
                   ),
                   const SizedBox(
-                      height: 10,
-                    ),
+                    height: 10,
+                  ),
                   TextFormField(
+                    validator: (val) =>
+                        val!.isEmpty ? 'Unit Price Cant be empty' : null,
                     controller: _unitPriceontroller,
                     keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        hintText: "Unit Price",
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(defaultPadding),
-                          child: Icon(Icons.person),
-                        ),
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Unit Price",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
                       ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (value) =>
+                        value!.isEmpty ? 'Drug Category Cant be empty' : null,
                     controller: _drCategorycontroller,
                     keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        hintText: "Drug Category",
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(defaultPadding),
-                          child: Icon(Icons.person),
-                        ),
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Drug Category",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
                       ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
+                    validator: (val) =>
+                        val!.isEmpty ? 'Drug Status Cant be empty' : null,
                     controller: _drStatuscontroller,
                     keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        hintText: "Drug Status",
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(defaultPadding),
-                          child: Icon(Icons.person),
-                        ),
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Drug Status",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
                       ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   InkWell(
                     onTap: () {
-                      if (kDebugMode) {
-                        print("Create Data");
-                      }
-                      //_create();
-                      DrugHelper.create(DrugsModel(
-                          drCode: _drCodecontroller.text,
-                          drName: _drNamecontroller.text,
-                          unitPrice: _unitPriceontroller.text,
-                          drCategory: _drCategorycontroller.text,
-                          drStatus: _drStatuscontroller.text));
+                      if (_formKey.currentState!.validate()) {
+                        if (kDebugMode) {
+                          print("Create Data");
+                        }
+                        //_create();
+                        DrugHelper.create(DrugsModel(
+                            drCode: _drCodecontroller.text,
+                            drName: _drNamecontroller.text,
+                            unitPrice: _unitPriceontroller.text,
+                            drCategory: _drCategorycontroller.text,
+                            drStatus: _drStatuscontroller.text));
 
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const DrugsList()));
+                        final snackBar = SnackBar(
+                          content: const Text('Drug Record Added Successfully'),
+                          backgroundColor: const Color.fromARGB(255, 17, 90, 150),
+                          action: SnackBarAction(
+                            label: 'close',
+                            onPressed: () {
+                              // Some code to undo the change.
+                            },
+                          ),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const DrugsList()));
+                      }
                     },
                     child: Container(
                       width: 100,
