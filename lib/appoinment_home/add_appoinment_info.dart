@@ -27,6 +27,7 @@ class AddAppoinment extends StatefulWidget {
 }
 
 class _AddAppoinmentState extends State<AddAppoinment> {
+
   TextEditingController _doctorNamecontroller = TextEditingController();
   final TextEditingController _hospitalNamecontroller = TextEditingController();
   final TextEditingController _datecontroller = TextEditingController();
@@ -50,7 +51,9 @@ class _AddAppoinmentState extends State<AddAppoinment> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      
       child: Scaffold(
+        
         appBar: AppBar(
           title: const Text("Add New Appoinment"),
           backgroundColor: const Color.fromARGB(255, 17, 90, 150),
@@ -132,46 +135,7 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   const SizedBox(
                     height: 10,
                   ),
-                  // TextFormField(
-                  //   controller: _doctorNamecontroller,
-                  //   decoration: const InputDecoration(
-                  //       border: OutlineInputBorder(), hintText: "Doctor Name"),
-                  // ),
-                  // DropdownButtonHideUnderline(
-                  //   child: DropdownButton2<String>(
-
-                  //     hint: Text(
-                  //       'Select Doctor',
-                  //       style: TextStyle(
-                  //         fontSize: 14,
-                  //         color: Theme.of(context).hintColor,
-                  //       ),
-                  //     ),
-                  //     items: items
-                  //         .map((item) => DropdownMenuItem<String>(
-                  //               value: item,
-                  //               child: Text(
-                  //                 item,
-                  //                 style: const TextStyle(
-                  //                   fontSize: 14,
-                  //                 ),
-                  //               ),
-                  //             ))
-                  //         .toList(),
-                  //     value: selectedValue,
-                  //     onChanged: (value) {
-                  //       // setState(() {
-                  //         selectedValue = value;
-                  //       // });
-                  //     },
-                  //   ),
-                  // ),
-
-                  // DropdownButton(items: _items.map((e) => DropdownMenuItem(child: Text(e),value: e,)).toList(),
-                  // onChanged: (val) { setState(() {
-                  //   selectedValue = val as String;
-                  // });
-                  // }),
+                  
                   Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 5),

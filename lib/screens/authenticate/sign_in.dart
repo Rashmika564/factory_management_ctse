@@ -75,8 +75,19 @@ class _SignInState extends State<SignIn> {
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
+                      Container(
+                        width: window.physicalSize.width / 2,
+                        height: window.physicalSize.height / 3,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('green.png'),
+                            fit: BoxFit.fill,
+                          ),
+                          shape: BoxShape.rectangle,
+                        ),
+                      ),
                       SizedBox(
-                        height: 20.0,
+                        height: 10.0,
                       ),
                       TextFormField(
                         decoration:
@@ -134,8 +145,8 @@ class _SignInState extends State<SignIn> {
                           }
                         },
                         child: Container(
-                          width: 100,
-                          height: 30,
+                          width: 330,
+                          height: 34,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.green),
@@ -162,17 +173,6 @@ class _SignInState extends State<SignIn> {
                       ),
                       Text(error,
                           style: TextStyle(color: Colors.red, fontSize: 14.0)),
-                      Container(
-                        width: window.physicalSize.width / 2,
-                        height: window.physicalSize.height / 3,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('Doctors-pana.png'),
-                            fit: BoxFit.fill,
-                          ),
-                          shape: BoxShape.rectangle,
-                        ),
-                      )
                     ],
                   ),
                 )),
