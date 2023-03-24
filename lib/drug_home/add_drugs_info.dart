@@ -73,171 +73,172 @@ class _AddDrugsState extends State<AddDrugs> {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Container(
-                    height: 300.0,
-                    decoration: const BoxDecoration(
-                        color: Colors.yellow,
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/onlinedoctorbro.png"),
-                          fit: BoxFit.cover,
+        body: Stack(
+          children: 
+            [Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Container(
+                      height: 300.0,
+                      decoration: const BoxDecoration(
+                          color: Colors.yellow,
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/onlinedoctorbro.png"),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(250),
+                            bottomRight: Radius.circular(0),
+                          )),
+                    ),
+                  const SizedBox(height: 20.0),
+                  const Text("Welcome",
+                      style: TextStyle(
+                          fontSize: 24.0,
+                          letterSpacing: 1.5,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  const SizedBox(height: 10.0),
+                  const Text("Add Drug",
+                      style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                  const SizedBox(height: 20.0),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                        child: const Text(
+                          "View all",
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: Colors.black),
                         ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(250),
-                          bottomRight: Radius.circular(0),
-                        )),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const DrugsList()));
+                        }),
                   ),
-                const SizedBox(height: 20.0),
-                const Text("Welcome",
-                    style: TextStyle(
-                        fontSize: 24.0,
-                        letterSpacing: 1.5,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
-                const SizedBox(height: 10.0),
-                const Text("Add Drug",
-                    style: TextStyle(fontSize: 16.0, color: Colors.black)),
-                const SizedBox(height: 20.0),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                      child: const Text(
-                        "View all",
-                        style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            color: Colors.black),
+                  // const Schedule(),
+                  const SizedBox(height: 30.0),
+                  // const Image(image: AssetImage('graphics/background.png')),
+                  TextFormField(
+                    controller: _drNamecontroller,
+                    keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      decoration: const InputDecoration(
+                        hintText: "Drug Name",
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(defaultPadding),
+                          child: Icon(Icons.person),
+                        ),
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const DrugsList()));
-                      }),
-                ),
-                // const Schedule(),
-                const SizedBox(height: 30.0),
-                // const Image(image: AssetImage('graphics/background.png')),
-                TextFormField(
-                  controller: _drNamecontroller,
-                  keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Drug Name",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.person),
-                      ),
-                    ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: _drCodecontroller,
-                  keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Drug Code",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.person),
-                      ),
-                    ),
-                ),
-                const SizedBox(
+                  ),
+                  const SizedBox(
                     height: 10,
                   ),
-                TextFormField(
-                  controller: _unitPriceontroller,
-                  keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Unit Price",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.person),
-                      ),
-                    ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: _drCategorycontroller,
-                  keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Drug Category",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.person),
-                      ),
-                    ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: _drStatuscontroller,
-                  keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      hintText: "Drug Status",
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(defaultPadding),
-                        child: Icon(Icons.person),
-                      ),
-                    ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                InkWell(
-                  onTap: () {
-                    if (kDebugMode) {
-                      print("Create Data");
-                    }
-                    //_create();
-                    DrugHelper.create(DrugsModel(
-                        drCode: _drCodecontroller.text,
-                        drName: _drNamecontroller.text,
-                        unitPrice: _unitPriceontroller.text,
-                        drCategory: _drCategorycontroller.text,
-                        drStatus: _drStatuscontroller.text));
-
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const DrugsList()));
-                  },
-                  child: Container(
-                    width: 100,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.yellow),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          "Book",
-                          style: TextStyle(color: Colors.black),
+                  TextFormField(
+                    controller: _drCodecontroller,
+                    keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      decoration: const InputDecoration(
+                        hintText: "Drug Code",
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(defaultPadding),
+                          child: Icon(Icons.person),
                         ),
-                      ],
+                      ),
+                  ),
+                  const SizedBox(
+                      height: 10,
+                    ),
+                  TextFormField(
+                    controller: _unitPriceontroller,
+                    keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      decoration: const InputDecoration(
+                        hintText: "Unit Price",
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(defaultPadding),
+                          child: Icon(Icons.person),
+                        ),
+                      ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: _drCategorycontroller,
+                    keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      decoration: const InputDecoration(
+                        hintText: "Drug Category",
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(defaultPadding),
+                          child: Icon(Icons.person),
+                        ),
+                      ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: _drStatuscontroller,
+                    keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      decoration: const InputDecoration(
+                        hintText: "Drug Status",
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(defaultPadding),
+                          child: Icon(Icons.person),
+                        ),
+                      ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      if (kDebugMode) {
+                        print("Create Data");
+                      }
+                      //_create();
+                      DrugHelper.create(DrugsModel(
+                          drCode: _drCodecontroller.text,
+                          drName: _drNamecontroller.text,
+                          unitPrice: _unitPriceontroller.text,
+                          drCategory: _drCategorycontroller.text,
+                          drStatus: _drStatuscontroller.text));
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const DrugsList()));
+                    },
+                    child: Container(
+                      width: 100,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.yellow),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "Book",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

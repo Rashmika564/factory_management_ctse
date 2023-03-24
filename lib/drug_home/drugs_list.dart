@@ -2,6 +2,7 @@
 
 import 'package:factory_management_ctse/data/models/drugs_model.dart';
 import 'package:factory_management_ctse/data/remote_data_source/drug_helper.dart';
+import 'package:factory_management_ctse/drug_home/add_drugs_info.dart';
 import 'package:factory_management_ctse/drug_home/edit_drugs_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -60,123 +61,169 @@ class _DrugsListState extends State<DrugsList> {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                StreamBuilder<List<DrugsModel>>(
-                    stream: DrugHelper.read(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
+        body: Stack(
+        
+          children: 
+            [
+              Container(
+                      height: 300.0,
+                      decoration: const BoxDecoration(
+                          color: Colors.yellow,
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/onlinedoctorbro.png"),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(0),
+                            bottomRight: Radius.circular(250),
+                          )),
+                    ),
+                    const SizedBox(height: 20.0),
+                    const Text("Welcome",
+                        style: TextStyle(
+                            fontSize: 24.0,
+                            letterSpacing: 1.5,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                    const SizedBox(height: 10.0),
+                    const Text("See Your Drug List",
+                        style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                    const SizedBox(height: 20.0),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                          child: const Text(
+                            "Add New Drug",
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Colors.black),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const AddDrugs()));
+                          }),
+                    ),
+                    // const Schedule(),
+                    const SizedBox(height: 30.0),
+              Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  StreamBuilder<List<DrugsModel>>(
+                      stream: DrugHelper.read(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (snapshot.hasError) {
+                          return const Center(
+                            child: Text("Some error occured"),
+                          );
+                        }
+                        if (snapshot.hasData) {
+                          final docterdata = snapshot.data;
+                          return Expanded(
+                            child: ListView.builder(
+                              itemCount: docterdata!.length,
+                              // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
+                              itemBuilder: (context, Index) {
+                                final singleDrug = docterdata[Index];
+                                return Container(
+                                  margin: const EdgeInsets.symmetric(vertical: 5),
+                                  child: ListTile(
+                                      leading: Container(
+                                        width: 40,
+                                        height: 40,
+                                        decoration: const BoxDecoration(
+                                            color: Colors.green,
+                                            shape: BoxShape.circle),
+                                      ),
+                                      title: Text("${singleDrug.drName}"),
+                                      subtitle: Text("${singleDrug.drCode}"),
+                                      trailing: Column(
+                                        children: [
+                                          InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder:
+                                                            (context) =>
+                                                                EditDruginfo(
+                                                                  drug: DrugsModel(
+                                                                      drCode: singleDrug
+                                                                          .drCode,
+                                                                      drName: singleDrug
+                                                                          .drName,
+                                                                      unitPrice:
+                                                                          singleDrug
+                                                                              .unitPrice,
+                                                                      drCategory:
+                                                                          singleDrug
+                                                                              .drCategory,
+                                                                      drStatus:
+                                                                          singleDrug
+                                                                              .drStatus,
+                                                                      id: singleDrug
+                                                                          .id),
+                                                                )));
+                                              },
+                                              child: const Icon(Icons.edit)),
+                                          // SizedBox(
+                                          //   height: 0.5,
+                                          // ),
+                                          InkWell(
+                                            onTap: () {
+                                              //call your onpressed function here
+                                              if (kDebugMode) {
+                                                print('Button Pressed');
+                                              }
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          "Delete Confirm"),
+                                                      content: const Text(
+                                                          "Are You sure You want to delete"),
+                                                      actions: [
+                                                        ElevatedButton(
+                                                            onPressed: () {
+                                                              DrugHelper.delete(
+                                                                      singleDrug)
+                                                                  .then((value) {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              });
+                                                            },
+                                                            child: const Text(
+                                                                "Delete"))
+                                                      ],
+                                                    );
+                                                  });
+                                            },
+                                            child: const Icon(Icons.delete),
+                                          ),
+                                        ],
+                                      )),
+                                );
+                              },
+                            ),
+                          );
+                        }
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
-                      }
-                      if (snapshot.hasError) {
-                        return const Center(
-                          child: Text("Some error occured"),
-                        );
-                      }
-                      if (snapshot.hasData) {
-                        final docterdata = snapshot.data;
-                        return Expanded(
-                          child: ListView.builder(
-                            itemCount: docterdata!.length,
-                            // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
-                            itemBuilder: (context, Index) {
-                              final singleDrug = docterdata[Index];
-                              return Container(
-                                margin: const EdgeInsets.symmetric(vertical: 5),
-                                child: ListTile(
-                                    leading: Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: const BoxDecoration(
-                                          color: Colors.green,
-                                          shape: BoxShape.circle),
-                                    ),
-                                    title: Text("${singleDrug.drName}"),
-                                    subtitle: Text("${singleDrug.drCode}"),
-                                    trailing: Column(
-                                      children: [
-                                        InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder:
-                                                          (context) =>
-                                                              EditDruginfo(
-                                                                drug: DrugsModel(
-                                                                    drCode: singleDrug
-                                                                        .drCode,
-                                                                    drName: singleDrug
-                                                                        .drName,
-                                                                    unitPrice:
-                                                                        singleDrug
-                                                                            .unitPrice,
-                                                                    drCategory:
-                                                                        singleDrug
-                                                                            .drCategory,
-                                                                    drStatus:
-                                                                        singleDrug
-                                                                            .drStatus,
-                                                                    id: singleDrug
-                                                                        .id),
-                                                              )));
-                                            },
-                                            child: const Icon(Icons.edit)),
-                                        // SizedBox(
-                                        //   height: 0.5,
-                                        // ),
-                                        InkWell(
-                                          onTap: () {
-                                            //call your onpressed function here
-                                            if (kDebugMode) {
-                                              print('Button Pressed');
-                                            }
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    title: const Text(
-                                                        "Delete Confirm"),
-                                                    content: const Text(
-                                                        "Are You sure You want to delete"),
-                                                    actions: [
-                                                      ElevatedButton(
-                                                          onPressed: () {
-                                                            DrugHelper.delete(
-                                                                    singleDrug)
-                                                                .then((value) {
-                                                              Navigator.pop(
-                                                                  context);
-                                                            });
-                                                          },
-                                                          child: const Text(
-                                                              "Delete"))
-                                                    ],
-                                                  );
-                                                });
-                                          },
-                                          child: const Icon(Icons.delete),
-                                        ),
-                                      ],
-                                    )),
-                              );
-                            },
-                          ),
-                        );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    })
-              ],
+                      })
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
