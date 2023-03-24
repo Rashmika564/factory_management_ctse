@@ -2,6 +2,7 @@ import 'package:factory_management_ctse/data/models/drugs_model.dart';
 import 'package:factory_management_ctse/data/remote_data_source/drug_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../constants.dart';
 import '../services/auth.dart';
 import 'drugs_list.dart';
 
@@ -79,14 +80,18 @@ class _AddDrugsState extends State<AddDrugs> {
             child: Column(
               children: [
                 Container(
-                  height: 300.0,
-                  decoration: const BoxDecoration(
-                      color: Colors.yellow,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(250),
-                        bottomRight: Radius.circular(250),
-                      )),
-                ),
+                    height: 300.0,
+                    decoration: const BoxDecoration(
+                        color: Colors.yellow,
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/onlinedoctorbro.png"),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(250),
+                          bottomRight: Radius.circular(0),
+                        )),
+                  ),
                 const SizedBox(height: 20.0),
                 const Text("Welcome",
                     style: TextStyle(
@@ -119,37 +124,75 @@ class _AddDrugsState extends State<AddDrugs> {
                 // const Image(image: AssetImage('graphics/background.png')),
                 TextFormField(
                   controller: _drNamecontroller,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Drug Name"),
+                  keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Drug Name",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
                   controller: _drCodecontroller,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Drug Code"),
+                  keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Drug Code",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
                 ),
+                const SizedBox(
+                    height: 10,
+                  ),
                 TextFormField(
                   controller: _unitPriceontroller,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Unit Price"),
+                  keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Unit Price",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
                   controller: _drCategorycontroller,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Drug Category"),
+                  keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Drug Category",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
                   controller: _drStatuscontroller,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Drug Status"),
+                  keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      hintText: "Drug Status",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
                 ),
                 const SizedBox(
                   height: 10,

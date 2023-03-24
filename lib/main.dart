@@ -50,9 +50,11 @@ class MyApp extends StatelessWidget {
               textTheme:
                   Theme.of(context).textTheme.apply(displayColor: const Color(0)),
               elevatedButtonTheme: ElevatedButtonThemeData(
-                style: TextButton.styleFrom(
-                  backgroundColor: const Color(0xFFF1E6FF),
-                  padding: const EdgeInsets.all(defaultPadding),
+                style: ElevatedButton.styleFrom(
+                  elevation: 0, backgroundColor: kPrimaryColor,
+                  shape: const StadiumBorder(),
+                  maximumSize: const Size(double.infinity, 56),
+                  minimumSize: const Size(double.infinity, 56),
                 ),
               ),
               inputDecorationTheme: const InputDecorationTheme(

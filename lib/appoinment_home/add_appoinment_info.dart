@@ -207,13 +207,16 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   TextFormField(
                     controller: _resoncontroller,
                     minLines:
-                        6, // any number you need (It works as the rows for the textarea)
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    
+                        4, // any number you need (It works as the rows for the textarea)
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Reson for appoinment"),
+                      hintText: "Reson For Appoinment",
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 10,

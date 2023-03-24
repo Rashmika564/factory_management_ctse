@@ -3,11 +3,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:factory_management_ctse/data/models/doctor_model.dart';
 import 'package:factory_management_ctse/data/remote_data_source/doctor_helper.dart';
+import 'package:factory_management_ctse/docter_home/doctor_list.dart';
 import 'package:factory_management_ctse/docter_home/edit_docter_info.dart';
 import 'package:factory_management_ctse/hospitalManagementHome.dart';
 import 'package:factory_management_ctse/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+import '../drug_home/drugs_list.dart';
 import '../services/auth.dart';
 import '../shared/constants.dart';
 
@@ -106,12 +109,60 @@ class _AddDoctorState extends State<AddDoctor> {
           child: Form(
             key: _formKey,
             child: Column(
+              
               children: [
+                Container(
+                    height: 200.0,
+                    decoration: const BoxDecoration(
+                        color: Colors.yellow,
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/onlinedoctorbro.png"),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(250),
+                          bottomRight: Radius.circular(0),
+                        )),
+                  ),
+                  const SizedBox(height: 10.0),
+                const Text("Welcome",
+                    style: TextStyle(
+                        fontSize: 24.0,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black)),
+                const SizedBox(height: 10.0),
+                const Text("Add Doctor",
+                    style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                const SizedBox(height: 10.0),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                      child: const Text(
+                        "View all",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const DoctorList()));
+                      }),
+                ),
+                const SizedBox(height: 20.0),
                 TextFormField(
                   validator: (val) =>
                       val!.isEmpty ? 'Full Name Cant be empty' : null,
                   controller: _fullnamecontroller,
+                  keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
+                    prefixIcon: const Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                           borderSide: BorderSide(width: 1.5)),
@@ -129,7 +180,12 @@ class _AddDoctorState extends State<AddDoctor> {
                   validator: (val) => val!.isEmpty ? 'age cant be empty' : null,
                   controller: _agecontroller,
                   decoration: InputDecoration(
+                    prefixIcon: const Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
                       border: OutlineInputBorder(
+                        
                           borderRadius: BorderRadius.circular(20.0),
                           borderSide: BorderSide(width: 1.5)),
                       focusedBorder: OutlineInputBorder(
@@ -168,6 +224,10 @@ class _AddDoctorState extends State<AddDoctor> {
                       val!.isEmpty ? 'mobile number cant be empty' : null,
                   controller: _mobilenumbercontroller,
                   decoration: InputDecoration(
+                    prefixIcon: const Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                           borderSide: BorderSide(width: 1.5)),
@@ -186,6 +246,10 @@ class _AddDoctorState extends State<AddDoctor> {
                       val!.isEmpty ? 'Living Addresss cant be empty' : null,
                   controller: _livingaddresscontroller,
                   decoration: InputDecoration(
+                    prefixIcon: const Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20.0),
                           borderSide: BorderSide(width: 1.5)),
@@ -204,6 +268,10 @@ class _AddDoctorState extends State<AddDoctor> {
                       val!.isEmpty ? 'Number Of Nurses cant be empty' : null,
                   controller: _noofnursescontroller,
                   decoration: InputDecoration(
+                    prefixIcon: const Padding(
+                        padding: EdgeInsets.all(defaultPadding),
+                        child: Icon(Icons.person),
+                      ),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(width: 1.5),
                         borderRadius: BorderRadius.circular(20.0),
@@ -295,139 +363,8 @@ class _AddDoctorState extends State<AddDoctor> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                StreamBuilder<List<DoctorModel>>(
-                    stream: DoctorHelper.read(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (snapshot.hasError) {
-                        return Center(
-                          child: Text("Some error occured"),
-                        );
-                      }
-                      if (snapshot.hasData) {
-                        final docterdata = snapshot.data;
-                        return Expanded(
-                          child: ListView.builder(
-                            itemCount: docterdata!.length,
-                            itemBuilder: (context, Index) {
-                              final singledoctor = docterdata[Index];
-                              return Container(
-                                margin: EdgeInsets.symmetric(vertical: 5),
-                                child: ListTile(
-                                    leading: CircleAvatar(
-                                      radius: 22.0,
-                                      backgroundColor: Colors.green,
-                                      // backgroundImage: AssetImage('images.png'),
-                                    ),
-                                    title: Text("${singledoctor.fullname}"),
-                                    subtitle: Text("${singledoctor.age}"),
-                                    trailing: Column(
-                                      children: [
-                                        InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          EditDocterInfo(
-                                                            doctor: DoctorModel(
-                                                                fullname:
-                                                                    singledoctor
-                                                                        .fullname,
-                                                                age: singledoctor
-                                                                    .age,
-                                                                id: singledoctor
-                                                                    .id,
-                                                                doctorcategory:
-                                                                    singledoctor
-                                                                        .doctorcategory,
-                                                                mobilenumber:
-                                                                    singledoctor
-                                                                        .mobilenumber,
-                                                                livingaddress:
-                                                                    singledoctor
-                                                                        .livingaddress,
-                                                                noofassignednurses:
-                                                                    singledoctor
-                                                                        .noofassignednurses),
-                                                          )));
-                                            },
-                                            child: Icon(Icons.edit)),
-                                        // SizedBox(
-                                        //   height: 0.5,
-                                        // ),
-                                        InkWell(
-                                          onTap: () {
-                                            //call your onpressed function here
-                                            print('Button Pressed');
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                    title:
-                                                        Text("Delete Confirm"),
-                                                    content: Text(
-                                                        "Are You sure You want to delete"),
-                                                    actions: [
-                                                      ElevatedButton(
-                                                          onPressed: () {
-                                                            DoctorHelper.delete(
-                                                                    singledoctor)
-                                                                .then((value) {
-                                                              Navigator.pop(
-                                                                  context);
-                                                            });
-
-                                                            final snackBar =
-                                                                SnackBar(
-                                                              content: const Text(
-                                                                  'Docter Record Deleted Successfully'),
-                                                              backgroundColor:
-                                                                  const Color
-                                                                          .fromARGB(
-                                                                      255,
-                                                                      17,
-                                                                      90,
-                                                                      150),
-                                                              action:
-                                                                  SnackBarAction(
-                                                                label: 'close',
-                                                                onPressed: () {
-                                                                  // Some code to undo the change.
-                                                                },
-                                                              ),
-                                                            );
-
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                                    snackBar);
-                                                          },
-                                                          child: Text("Delete"))
-                                                    ],
-                                                  );
-                                                });
-                                          },
-                                          child: Icon(Icons.delete),
-                                        ),
-                                      ],
-                                    )),
-                              );
-                            },
-                          ),
-                        );
-                      }
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    })
+             
+               
               ],
             ),
           ),
