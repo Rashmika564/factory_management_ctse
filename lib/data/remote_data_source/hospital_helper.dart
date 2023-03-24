@@ -10,7 +10,7 @@ class HospitalHelper {
   }
 
   static Future create(HospitalModel hospital) async {
-    final hospitalCollection = FirebaseFirestore.instance.collection("doctors");
+    final hospitalCollection = FirebaseFirestore.instance.collection("hospital");
 
     final hospitalid = hospitalCollection.doc().id;
     final hosRef = hospitalCollection.doc(hospitalid);
@@ -31,7 +31,7 @@ class HospitalHelper {
   }
 
   static Future update(HospitalModel hospital) async {
-    final hospitalCollection = FirebaseFirestore.instance.collection("doctors");
+    final hospitalCollection = FirebaseFirestore.instance.collection("hospital");
 
     final hosRef = hospitalCollection.doc(hospital.id);
 
@@ -50,9 +50,10 @@ class HospitalHelper {
     }
   }
 
-  static Future delete(HospitalModel doctor) async {
+  static Future delete(HospitalModel hospital) async {
+
     final hospitalCollection =
-        FirebaseFirestore.instance.collection("hospitals");
-    final hosRef = hospitalCollection.doc(doctor.id).delete();
+        FirebaseFirestore.instance.collection("hospital");
+    final hosRef = hospitalCollection.doc(hospital.id).delete();
   }
 }

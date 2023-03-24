@@ -2,6 +2,8 @@ import 'package:factory_management_ctse/data/models/drugs_model.dart';
 import 'package:factory_management_ctse/data/remote_data_source/drug_helper.dart';
 import 'package:flutter/material.dart';
 
+import '../shared/constants.dart';
+
 class EditDruginfo extends StatefulWidget {
   final DrugsModel drug;
   const EditDruginfo({Key? key, required this.drug}) : super(key: key);
@@ -9,6 +11,25 @@ class EditDruginfo extends StatefulWidget {
   @override
   State<EditDruginfo> createState() => _EditDruginfoState();
 }
+
+
+final List<String> drugcategories = [
+    'Select a Category',
+    'Blood Pressure',
+    'Blood Cholesterol',
+    'Blood Glucose',
+    'Antibiotics',
+    'Painkillers',
+    'Other Drugs',
+  ];
+   String? selectedValue = 'Select a Category';
+
+  final List<String> drugStatus = [
+    'Select a Status',
+    'Available',
+    'Unavailable'
+  ];
+   String? selectedValueStatus = 'Select a Status';
 
 class _EditDruginfoState extends State<EditDruginfo> {
   TextEditingController? _drCodecontroller;
@@ -23,8 +44,10 @@ class _EditDruginfoState extends State<EditDruginfo> {
     _drCodecontroller = TextEditingController(text: widget.drug.drCode);
     _drNamecontroller = TextEditingController(text: widget.drug.drName);
     _unitPriceontroller = TextEditingController(text: widget.drug.unitPrice);
-    _drCategorycontroller = TextEditingController(text: widget.drug.drCategory);
-    _drStatuscontroller = TextEditingController(text: widget.drug.drStatus);
+  
+
+    selectedValue = widget.drug.drCategory;
+    selectedValueStatus = widget.drug.drStatus;
     //init state
     super.initState();
   }
@@ -84,23 +107,59 @@ class _EditDruginfoState extends State<EditDruginfo> {
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  validator: (value) =>
-                      value!.isEmpty ? 'Drug Category Cant be empty' : null,
-                  controller: _drCategorycontroller,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Drug Category"),
-                ),
+                // TextFormField(
+                //   validator: (value) =>
+                //       value!.isEmpty ? 'Drug Category Cant be empty' : null,
+                //   controller: _drCategorycontroller,
+                //   decoration: const InputDecoration(
+                //       border: OutlineInputBorder(), hintText: "Drug Category"),
+                // ),
+                DropdownButtonFormField(
+                    validator: (value) => value!.toString() == 'Select a Category'
+                        ? 'category Cant be empty'
+                        : null,
+                    decoration: textInputDecoration,
+                    value: selectedValue,
+                    items: drugcategories.map((c) {
+                      return DropdownMenuItem(
+                        value: c,
+                        child: Text(c),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      // print(value);
+                      selectedValue = value as String?;
+                      // setState(() => doctorcategory = value as String?);
+                    },
+                  ),
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  validator: (val) =>
-                      val!.isEmpty ? 'Drug Status Cant be empty' : null,
-                  controller: _drStatuscontroller,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: "Drug Status"),
-                ),
+                // TextFormField(
+                //   validator: (val) =>
+                //       val!.isEmpty ? 'Drug Status Cant be empty' : null,
+                //   controller: _drStatuscontroller,
+                //   decoration: const InputDecoration(
+                //       border: OutlineInputBorder(), hintText: "Drug Status"),
+                // ),
+                DropdownButtonFormField(
+                    validator: (value) => value!.toString() == 'Select a Category'
+                        ? 'category Cant be empty'
+                        : null,
+                    decoration: textInputDecoration,
+                    value: selectedValueStatus,
+                    items: drugStatus.map((c) {
+                      return DropdownMenuItem(
+                        value: c,
+                        child: Text(c),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      // print(value);
+                      selectedValueStatus = value as String?;
+                      // setState(() => doctorcategory = value as String?);
+                    },
+                  ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -111,8 +170,8 @@ class _EditDruginfoState extends State<EditDruginfo> {
                             drCode: _drCodecontroller!.text,
                             drName: _drNamecontroller!.text,
                             unitPrice: _unitPriceontroller!.text,
-                            drCategory: _drCategorycontroller!.text,
-                            drStatus: _drStatuscontroller!.text))
+                            drCategory: selectedValue,
+                            drStatus: selectedValueStatus))
                         .then((value) {
                       final snackBar = SnackBar(
                         content: const Text(

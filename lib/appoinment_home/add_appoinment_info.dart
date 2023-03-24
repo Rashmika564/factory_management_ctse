@@ -227,34 +227,36 @@ class _AddAppoinmentState extends State<AddAppoinment> {
                   ),
                   InkWell(
                     onTap: () {
-                      if (kDebugMode) {
-                        print("Create Data");
+                      if (_formKey.currentState!.validate()) {
+                        if (kDebugMode) {
+                          print("Create Data");
+                        }
+                        //_create();
+                        AppoinmentHelper.create(AppoinmentModel(
+                            doctorName: selectedValue,
+                            hospitalName: _hospitalNamecontroller.text,
+                            date: _datecontroller.text,
+                            reson: _resoncontroller.text));
+
+                        final snackBar = SnackBar(
+                          content:
+                              const Text('Apoinment Record Added Successfully'),
+                          backgroundColor: const Color.fromARGB(255, 17, 90, 150),
+                          action: SnackBarAction(
+                            label: 'close',
+                            onPressed: () {
+                              // Some code to undo the change.
+                            },
+                          ),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AppoinmentList()));
                       }
-                      //_create();
-                      AppoinmentHelper.create(AppoinmentModel(
-                          doctorName: selectedValue,
-                          hospitalName: _hospitalNamecontroller.text,
-                          date: _datecontroller.text,
-                          reson: _resoncontroller.text));
-
-                      final snackBar = SnackBar(
-                        content:
-                            const Text('Apoinment Record Added Successfully'),
-                        backgroundColor: const Color.fromARGB(255, 17, 90, 150),
-                        action: SnackBarAction(
-                          label: 'close',
-                          onPressed: () {
-                            // Some code to undo the change.
-                          },
-                        ),
-                      );
-
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AppoinmentList()));
                     },
                     child: Container(
                       width: 100,
